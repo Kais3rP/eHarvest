@@ -23,6 +23,13 @@ width:100%;
 height:30px;
 border:1px solid black;
 background:yellow;
+outline:none;
+&:hover{
+    opacity:0.7;
+};
+&:active{
+    border: 2px inset black;
+}
 
 
 `

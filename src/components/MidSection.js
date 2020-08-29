@@ -22,6 +22,6 @@ width:100%;
 height:40%;
 background:white;
 text-align:center;
-margin-top:5%;
+margin-top:10%;
 `
 
