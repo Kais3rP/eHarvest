@@ -10,17 +10,21 @@ import Header from './components/Header';
 import MidSection from './components/MidSection';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 
 
 export default function () {
+    const isCartOpen = useSelector( state => state.shop.isCartOpen);
     return (
         <Router>
             <AppWrapper>
                 <Header />
+                { isCartOpen ? <Cart position={0}/> : <Cart position={'-500px'}/> }
                 <Switch>
-                    <Route path="/cart" >
-                        <Cart />
+                    <Route path="/gallery" >
+                        
                     </Route>
                     <Route path="/" >
                         <MidSection />

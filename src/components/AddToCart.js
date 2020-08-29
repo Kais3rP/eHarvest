@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../slices/shopSlice';
+import { addToCart, toggleCart } from '../slices/shopSlice';
 
 
 
 export default function ({ pic, id }){
-    const cart = useSelector( state => state.shop.cart)
+    const cart = useSelector( state => state.shop.cart);
+    const isCartOpen = useSelector( state => state.shop.isCartOpen)
     const dispatch = useDispatch();
     return (
-     <CartButton onClick = {() => { dispatch(addToCart({pic,id})) } }>
+     <CartButton onClick = {() => { 
+         dispatch(addToCart({pic,id}));
+
+         if (!isCartOpen) dispatch(toggleCart())
+          } }>
          Add To Cart
      </CartButton>
        

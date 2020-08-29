@@ -1,13 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetCart, toggleCart } from '../slices/shopSlice';
 
-
-export default function (){
+export default function ( { position }){
     const cart = useSelector( state => state.shop.cart);
+    const dispatch = useDispatch();
     return (
-        <CartWrapper>
-        {cart.map( (item,i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={item.pic}></ProductPic>`item${item.id}`</ThumbnailProductContainer>))}
+        <CartWrapper style={{right: position }}>
+        <ControlCart>  
+        
+        <ResetCartButton onClick={ () => {dispatch(resetCart())}}>Reset Cart</ResetCartButton>
+        <CloseCartButton onClick={()=>{dispatch(toggleCart())}}>&times;</CloseCartButton>
+        </ControlCart>
+       <ThumbnailsWrapper>
+
+       {cart.map( (item,i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={item.pic}></ProductPic>`item${item.id}`</ThumbnailProductContainer>))}
+       </ThumbnailsWrapper>
+        
+        
         </CartWrapper>
         
        
@@ -15,15 +26,43 @@ export default function (){
 }
 
 const CartWrapper = styled.div`
-
-width:100%;
+position:fixed;
+right:0;
+width:20%;
 height:100%;
 display:flex;
-justify-content: center;
+flex-direction:column;
+justify-content: space-between;
 align-items: center;
-background:lavender;
-margin-top:5%;
+background:green;
+margin-top:100px;
+transition: right 0.5s ease-in;
 
+
+`
+
+const ControlCart = styled.div`
+
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+width:100%;
+height:5%;
+background:orange;
+font-size:20px;
+font-weight:bold;
+
+
+`
+
+const ThumbnailsWrapper = styled.div`
+display:flex;
+justify-content: center;
+align-items: flex-start;
+width:100%;
+height:95%;
+overflow-y: scroll;
+flex-wrap:wrap;
 
 `
 const ThumbnailProductContainer = styled.div`
@@ -40,5 +79,19 @@ const ProductPic = styled.img`
 
 width:98%;
 
+
+`
+const CloseCartButton = styled.div`
+margin-right:5px;
+cursor: pointer;
+`
+const ResetCartButton = styled.button`
+
+width:100px;
+height:40px;
+background: violet;
+border: 1px solid black;
+margin:5px;
+cursor: pointer;
 
 `

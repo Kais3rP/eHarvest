@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const shopSlice = createSlice({
   name: 'shop',
   initialState: {
-   cart:[]
+   cart:[],
+   isCartOpen: false
   },
   reducers: {
    addToCart: (state,action) => {
@@ -11,11 +12,14 @@ export const shopSlice = createSlice({
    },
    resetCart: (state,action) => {
      state.cart = [];
+   },
+   toggleCart: (state,action) => {
+     state.isCartOpen = !state.isCartOpen
    }
   }
 });
 
-export const { addToCart, resetCart } = shopSlice.actions;
+export const { addToCart, resetCart, toggleCart } = shopSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
