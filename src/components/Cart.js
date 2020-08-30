@@ -15,7 +15,7 @@ export default function ( { position }){
         </ControlCart>
        <ThumbnailsWrapper>
 
-       {cart.map( (item,i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={item.pic}></ProductPic>`item${item.id}`</ThumbnailProductContainer>))}
+       {cart.map( (item,i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={item.pic}></ProductPic><ProductQuantity>{item.numbers}</ProductQuantity></ThumbnailProductContainer>))}
        </ThumbnailsWrapper>
         
         
@@ -37,7 +37,7 @@ align-items: center;
 background:green;
 margin-top:100px;
 transition: right 0.5s ease-in;
-
+z-index:1;
 
 `
 
@@ -71,6 +71,7 @@ flex-direction:column;
 justify-content: center;
 align-items: center;
 width:10%;
+height:10%;
 text-align:center;
 border: 1px solid red;
 margin:5px;
@@ -78,7 +79,14 @@ margin:5px;
 const ProductPic = styled.img`
 
 width:98%;
+height:80%;
 
+`
+const ProductQuantity = styled.div`
+
+width:98%;
+height:20%;
+background:white;
 
 `
 const CloseCartButton = styled.div`

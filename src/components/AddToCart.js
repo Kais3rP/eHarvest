@@ -31,6 +31,7 @@ background:yellow;
 outline:none;
 &:hover{
     opacity:0.7;
+    
 };
 &:active{
     border: 2px inset black;

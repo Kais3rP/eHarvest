@@ -4,11 +4,16 @@ export const shopSlice = createSlice({
   name: 'shop',
   initialState: {
    cart:[],
-   isCartOpen: false
+   isCartOpen: false,
+
   },
   reducers: {
    addToCart: (state,action) => {
-     state.cart.push({id:action.payload.id, pic:action.payload.pic})
+     for (let item of state.cart) if(item.id === action.payload.id) {
+       item.numbers++;
+       return;
+     }
+     state.cart.push({id:action.payload.id, pic:action.payload.pic, numbers: 1})
    },
    resetCart: (state,action) => {
      state.cart = [];
