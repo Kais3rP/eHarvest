@@ -1,0 +1,18 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server of e-harvest app",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test",
+    "start": "nodemon server.js",
+    "inspect": "node --inspect server.js"
+  },
+  "author": "Cesare Polonara",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
