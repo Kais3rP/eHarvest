@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetCart, toggleCart } from '../slices/shopSlice';
-import PicThumbnail from './PicThumbnail.js';
+
 
 export default function ( { position }){
     const cart = useSelector( state => state.shop.cart);
+    const totalPrice = useSelector( state => state.shop.totalPrice);
     const dispatch = useDispatch();
     let mimeType = "image/png";
+    
     return (
         <CartWrapper style={{right: position }}>
         <ControlCart>  
@@ -16,10 +18,11 @@ export default function ( { position }){
         <CloseCartButton onClick={()=>{dispatch(toggleCart())}}>&times;</CloseCartButton>
         </ControlCart>
        <ThumbnailsWrapper>
-
-       {cart.map( (item,i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={`data:${mimeType};base64,${item.pic}`}></ProductPic><ProductQuantity>{item.quantity}</ProductQuantity></ThumbnailProductContainer>))}
+       {cart.map( (item,i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={`data:${mimeType};base64,${item.pic}`}></ProductPic><ProductQuantity>{item.quantityInCart}</ProductQuantity></ThumbnailProductContainer>))}
        </ThumbnailsWrapper>
-        
+        <TotalPriceContainer>
+           TOTAL TO PAY: { totalPrice.toFixed(2) }€  
+        </TotalPriceContainer>
         
         </CartWrapper>
         
@@ -40,7 +43,7 @@ background:green;
 margin-top:100px;
 transition: right 0.5s ease-in;
 z-index:1;
-
+overflow-y: scroll;
 `
 
 const ControlCart = styled.div`
@@ -62,8 +65,7 @@ display:flex;
 justify-content: center;
 align-items: flex-start;
 width:100%;
-height:95%;
-overflow-y: scroll;
+height:70%;
 flex-wrap:wrap;
 
 `
@@ -103,5 +105,14 @@ background: violet;
 border: 1px solid black;
 margin:5px;
 cursor: pointer;
+
+`
+
+const TotalPriceContainer = styled.div`
+
+width:98%;
+height:30%;
+background:white;
+
 
 `

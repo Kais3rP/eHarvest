@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCart, toggleCart } from '../slices/shopSlice';
+import { addToCart, toggleCart, calculateTotalPrice } from '../slices/shopSlice';
 
 
 
@@ -12,7 +12,7 @@ export default function ({ item }){
     return (
      <CartButton onClick = {() => { 
          dispatch(addToCart(item));
-
+         dispatch(calculateTotalPrice(item.price))
          if (!isCartOpen) dispatch(toggleCart())
           } }>
          Add To Cart
@@ -25,7 +25,7 @@ export default function ({ item }){
 const CartButton = styled.button`
 
 width:100%;
-height:30px;
+height:10%;
 border:1px solid black;
 background:yellow;
 outline:none;

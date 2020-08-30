@@ -4,29 +4,37 @@ const url = '/offers';
 export const shopSlice = createSlice({
   name: 'shop',
   initialState: {
-   cart:[],
-   isCartOpen: false,
-   offersItems:[]
+    cart: [],
+    totalPrice: 0,
+    isCartOpen: false,
+    offersItems: []
   },
   reducers: {
-   addToCart: (state,action) => {
-   
-     
-     state.cart.push(action.payload)
-   },
-   resetCart: (state,action) => {
-     state.cart = [];
-   },
-   toggleCart: (state,action) => {
-     state.isCartOpen = !state.isCartOpen
-   },
-   fetchOffers: (state, action) => {
-     state.offersItems = action.payload;
-   }
+    addToCart: (state, action) => {
+      for (let item of state.cart) {
+        if (item.id === action.payload.id) {
+          item.quantityInCart += 1;
+          return;
+        }
+      }
+      state.cart.push(action.payload)
+    },
+    resetCart: (state, action) => {
+      state.cart = [];
+    },
+    toggleCart: (state, action) => {
+      state.isCartOpen = !state.isCartOpen
+    },
+    fetchOffers: (state, action) => {
+      state.offersItems = action.payload;
+    },
+    calculateTotalPrice: (state, action) => {
+      state.totalPrice += action.payload
+    }
   }
 });
 
-export const { addToCart, resetCart, toggleCart, fetchOffers } = shopSlice.actions;
+export const { addToCart, resetCart, toggleCart, fetchOffers, calculateTotalPrice } = shopSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -35,9 +43,9 @@ export const { addToCart, resetCart, toggleCart, fetchOffers } = shopSlice.actio
 export const fetchOfferItems = () => async dispatch => {
   let res = await fetch(url);
   let data = await res.json();
-  //console.log(data.pics);
+  for (let item of data) item.quantityInCart = parseInt(item.quantityInCart);
   dispatch(fetchOffers(data));
-  
+
 };
 
 // The function below is called a selector and allows us to select a value from

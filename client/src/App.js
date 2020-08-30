@@ -18,20 +18,20 @@ import { useEffect } from 'react';
 
 
 export default function () {
-    const isCartOpen = useSelector( state => state.shop.isCartOpen);
+    const isCartOpen = useSelector(state => state.shop.isCartOpen);
     const dispatch = useDispatch();
-    useEffect( ()=>{
-    dispatch(fetchOfferItems());
+    useEffect(() => {
+        dispatch(fetchOfferItems());
     })
     return (
         <Router>
             <AppWrapper>
-            
+
                 <Header />
-                { isCartOpen ? <Cart position={0}/> : <Cart position={'-500px'}/> }
+                {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
                     <Route path="/gallery" >
-                        
+
                     </Route>
                     <Route path="/" >
                         <MidSection />

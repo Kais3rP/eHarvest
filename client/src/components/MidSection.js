@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import Offers from './Offers';
 import ProductsPreview from './ProductsPreview';
 
-export default function (){
+export default function () {
     return (
-       <MidSectionWrapper>
-       <Offers />
-       <ProductsPreview />
-       </MidSectionWrapper>
-       
+        <MidSectionWrapper>
+            <Offers />
+            <ProductsPreview />
+        </MidSectionWrapper>
+
     )
 }
 

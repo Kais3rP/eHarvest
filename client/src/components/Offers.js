@@ -4,18 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import PicThumbnail from './PicThumbnail.js';
 
 
-export default function (){
-    const offersItems = useSelector( state => state.shop.offersItems);
-    
+export default function () {
+    const offersItems = useSelector(state => state.shop.offersItems);
+    //console.log(offersItems)
     return (
         <OffersWrapper>
-        <OffersTitle>OFFERS</OffersTitle>
-    <PicThumbnailContainer>
-    { offersItems.map( (item,i) => (<PicThumbnail key={i} item={{id: item.id, pic:item.pic}}/>))}
-    </PicThumbnailContainer>
-         
+            <OffersTitle>OFFERS</OffersTitle>
+            <PicThumbnailContainer>
+                {offersItems.map((item, i) => (<PicThumbnail key={i} item={item} />))}
+            </PicThumbnailContainer>
         </OffersWrapper>
-       
+
     )
 }
 
@@ -25,20 +24,21 @@ flex-direction:column;
 justify-content: center;
 align-items: center;
 width:70%;
+height:400px;
 background:aqua;
 text-align:center;
 `
 
- const OffersTitle = styled.div`
+const OffersTitle = styled.div`
  width:100%;
- height:10%;
+ height:20%;
  background:grey;
  
  `
 const PicThumbnailContainer = styled.div`
 
 width:100%;
-height:90%;
+height:80%;
 display:flex;
 justify-content: center;
 align-items: center;
