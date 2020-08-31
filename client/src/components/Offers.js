@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import PicThumbnail from './PicThumbnail.js';
 
@@ -19,10 +20,7 @@ export default function () {
 }
 
 const OffersWrapper = styled.div`
-display:flex;
-flex-direction:column;
-justify-content: center;
-align-items: center;
+${flexColSpace};
 width:70%;
 height:400px;
 background:aqua;
@@ -36,11 +34,9 @@ const OffersTitle = styled.div`
  
  `
 const PicThumbnailContainer = styled.div`
-
+${flexRowSpace};
 width:100%;
 height:80%;
-display:flex;
-justify-content: center;
-align-items: center;
+
 `
 

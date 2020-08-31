@@ -1,4 +1,5 @@
 import React from 'react';
+import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
@@ -21,9 +22,7 @@ export default function ( { position, onMouseOut }) {
 }
 
 const ModalWrapper = styled.div`
-display:flex;
-justify-content:center;
-align-items:center;
+${flexRowCenter};
 flex-wrap:wrap;
 margin-top:100px;
 position:fixed;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter } from '../styled-components/globalStyles';
 import AddToCart from './AddToCart';
-import convertIdNames from '../helpers/convertIdNames';
 import Loader from 'react-loader-spinner'
 
 export default function ({ item }) {
@@ -16,25 +16,22 @@ export default function ({ item }) {
         </PicContainer>
 
         {item.id}
-        <ItemPrice>{item.price}€</ItemPrice>
+        <ItemPrice>{item.price}€/Kg</ItemPrice>
         <AddToCart item={item} />
       </ThumbnailOfferContainer>)
       :
       <Loader
         type="TailSpin"
-        color="#00BFFF"
-        height={30}
-        width={30}
+        color="black"
+        height={50}
+        width={50}
         timeout={3000} //3 secs
       />
   )
 }
 
 const ThumbnailOfferContainer = styled.div`
-display:flex;
-flex-direction:column;
-justify-content: center;
-align-items: center;
+${flexColCenter};
 width:35%;
 height:100%;
 min-width:100px;
@@ -44,9 +41,7 @@ margin:5px;
 `
 
 const PicContainer = styled.div`
-display:flex;
-justify-content:center;
-align-items:center;
+${flexRowCenter};
 width:100%;
 height:75%;
 

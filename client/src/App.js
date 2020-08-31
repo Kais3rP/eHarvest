@@ -1,4 +1,5 @@
 import React from 'react';
+import { flexColSpace } from './styled-components/globalStyles';
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,6 +11,7 @@ import Header from './components/Header';
 import MidSection from './components/MidSection';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import Login from './components/Login';
 import HeaderModal from './components/HeaderModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOfferItems, fetchMostSoldItems, closeHeaderModal } from './slices/shopSlice';
@@ -25,17 +27,17 @@ export default function () {
     useEffect(() => {
         dispatch(fetchOfferItems());
         dispatch(fetchMostSoldItems());
-    },[])
+    }, [])
     return (
         <Router>
             <AppWrapper>
 
                 <Header />
-                {isHeaderModalOpen ? <HeaderModal onMouseOut={()=>{dispatch(closeHeaderModal())}} position={0} /> : <HeaderModal position={'-200px'} />}
+                {isHeaderModalOpen ? <HeaderModal onMouseOut={() => { dispatch(closeHeaderModal()) }} position={'100px'} /> : <HeaderModal position={'-200px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
-                    <Route path="/gallery" >
-
+                    <Route path="/login" >
+                        <Login />
                     </Route>
                     <Route path="/" >
                         <MidSection />
@@ -48,11 +50,7 @@ export default function () {
 }
 
 const AppWrapper = styled.div`
-display:flex;
-flex-direction:column;
-justify-content: space-between;
-align-items: center;
-align-items: center;
+${flexColSpace};
 width:100vw;
 min-height:100vh;
 background:pink;

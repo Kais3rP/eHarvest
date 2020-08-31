@@ -1,21 +1,31 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart } from '../styled-components/globalStyles';
 import { useDispatch } from 'react-redux';
 import { toggleCart, openHeaderModal } from '../slices/shopSlice';
+import { FaShoppingCart } from 'react-icons/fa';
+import { IconContext } from "react-icons";
+import Logo from './Logo';
+
 
 
 export default function () {
     const dispatch = useDispatch();
     return (
         <HeaderWrapper>
-            <LeftHeaderContainer>Left Controls</LeftHeaderContainer>
+            <LeftHeaderContainer><Logo /></LeftHeaderContainer>
             <MidHeaderContainer>
                 <HeaderLink><Link to="/">HOME</Link></HeaderLink>
                 <HeaderLink><Link to="/full-shop">FULL SHOP</Link></HeaderLink>
-                <HeaderLink onMouseOver={ ()=> {dispatch(openHeaderModal())}} ><Link to="/">WHAT'S eHARVEST</Link></HeaderLink> </MidHeaderContainer>
+                <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} ><Link to="/">WHAT'S eHARVEST</Link></HeaderLink> </MidHeaderContainer>
             <RightHeaderContainer>
-                <CartButton onClick={() => { dispatch(toggleCart()) }}>Cart</CartButton>
+            <LoginContainer>
+            <HeaderLink><Link  to="/login">Sign In / Register</Link></HeaderLink>
+            </LoginContainer>
+                <IconContext.Provider value={{ style:{ 'margin-right':'10px', color:'grey', cursor:'pointer'} }}  >                
+                    <FaShoppingCart size={30} onClick={() => { dispatch(toggleCart()) }} />
+                                </IconContext.Provider>
             </RightHeaderContainer>
         </HeaderWrapper>
 
@@ -23,57 +33,43 @@ export default function () {
 }
 
 const HeaderWrapper = styled.div`
-display:flex;
-justify-content: center;
-align-items: center;
+${flexRowCenter};
 width:100%;
-height:100px;
+height:200px;
 position: fixed;
 top:0;
 left:0;
 background:yellow;
 text-align:center;
 z-index:2;
-
-
 `
 const LeftHeaderContainer = styled.div`
-
-display:flex;
-justify-content: flex-start;
-align-items: center;
+${flexRowStart};
 width:30%;
-
+height:100%;
+background:violet;
 `
 const RightHeaderContainer = styled.div`
 
-display:flex;
+${flexRowCenter}
 justify-content: flex-end;
-align-items: center;
 width:30%;
+height:100%;
+background:violet;
 
 `
 const MidHeaderContainer = styled.div`
 
-display:flex;
-justify-content: center;
-align-items: center;
+${flexRowCenter};
 width:40%;
 
 `
 
-const CartButton = styled.button`
 
-width:100px;
-height:40px;
-background: violet;
-border: 1px solid black;
-margin:5px;
-cursor: pointer;
-
-`
 
 const HeaderLink = styled.div`
 margin:10px;
+`
+const LoginContainer = styled.div`
 
 `

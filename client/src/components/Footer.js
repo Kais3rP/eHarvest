@@ -10,7 +10,6 @@ export default function (){
 }
 
 const FooterWrapper = styled.div`
-
 width:100%;
 height:150px;
 background:red;

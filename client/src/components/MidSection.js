@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter } from '../styled-components/globalStyles';
 import Offers from './Offers';
 import ProductsPreview from './ProductsPreview';
 
@@ -14,14 +15,10 @@ export default function () {
 }
 
 const MidSectionWrapper = styled.div`
-display:flex;
-flex-direction:column;
-justify-content: center;
-align-items: center;
+${flexColCenter};
 width:100%;
-height:40%;
 background:white;
 text-align:center;
-margin-top:10%;
+margin-top:200px;
 `
 
