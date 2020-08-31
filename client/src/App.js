@@ -22,7 +22,7 @@ export default function () {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchOfferItems());
-    })
+    },[])
     return (
         <Router>
             <AppWrapper>
