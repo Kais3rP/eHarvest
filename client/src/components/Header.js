@@ -2,26 +2,29 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { resetCart, toggleCart } from '../slices/shopSlice';
+import { toggleCart, openHeaderModal } from '../slices/shopSlice';
 
 
-export default function (){
+export default function () {
     const dispatch = useDispatch();
     return (
         <HeaderWrapper>
-<HeaderLink><Link to="/gallery">Gallery</Link></HeaderLink>
-<HeaderLink><Link to="/">Home</Link></HeaderLink>
-<CartButton onClick={() => {dispatch(toggleCart())}}>Cart</CartButton>
-
-
+            <LeftHeaderContainer>Left Controls</LeftHeaderContainer>
+            <MidHeaderContainer>
+                <HeaderLink><Link to="/">HOME</Link></HeaderLink>
+                <HeaderLink><Link to="/full-shop">FULL SHOP</Link></HeaderLink>
+                <HeaderLink onMouseOver={ ()=> {dispatch(openHeaderModal())}} ><Link to="/">WHAT'S eHARVEST</Link></HeaderLink> </MidHeaderContainer>
+            <RightHeaderContainer>
+                <CartButton onClick={() => { dispatch(toggleCart()) }}>Cart</CartButton>
+            </RightHeaderContainer>
         </HeaderWrapper>
-       
+
     )
 }
 
 const HeaderWrapper = styled.div`
 display:flex;
-justify-content: flex-end;
+justify-content: center;
 align-items: center;
 width:100%;
 height:100px;
@@ -34,6 +37,31 @@ z-index:2;
 
 
 `
+const LeftHeaderContainer = styled.div`
+
+display:flex;
+justify-content: flex-start;
+align-items: center;
+width:30%;
+
+`
+const RightHeaderContainer = styled.div`
+
+display:flex;
+justify-content: flex-end;
+align-items: center;
+width:30%;
+
+`
+const MidHeaderContainer = styled.div`
+
+display:flex;
+justify-content: center;
+align-items: center;
+width:40%;
+
+`
+
 const CartButton = styled.button`
 
 width:100px;

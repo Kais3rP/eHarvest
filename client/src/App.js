@@ -10,8 +10,9 @@ import Header from './components/Header';
 import MidSection from './components/MidSection';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import HeaderModal from './components/HeaderModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchOfferItems } from './slices/shopSlice';
+import { fetchOfferItems, fetchMostSoldItems, closeHeaderModal } from './slices/shopSlice';
 import { useEffect } from 'react';
 
 
@@ -19,15 +20,18 @@ import { useEffect } from 'react';
 
 export default function () {
     const isCartOpen = useSelector(state => state.shop.isCartOpen);
+    const isHeaderModalOpen = useSelector(state => state.shop.isHeaderModalOpen);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchOfferItems());
+        dispatch(fetchMostSoldItems());
     },[])
     return (
         <Router>
             <AppWrapper>
 
                 <Header />
+                {isHeaderModalOpen ? <HeaderModal onMouseOut={()=>{dispatch(closeHeaderModal())}} position={0} /> : <HeaderModal position={'-200px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
                     <Route path="/gallery" >

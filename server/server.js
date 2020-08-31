@@ -36,6 +36,26 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
     }
     console.log()
     res.status(200).json(result);
+});
+
+app.get('/mostsold', async (req,res) => {
+
+  let fileNames = [];
+  fileNames = await readDir(path.resolve(__dirname,"models/most-sold-pics"));
+  let data = {};
+  const files = await Promise.all(fileNames.map(async fileName => {
+      let filePath = path.resolve(__dirname,"models/most-sold-pics") + '/' + fileName
+      let file = await readFile(filePath,"base64");
+      return file;
+      
+      }));
+  //merge id and data
+  let result =[];
+  for ( let i = 0; i<fileNames.length; i++){
+ result.push({id:convertIdNames(fileNames[i]),pic:files[i],price:prices[convertIdNames(fileNames[i])], quantityInCart:1})
+  }
+  console.log()
+  res.status(200).json(result);
 })
   const listener = app.listen(process.env.PORT, () => {
     console.log("Your app is listening on port " + listener.address().port);
