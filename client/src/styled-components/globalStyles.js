@@ -36,38 +36,43 @@ justify-content: space-between;
 align-items:center;
 `
 
+
 export const Input = styled.input`
-background:pink;
 border:none;
 border-radius:5px;
 padding:10px;
 margin:5px;
+font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-weight:600;
 `
 export const Button = styled.button`
 width:100%;
 height:10%;
-border:1px solid black;
-background:yellow;
+border:none;
+background:lavender;
 outline:none;
 cursor:pointer;
 font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     font-weight:600;
+    box-shadow:1px 1px 10px 2px grey;
 &:hover{
-    opacity:0.7;
+    box-shadow:2px 2px 10px 4px grey;
     
 };
 &:active{
-    border: 2px inset black;
+   background:rgb(208, 208, 247);
 }
 `
 export const ButtonAlt = styled.button`
 
 width:100px;
 height:40px;
-background: violet;
-border: 1px solid black;
+background: lavender;
+outline:none;
 margin:5px;
 cursor: pointer;
 font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -78,9 +83,7 @@ font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI'
     opacity:0.7;
     
 };
-&:active{
-    border: 2px inset black;
-}
+
 
 `
 
@@ -93,4 +96,13 @@ color:red;
 
 export const ValidHeader = styled.h3`
 color:green;
+`
+
+export const Header3 = styled.h3`
+color:grey;
+margin:10px;
+`
+export const Header5 = styled.h5`
+color:grey;
+margin:10px;
 `

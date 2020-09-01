@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter, ButtonAlt } from '../styled-components/globalStyles';
+import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter, ButtonAlt, Header3, Input } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetCart, toggleCart } from '../slices/shopSlice';
 
@@ -17,12 +17,15 @@ export default function ({ position }) {
                 <ButtonAlt onClick={() => { dispatch(resetCart()) }}>Reset Cart</ButtonAlt>
                 <CloseCartButton onClick={() => { dispatch(toggleCart()) }}>&times;</CloseCartButton>
             </ControlCart>
-            <ThumbnailsWrapper>
-                {cart.map((item, i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={`data:${mimeType};base64,${item.pic}`}></ProductPic><ProductQuantity>{item.quantityInCart}Kg</ProductQuantity></ThumbnailProductContainer>))}
-            </ThumbnailsWrapper>
             <TotalPriceContainer>
-                TOTAL TO PAY: {totalPrice.toFixed(2)}€
+               <Header3> TOTAL TO PAY: {totalPrice.toFixed(2)}€</Header3>
         </TotalPriceContainer>
+            <ThumbnailsWrapper>
+           
+                {cart.map((item, i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={`data:${mimeType};base64,${item.pic}`}></ProductPic><ProductQuantity value={`${item.quantityInCart}Kg`} readOnly={true}></ProductQuantity></ThumbnailProductContainer>))}
+                
+            </ThumbnailsWrapper>
+           
         </CartWrapper>
   )
 }
@@ -32,12 +35,14 @@ position:fixed;
 right:0;
 width:20%;
 height:100%;
-${flexColSpace};
-background:green;
+${flexColCenter};
+justify-content:flex-start;
 margin-top:200px;
 transition: right 0.5s ease-in;
 z-index:1;
 overflow-y: scroll;
+background:white;
+box-shadow: 1px 2px 10px 2px grey;
 `
 
 const ControlCart = styled.div`
@@ -45,43 +50,50 @@ const ControlCart = styled.div`
 ${flexRowSpace};
 width:100%;
 height:5%;
-background:orange;
 font-size:20px;
 font-weight:bold;
+
 
 
 `
 
 const ThumbnailsWrapper = styled.div`
-${flexRowCenter};
-align-items: flex-start;
+${flexColCenter};
+justify-content:flex-start;
 width:100%;
 height:70%;
-flex-wrap:wrap;
+
+
+
 
 `
 const ThumbnailProductContainer = styled.div`
-${flexColCenter};
-width:30%;
+${flexRowSpace};
+height:10%;
+width:98%;
 text-align:center;
-border: 1px solid red;
 margin:5px;
+box-shadow: 1px 2px 10px 2px grey;
 `
 const ProductPic = styled.img`
-width:98%;
-height:80%;
+
+height:100%;
+
 `
-const ProductQuantity = styled.div`
-width:98%;
-height:20%;
-background:white;
+const ProductQuantity = styled(Input)`
+width:30%;
+height:100%;
+border:none;
+font-size:30px;
+
 `
 const CloseCartButton = styled.div`
 margin-right:5px;
 cursor: pointer;
+font-size:50px;
 `
 const TotalPriceContainer = styled.div`
+display:block;
 width:98%;
-height:30%;
-background:white;
+height:5%;
 `

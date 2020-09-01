@@ -23,14 +23,12 @@ const OffersWrapper = styled.div`
 ${flexColSpace};
 width:70%;
 height:400px;
-background:aqua;
 text-align:center;
 `
 
 const OffersTitle = styled.div`
  width:100%;
  height:20%;
- background:grey;
  
  `
 const PicThumbnailContainer = styled.div`

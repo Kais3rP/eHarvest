@@ -13,6 +13,10 @@ import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Login from './components/Login';
 import HeaderModal from './components/HeaderModal';
+import HowItWorks from './components/HowItWorks';
+import Feedbacks from './components/Feedbacks';
+import Sell from './components/Sell';
+import Faq from './components/Faq';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOfferItems, fetchMostSoldItems, closeHeaderModal } from './slices/shopSlice';
 import { useEffect } from 'react';
@@ -33,11 +37,23 @@ export default function () {
             <AppWrapper>
 
                 <Header />
-                {isHeaderModalOpen ? <HeaderModal onMouseOut={() => { dispatch(closeHeaderModal()) }} position={'100px'} /> : <HeaderModal position={'-200px'} />}
+                {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-200px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
                     <Route path="/login" >
                         <Login />
+                    </Route>
+                    <Route path="/howitworks" >
+                        <HowItWorks />
+                    </Route>
+                    <Route path="/feedbacks" >
+                        <Feedbacks />
+                    </Route>
+                    <Route path="/sell" >
+                        <Sell />
+                    </Route>
+                    <Route path="/faq" >
+                        <Faq />
                     </Route>
                     <Route path="/" >
                         <MidSection />
@@ -53,7 +69,6 @@ const AppWrapper = styled.div`
 ${flexColSpace};
 width:100vw;
 min-height:100vh;
-background:pink;
 margin:0;
 overflow:hidden;
 `

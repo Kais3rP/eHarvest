@@ -10,15 +10,13 @@ export default function () {
             <Offers />
             <ProductsPreview />
         </MidSectionWrapper>
-
-    )
+)
 }
 
 const MidSectionWrapper = styled.div`
 ${flexColCenter};
 width:100%;
-background:white;
 text-align:center;
-margin-top:200px;
+margin-top:230px;
 `
 

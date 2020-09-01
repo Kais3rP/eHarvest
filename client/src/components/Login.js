@@ -49,18 +49,18 @@ export default function () {
          </RegLogContainer>
          {isPwdCheckerOpen ? (
                <PasswordCheckContainer>
-               <h3>Password must contain the following:</h3>
+               <h3>Password must have:</h3>
                <CheckersWrapper>
-               {isLowerCase ? "✔" : "✖"}<LetterChecker>At least a <b>lowercase</b> letter  </LetterChecker> 
+               {isLowerCase ? "✔ " : "✖ "}<LetterChecker> At least a <b>lowercase</b> letter  </LetterChecker> 
                </CheckersWrapper>
                <CheckersWrapper> 
-               {isUpperCase ? "✔" : "✖"}<LetterChecker>At least an <b>uppercase</b> letter  </LetterChecker> 
+               {isUpperCase ? "✔ " : "✖ "}<LetterChecker> At least an <b>uppercase</b> letter  </LetterChecker> 
                </CheckersWrapper>
                <CheckersWrapper> 
-               {isNumber ? "✔" : "✖"}<LetterChecker> At least a <b>number</b></LetterChecker> 
+               {isNumber ? "✔ " : "✖ "}<LetterChecker> At least a <b>number</b></LetterChecker> 
                </CheckersWrapper>
                <CheckersWrapper>
-               {isLongEnough ? "✔" : "✖"}<LetterChecker> At least <b>8 characters</b>  </LetterChecker>
+               {isLongEnough ? "✔ " : "✖ "}<LetterChecker> At least <b>8 characters</b>  </LetterChecker>
                 </CheckersWrapper>              
             </PasswordCheckContainer>) :
                null}
@@ -71,7 +71,6 @@ export default function () {
 const RegLogWrapper = styled.div`
 ${flexColCenter};
 width:100%;
-background:white;
 margin-top:200px;
 `
 const RegisterForm = styled.form`
@@ -88,18 +87,18 @@ width:100%;
 `
 
 const PasswordCheckContainer = styled.div`
-background:yellow;
+
 width:20%;
 `
 const CheckersWrapper = styled.div`
 ${flexRowCenter};
-background:grey;
+
 `
 const LoginForm = styled.form`
 ${flexColCenter};
 justify-content:flex-start;
 width:20%;
-background:white;
+
 
 
 `

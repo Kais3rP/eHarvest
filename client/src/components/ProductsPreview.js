@@ -30,24 +30,19 @@ const ProductsPreviewWrapper = styled.div`
 ${flexRowCenter};
 align-items: flex-start;
 width:100%;
-background:lavender;
 text-align:center;
-
+margin-top:50px;
 `
 const ProductsLeft = styled.div`
 ${flexColCenter};
 width:50%;
-background:violet;
 text-align:center;
-
-
-
 `
 
 const ProductsRight = styled.div`
 ${flexColCenter};
 width:50%;
-background:blue;
+
 text-align:center;
 
 
@@ -56,7 +51,7 @@ text-align:center;
 const ProductsTitle = styled.div`
 width:100%;
 height:10%;
-background:grey;
+
 
 `
 const PicThumbnailContainer = styled.div`

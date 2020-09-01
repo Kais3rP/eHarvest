@@ -18,14 +18,14 @@ export default function () {
             <MidHeaderContainer>
                 <HeaderLink><Link to="/">HOME</Link></HeaderLink>
                 <HeaderLink><Link to="/full-shop">FULL SHOP</Link></HeaderLink>
-                <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} ><Link to="/">WHAT'S eHARVEST</Link></HeaderLink> </MidHeaderContainer>
+                <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} >WHAT'S eHARVEST</HeaderLink> </MidHeaderContainer>
             <RightHeaderContainer>
-            <LoginContainer>
-            <HeaderLink><Link  to="/login">Sign In / Register</Link></HeaderLink>
-            </LoginContainer>
-                <IconContext.Provider value={{ style:{ 'margin-right':'10px', color:'grey', cursor:'pointer'} }}  >                
+                <LoginContainer>
+                    <HeaderLink><Link to="/login">Sign In / Register</Link></HeaderLink>
+                </LoginContainer>
+                <IconContext.Provider value={{ style: { 'margin-right': '10px', color: 'grey', cursor: 'pointer' } }}  >
                     <FaShoppingCart size={30} onClick={() => { dispatch(toggleCart()) }} />
-                                </IconContext.Provider>
+                </IconContext.Provider>
             </RightHeaderContainer>
         </HeaderWrapper>
 
@@ -39,15 +39,16 @@ height:200px;
 position: fixed;
 top:0;
 left:0;
-background:yellow;
 text-align:center;
 z-index:2;
+background:white;
+box-shadow: 1px 2px 10px 2px grey;
 `
 const LeftHeaderContainer = styled.div`
 ${flexRowStart};
 width:30%;
 height:100%;
-background:violet;
+
 `
 const RightHeaderContainer = styled.div`
 
@@ -55,7 +56,7 @@ ${flexRowCenter}
 justify-content: flex-end;
 width:30%;
 height:100%;
-background:violet;
+
 
 `
 const MidHeaderContainer = styled.div`
@@ -69,6 +70,9 @@ width:40%;
 
 const HeaderLink = styled.div`
 margin:10px;
+color:grey;
+cursor:pointer;
+
 `
 const LoginContainer = styled.div`
 
