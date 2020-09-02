@@ -25,5 +25,12 @@
     "react"
   ],
   "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.10.2",
+    "nodemon": "^2.0.4"
+  },
   "devDependencies": {}
 }
