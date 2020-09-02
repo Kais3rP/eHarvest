@@ -38,7 +38,7 @@ align-items:center;
 
 
 export const Input = styled.input`
-border:none;
+border: 1px solid grey;
 border-radius:5px;
 padding:10px;
 margin:5px;

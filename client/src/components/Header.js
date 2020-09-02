@@ -17,7 +17,7 @@ export default function () {
             <LeftHeaderContainer><Logo /></LeftHeaderContainer>
             <MidHeaderContainer>
                 <HeaderLink><Link to="/">HOME</Link></HeaderLink>
-                <HeaderLink><Link to="/full-shop">FULL SHOP</Link></HeaderLink>
+                <HeaderLink><Link to="/fullshop">FULL SHOP</Link></HeaderLink>
                 <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} >WHAT'S eHARVEST</HeaderLink> </MidHeaderContainer>
             <RightHeaderContainer>
                 <LoginContainer>

@@ -24,15 +24,16 @@ export default function () {
       <RegLogWrapper>
       <RegLogContainer>
          <RegisterForm>
-            <Input placeholder={'Name'} type={'text'} required />
-            <Input placeholder={'Surname'} type={'text'} required />
-            <Input placeholder={'email@example.it'} type={'email'} required />
+            <Input placeholder={'Name'} type={'text'} name="name" required />
+            <Input placeholder={'Surname'} type={'text'} name="surname" required />
+            <Input placeholder={'email@example.it'} type={'email'} name="email" required />
             <Input onChange={(ev) => {
                checkPwd(ev.target.value, setIsLowerCase, setIsUpperCase, setIsNumber, setIsLongEnough);
                setPassword(ev.target.value)}}
              onBlur={() => { setPwdCheckerOpen(false) }} onFocus={() => { setPwdCheckerOpen(true) }} placeholder={'Password'} 
              type={'password'} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
+             name="password"
              required />
             <Input onChange={(ev)=>{
                validatePwd(password, ev.target);
@@ -42,8 +43,8 @@ export default function () {
             <ButtonAlt type='submit'>Register</ButtonAlt>
            </RegisterForm>
          <LoginForm>
-            <Input placeholder={'email@example.it'} type={'email'} required />
-            <Input placeholder={'Password'} type={'password'} required />
+            <Input placeholder={'email@example.it'} type={'email'} name="email" required />
+            <Input placeholder={'Password'} type={'password'} name="password" required />
             <ButtonAlt type='submit'>Log In</ButtonAlt>
          </LoginForm>
          </RegLogContainer>
@@ -71,7 +72,7 @@ export default function () {
 const RegLogWrapper = styled.div`
 ${flexColCenter};
 width:100%;
-margin-top:200px;
+margin-top:300px;
 `
 const RegisterForm = styled.form`
 ${flexColCenter};

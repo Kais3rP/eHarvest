@@ -1,0 +1,29 @@
+{
+  "name": "e-harvest",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "start": "node server",
+    "build": "cd client/ && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kais3rP/eHarvest-FrontEnd.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Kais3rP/eHarvest-FrontEnd/issues"
+  },
+  "homepage": "https://github.com/Kais3rP/eHarvest-FrontEnd#readme",
+  "keywords": [
+    "node",
+    "heroku",
+    "create-react-app",
+    "react"
+  ],
+  "license": "MIT",
+  "devDependencies": {}
+}

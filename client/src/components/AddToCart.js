@@ -8,14 +8,13 @@ import { IconContext } from "react-icons";
 
 
 export default function ({ item }) {
-    const cart = useSelector(state => state.shop.cart);
     const isCartOpen = useSelector(state => state.shop.isCartOpen)
     const dispatch = useDispatch();
     return (
         <ButtonItem onClick={() => {
             dispatch(addToCart(item));
-            dispatch(calculateTotalPrice(item.price))
-            if (!isCartOpen) dispatch(toggleCart())
+            dispatch(calculateTotalPrice(item.price));
+            if (!isCartOpen) dispatch(toggleCart());
         }}>
             <IconContainer>
                 <IconContext.Provider value={{ style: { display: 'inline', color: 'grey', cursor: 'pointer' } }}  >
@@ -32,6 +31,7 @@ const ButtonItem = styled(Button)`
 ${flexRowCenter};
 justify-content:flex-start;
 height:10%;
+width:100%;
 `
 const Title = styled(Header5)`
 width:90%;`

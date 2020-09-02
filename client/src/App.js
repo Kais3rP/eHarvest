@@ -11,6 +11,7 @@ import Header from './components/Header';
 import MidSection from './components/MidSection';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import FullShop from './components/FullShop';
 import Login from './components/Login';
 import HeaderModal from './components/HeaderModal';
 import HowItWorks from './components/HowItWorks';
@@ -18,7 +19,7 @@ import Feedbacks from './components/Feedbacks';
 import Sell from './components/Sell';
 import Faq from './components/Faq';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchOfferItems, fetchMostSoldItems, closeHeaderModal } from './slices/shopSlice';
+import { fetchItems, closeHeaderModal } from './slices/shopSlice';
 import { useEffect } from 'react';
 
 
@@ -29,9 +30,8 @@ export default function () {
     const isHeaderModalOpen = useSelector(state => state.shop.isHeaderModalOpen);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchOfferItems());
-        dispatch(fetchMostSoldItems());
-    }, [])
+        dispatch(fetchItems());
+    }, [dispatch])
     return (
         <Router>
             <AppWrapper>
@@ -40,6 +40,9 @@ export default function () {
                 {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-200px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
+                <Route path="/fullshop" >
+                        <FullShop />
+                    </Route>
                     <Route path="/login" >
                         <Login />
                     </Route>

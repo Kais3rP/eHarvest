@@ -1,5 +1,5 @@
 import React,  { useEffect }  from 'react';
-import { flexColSpace, flexRowCenter } from '../styled-components/globalStyles';
+import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +12,62 @@ export default function () {
    
     const dispatch = useDispatch();
  
-    return (<div></div>);
+    return (<SellFormWrapper>
+    <AddProductForm action='/api/add-product' method='post'>
+    <OptionsMenu name='productName'>
+    <optgroup label='Fruit'></optgroup>
+        <Option value='Oranges'>Oranges</Option>
+        <Option value='Apples'>Apples</Option>
+        <Option value='Bananas'>Bananas</Option>
+        <Option value='Kiwis'>Kiwis</Option>
+        <Option value='Lemons'>Lemons</Option>
+        <Option value='Peaches'>Peaches</Option>
+        <Option value='Pomegranates'>Pomegranates</Option>
+        <Option value='Strawberries'>Strawberries</Option>
+        <Option value='Watermelons'Watermelons></Option>
+        <optgroup label='Vegetables'></optgroup>
+        <Option value='Broccoli'>Broccoli</Option>
+        <Option value='Cabbages'>Cabbages</Option>
+        <Option value='Carrots'>Carrots</Option>
+        <Option value='Cauliflowers'>Cauliflowers</Option>
+        <Option value='Corn'>Corn</Option>
+        <Option value='Cucumbers'>Cucumbers</Option>
+        <Option value='Eggplant'>Eggplant</Option>
+        <Option value='Potatoes'>Potatoes</Option>
+        <Option value='Pumpkins'>Pumpkins</Option>
+        <Option value='Red Chili Peppers'>Red Chili Peppers</Option>
+        <Option value='Red Peppers'>Red Peppers</Option>
+        <Option value='Salad'>Salad</Option>
+        <Option value='Tomatoes'>Tomatoes</Option>
+    </OptionsMenu>
+    <Input placeholder='Name of Seller' name='sellerName'></Input>
+    <Input placeholder='Price in € per Kg' name='price'></Input>
+    <Input placeholder='Amount of Kg available for selling' name='quantityAvailable'></Input>
+    <ButtonAlt type="submit">Register the product!</ButtonAlt>
+    </AddProductForm>
+   </SellFormWrapper>);
         
 }
+
+const SellFormWrapper = styled.div`
+${flexColCenter};
+width:100%;
+margin-top:300px;
+`
+
+const AddProductForm = styled.form`
+${flexColCenter};
+justify-content:flex-start;
+width:20%;
+background:white;
+
+`
+const OptionsMenu = styled.select`
+padding:10px;
+font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive;
+font-weight:bold;
+border-radius: 5px;
+`
+const Option = styled.option`
+
+`
