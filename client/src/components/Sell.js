@@ -1,5 +1,5 @@
 import React,  { useEffect }  from 'react';
-import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter } from '../styled-components/globalStyles';
+import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, TextArea } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,8 +12,8 @@ export default function () {
    
     const dispatch = useDispatch();
  
-    return (<SellFormWrapper>
-    <AddProductForm action='/api/add-product' method='post'>
+    return (<FormWrapper>
+    <Form action='/api/add-product' method='post'>
     <OptionsMenu name='productName'>
     <optgroup label='Fruit'></optgroup>
         <Option value='Oranges'>Oranges</Option>
@@ -43,19 +43,25 @@ export default function () {
     <Input placeholder='Name of Seller' name='sellerName'></Input>
     <Input placeholder='Price in € per Kg' name='price'></Input>
     <Input placeholder='Amount of Kg available for selling' name='quantityAvailable'></Input>
+    <TextAreaForm placeholder={'Insert the description of your product here'} rows={4} onChange={handleAutoResize}></TextAreaForm>
     <ButtonAlt type="submit">Register the product!</ButtonAlt>
-    </AddProductForm>
-   </SellFormWrapper>);
+    </Form>
+   </FormWrapper>);
         
 }
 
-const SellFormWrapper = styled.div`
+function handleAutoResize (ev) {
+    if (ev.target.scrollHeight > ev.target.clientHeight) {
+       ev.target.rows += 1;
+}
+}
+const FormWrapper = styled.div`
 ${flexColCenter};
 width:100%;
 margin-top:300px;
 `
 
-const AddProductForm = styled.form`
+const Form = styled.form`
 ${flexColCenter};
 justify-content:flex-start;
 width:20%;
@@ -70,4 +76,7 @@ border-radius: 5px;
 `
 const Option = styled.option`
 
+`
+const TextAreaForm = styled(TextArea)`
+width:100%;
 `
