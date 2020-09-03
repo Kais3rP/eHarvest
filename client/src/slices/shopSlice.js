@@ -12,21 +12,35 @@ export const shopSlice = createSlice({
     cart: [],
     totalPrice: 0,
     offersItems: [],
-    mostSoldItems:[],
-    vegetables:[],
-    fruit:[]
+    mostSoldItems: [],
+    vegetables: [],
+    fruit: []
   },
   reducers: {
     addToCart: (state, action) => {
-      console.log(action.payload)
       for (let item of state.cart) {
-        if (item.productName === action.payload.productName) {
+        if (item.productName === action.payload.productName && item.sellerName === action.payload.sellerName) {
           item.quantityInCart += 1;
-          console.log(item.quantityInCart)
           return;
         }
       }
       state.cart.push(action.payload)
+    },
+    increaseCart: (state, action) => {
+      for (let item of state.cart) {
+        if (item.productName === action.payload.productName && item.sellerName === action.payload.sellerName) {
+          item.quantityInCart += 1;
+        }
+      }
+    },
+    decreaseCart: (state, action) => {
+      
+      for (let item of state.cart) {
+        if (item.productName === action.payload.productName && item.sellerName === action.payload.sellerName) {
+          if (item.quantityInCart === 0) return;
+          item.quantityInCart -= 1;
+        }
+      }
     },
     resetCart: (state, action) => {
       state.cart = [];
@@ -54,12 +68,28 @@ export const shopSlice = createSlice({
       state.fruit = action.payload;
     },
     calculateTotalPrice: (state, action) => {
-      state.totalPrice += action.payload
+      let total = 0;
+      for (let item of state.cart) {
+      total+=item.price*item.quantityInCart
+      
+      };
+      state.totalPrice = total;
     }
   }
 });
 
-export const { addToCart, resetCart, toggleCart, fetchOffers, fetchMostSold, calculateTotalPrice, openHeaderModal, closeHeaderModal, fetchVegs, fetchFruit } = shopSlice.actions;
+export const {  addToCart,
+                resetCart,
+                toggleCart,
+                fetchOffers,
+                fetchMostSold,
+                calculateTotalPrice,
+                openHeaderModal,
+                closeHeaderModal,
+                fetchVegs,
+                fetchFruit,
+                increaseCart,
+                decreaseCart } = shopSlice.actions;
 
 //Thunks
 export const fetchItems = () => async dispatch => {
@@ -83,18 +113,22 @@ export const fetchItems = () => async dispatch => {
   dispatch(fetchFruit(fruit));
 
 };
+
+export const fetchLogin = () => async dispatch => {
+
+}
 ///Helper functions:
-function findTenMostSold(arr){
-  return arr.sort((a,b)=> b.sold - a.sold)
-               .slice(0,10)
- }
+function findTenMostSold(arr) {
+  return arr.sort((a, b) => b.sold - a.sold)
+    .slice(0, 10)
+}
 
 
- function findTenCheapest(arr){
+function findTenCheapest(arr) {
 
-  return arr.sort((a,b)=> a.price - b.price)
-                      .slice(0,10)   
- }
+  return arr.sort((a, b) => a.price - b.price)
+    .slice(0, 10)
+}
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

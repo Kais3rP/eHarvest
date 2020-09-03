@@ -113,6 +113,7 @@ export const Header3 = styled.h3`
 margin-bottom: 0em;
  margin-top: 0em;
 color:grey;
+z-index:1;
 `
 export const Header5 = styled.h5`
 margin-bottom: 0em;

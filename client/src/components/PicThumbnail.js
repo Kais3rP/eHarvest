@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexColSpace, flexColCenter, flexRowCenter, Header1, Header2, Header3, Header5 } from '../styled-components/globalStyles';
 import AddToCart from './AddToCart';
+import circle from '../img/circle.svg'
 
 
 export default function ({ item }) {
@@ -9,6 +10,7 @@ export default function ({ item }) {
   let mimeType = "image/png";
   return (
     <ThumbnailContainer>
+      <Circle src={circle}></Circle>
       <PicContainer>
         <Pic src={`data:${mimeType};base64,${item.pic}`} />
       </PicContainer>
@@ -28,6 +30,7 @@ export default function ({ item }) {
 }
 
 const ThumbnailContainer = styled.div`
+position:relative;
 ${flexColSpace};
 width:25%;
 min-width:100px;
@@ -50,6 +53,7 @@ height:60%;
 `
 const Pic = styled.img`
 height:60%;
+z-index:1;
 `
 
 const ItemPrice = styled.div`
@@ -57,5 +61,11 @@ width:100%;
 height:10%;
 background:white;
 
+
+`
+
+const Circle = styled.img`
+position:absolute;
+z-index:0;
 
 `

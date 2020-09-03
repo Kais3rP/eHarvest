@@ -13,7 +13,7 @@ export default function ({ item }) {
     return (
         <ButtonItem onClick={() => {
             dispatch(addToCart(item));
-            dispatch(calculateTotalPrice(item.price));
+            dispatch(calculateTotalPrice());
             if (!isCartOpen) dispatch(toggleCart());
         }}>
             <IconContainer>

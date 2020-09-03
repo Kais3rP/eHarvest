@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter, ButtonAlt, Header3, Input } from '../styled-components/globalStyles';
+import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter, ButtonAlt, Header1, Header3, Header5, Input } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetCart, toggleCart } from '../slices/shopSlice';
+import { resetCart, toggleCart, increaseCart, decreaseCart, calculateTotalPrice } from '../slices/shopSlice';
 
 
 export default function ({ position }) {
@@ -18,16 +18,27 @@ export default function ({ position }) {
                 <CloseCartButton onClick={() => { dispatch(toggleCart()) }}>&times;</CloseCartButton>
             </ControlCart>
             <TotalPriceContainer>
-               <Header3> TOTAL TO PAY: {totalPrice.toFixed(2)}€</Header3>
-        </TotalPriceContainer>
+                <Header3> TOTAL TO PAY: {totalPrice.toFixed(2)}€</Header3>
+            </TotalPriceContainer>
             <ThumbnailsWrapper>
-           
-                {cart.map((item, i) => (<ThumbnailProductContainer> <ProductPic key={i} id={item.id} src={`data:${mimeType};base64,${item.pic}`}></ProductPic><ProductQuantity value={`${item.quantityInCart}Kg`} readOnly={true}></ProductQuantity></ThumbnailProductContainer>))}
-                
+                {cart.map((item, i) => (<ThumbnailProductContainer>
+                    <ProductPic key={i} id={item.productName} src={`data:${mimeType};base64,${item.pic}`}></ProductPic>
+                    <Header3>{item.productName}</Header3>
+                    <Header5>from </Header5>
+                    <Header3>{item.sellerName}</Header3>
+                    <Decrease onClick={() => {
+                        dispatch(decreaseCart(item));
+                        dispatch(calculateTotalPrice());
+                    }}>-</Decrease>
+                    <ProductQuantity >{item.quantityInCart}Kg</ProductQuantity>
+                    <Increase onClick={() => {
+                        dispatch(increaseCart(item));
+                        dispatch(calculateTotalPrice());
+                    }}>+</Increase>
+                </ThumbnailProductContainer>))}
             </ThumbnailsWrapper>
-           
         </CartWrapper>
-  )
+    )
 }
 
 const CartWrapper = styled.div`
@@ -39,10 +50,10 @@ ${flexColCenter};
 justify-content:flex-start;
 margin-top:200px;
 transition: right 0.5s ease-in;
-z-index:1;
+z-index:2;
 overflow-y: scroll;
 background:white;
-box-shadow: 1px 2px 10px 2px grey;
+box-shadow: 0px 2px 10px 2px grey;
 `
 
 const ControlCart = styled.div`
@@ -80,11 +91,13 @@ const ProductPic = styled.img`
 height:100%;
 
 `
-const ProductQuantity = styled(Input)`
-width:30%;
+const ProductQuantity = styled.div`
+${flexRowCenter};
+width:10%;
 height:100%;
-border:none;
-font-size:30px;
+font-size:25px;
+margin-right:10px;
+margin-left:10px
 
 `
 const CloseCartButton = styled.div`
@@ -96,4 +109,13 @@ const TotalPriceContainer = styled.div`
 display:block;
 width:98%;
 height:5%;
+`
+const Increase = styled(Header1)`
+
+cursor:pointer;
+`
+
+const Decrease = styled(Header1)`
+
+cursor:pointer;
 `
