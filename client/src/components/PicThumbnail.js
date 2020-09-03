@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexColSpace, flexRowCenter, Header3 } from '../styled-components/globalStyles';
+import { flexColSpace, flexColCenter, flexRowCenter, Header1, Header2, Header3, Header5 } from '../styled-components/globalStyles';
 import AddToCart from './AddToCart';
 
 
@@ -8,21 +8,26 @@ export default function ({ item }) {
 
   let mimeType = "image/png";
   return (
- <ThumbnailOfferContainer>
-        <PicContainer>
-          <Pic src={`data:${mimeType};base64,${item.pic}`} />
-        </PicContainer>
-        <Header3>
-        {item.id}
-        </Header3>
-        <ItemPrice>{item.price}€/Kg</ItemPrice>
-        <AddToCart item={item} />
-      </ThumbnailOfferContainer>)
-   
-  
+    <ThumbnailContainer>
+      <PicContainer>
+        <Pic src={`data:${mimeType};base64,${item.pic}`} />
+      </PicContainer>
+      
+      <Header3>
+        {item.productName}
+      </Header3>
+      <Header5>Grown by: </Header5>
+        <Header3>{item.sellerName}</Header3>
+     
+      <Header2>{item.price}€/Kg</Header2>
+     
+      <AddToCart item={item} />
+    </ThumbnailContainer>)
+
+
 }
 
-const ThumbnailOfferContainer = styled.div`
+const ThumbnailContainer = styled.div`
 ${flexColSpace};
 width:25%;
 min-width:100px;

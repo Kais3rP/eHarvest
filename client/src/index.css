@@ -24,6 +24,22 @@ a{
   text-decoration:none;
   color:grey;
 }
+a:hover{
+  color:rgb(65, 65, 65);
+}
+a:hover::after {
+  width:100%;
+}
+a::after{
+  content: '';
+    width: 0px;
+    height: 1px;
+    display: block;
+    background: rgb(65, 65, 65);
+    transition: all 200ms;
+}
+
+p {margin-bottom: 0em; margin-top: 0em;} /* deletes auto margins from p elements */
 /*Testing layout
 *{
   background: #000 !important;

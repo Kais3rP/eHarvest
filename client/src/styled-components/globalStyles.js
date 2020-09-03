@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+
+
 export const flexRowCenter = css`
 display:flex;
 justify-content: center;
@@ -97,12 +99,27 @@ color:red;
 export const ValidHeader = styled.h3`
 color:green;
 `
-
-export const Header3 = styled.h3`
+export const Header1 = styled.h1`
+margin-bottom: 0em;
+ margin-top: 0em;
 color:grey;
-margin:10px;
+`
+export const Header2 = styled.h2`
+margin-bottom: 0em;
+ margin-top: 0em;
+color:grey;
+`
+export const Header3 = styled.h3`
+margin-bottom: 0em;
+ margin-top: 0em;
+color:grey;
 `
 export const Header5 = styled.h5`
+margin-bottom: 0em;
+ margin-top: 0em;
 color:grey;
-margin:10px;
+`
+
+export const TextArea = styled.textarea`
+
 `

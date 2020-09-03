@@ -33,7 +33,6 @@ export default function () {
 
 const FullShopWrapper = styled.div`
 ${flexRowCenter};
-flex-wrap:wrap;
 width:100%;
 margin-top:300px;
 `
