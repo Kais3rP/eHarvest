@@ -32,7 +32,7 @@ padding:20px;
 background:white;
 transition:top 0.4s ease-in;
 box-shadow:1px 1px 10px 2px grey;
-
+z-index:3;
 
 `
 const ModalWrapper = styled.div`
