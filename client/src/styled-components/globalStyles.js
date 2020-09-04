@@ -40,14 +40,17 @@ align-items:center;
 
 
 export const Input = styled.input`
-border: 1px solid grey;
-border-radius:5px;
+border: none;
 padding:10px;
 margin:5px;
 font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     font-weight:600;
+    border-radius: 5px;
+background: #ffffff;
+box-shadow: inset 5px 5px 10px #d9d9d9, 
+            inset -5px -5px 10px #ffffff;
 `
 export const Button = styled.button`
 width:100%;
@@ -128,12 +131,30 @@ color:grey;
 export const TextArea = styled.textarea`
 overflow:hidden;
   resize:none;
-  border: 1px solid grey;
-border-radius:5px;
+  border: none;
 padding:10px;
 margin:5px;
 font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     font-weight:600;
+    border-radius: 5px;
+background: #ffffff;
+box-shadow: inset 5px 5px 10px #d9d9d9, 
+            inset -5px -5px 10px #ffffff;
+`
+
+export const Select = styled.select`
+color:inherit;
+border:none;
+padding:10px;
+font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-weight:600;
+border-radius: 5px;
+margin:5px;
+background: #ffffff;
+box-shadow: inset 5px 5px 10px #d9d9d9, 
+            inset -5px -5px 10px #ffffff;
 `

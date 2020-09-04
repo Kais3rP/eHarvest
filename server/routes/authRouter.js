@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     } catch {
         console.log('Error retrieving User from DB')
     }
-    if (userEmail) return res.status(400).send({ error: "E-mail already registered", isRegisterOk: false });
+    if (userEmail) return res.status(400).send({ error: "E-mail already registered", isOk: false });
     let hashedPwd = bcrypt.hashSync(req.body.password, 8); //crpyting pwd
     let newUser = new User({ name, surname, email, password: hashedPwd });
     try {
@@ -24,15 +24,21 @@ router.post('/register', async (req, res) => {
     } catch {
         console.log('Error during DB saving attempt of new user')
     }
-    res.send({ isRegisterOk: true })
+    res.send({ isOk: true })
 })
 
 
 
 router.post('/login', passport.authenticate('local', { failureRedirect: "/" }), (req, res) => {
     console.log(req.body);
-res.status(200).send({ isLoginOk: true });
-})
+res.status(200).send({ isOk: true, user: req.body.email });
+});
+
+router.get('/logout', function(req, res){
+    console.log("Logout attempt");
+    req.logout();
+    res.status(200).send({isOk:true})
+  });
 
 
 module.exports = router;

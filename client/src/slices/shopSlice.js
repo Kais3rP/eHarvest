@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-const itemsURL = '/products/get-product'; //Alternative '/products/get-products'  uses the base64 pics
+const itemsURL = '/products/get-products'; //Alternative '/products/get-products'  uses the base64 pics
 
 
 export const shopSlice = createSlice({
@@ -12,7 +12,8 @@ export const shopSlice = createSlice({
     offersItems: [],
     mostSoldItems: [],
     vegetables: [],
-    fruit: []
+    fruit: [],
+    isProductRegistrationOk: false
   },
   reducers: {
     addToCart: (state, action) => {
@@ -72,6 +73,9 @@ export const shopSlice = createSlice({
       
       };
       state.totalPrice = total;
+    },
+    setIsProductRegistrationOk : (state, action) => {
+      state.isProductRegistrationOk = action.payload;
     }
   }
 });
@@ -87,7 +91,8 @@ export const {  addToCart,
                 setVegs,
                 setFruit,
                 increaseCart,
-                decreaseCart } = shopSlice.actions;
+                decreaseCart,
+                setIsProductRegistrationOk } = shopSlice.actions;
 
 //Thunks
 export const fetchItems = () => async dispatch => {
@@ -111,8 +116,21 @@ console.log(data)
   dispatch(setFruit(fruit));
 
 };
+export const fetchRegisterProduct = (ev) => async dispatch => {
+  //To pass variables to a thunk you just need to pass it to the first action creator
+   const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
+ let res = await fetch('/products/add-product', {
+       method: 'POST',
+       body:params
+});
+let data = await res.json();
+console.log(data)
+if (data.isOk) {
+    dispatch(setIsProductRegistrationOk(data.isOk));
+   }
+}
+export const addItem = () => async dispatch => { 
 
-export const fetchLogin = () => async dispatch => {
 
 }
 ///Helper functions:

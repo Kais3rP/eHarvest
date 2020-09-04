@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart } from '../styled-components/globalStyles';
-import { useDispatch } from 'react-redux';
+import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart, Header3, ButtonAlt } from '../styled-components/globalStyles';
+import { useSelector, useDispatch } from 'react-redux';
 import { toggleCart, openHeaderModal } from '../slices/shopSlice';
+import { fetchLogout } from '../slices/userSlice';
 import { FaShoppingCart } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import Logo from './Logo';
@@ -11,6 +12,8 @@ import Logo from './Logo';
 
 
 export default function () {
+    const isLoggedIn = useSelector( state => state.user.isLoggedIn);
+    const userLogged = useSelector( state => state.user.userLogged);
     const dispatch = useDispatch();
     return (
         <HeaderWrapper>
@@ -22,7 +25,10 @@ export default function () {
             <RightHeaderContainer>
                 <LoginContainer>
                     <HeaderLink><Link to="/login">Sign In / Register</Link></HeaderLink>
-                </LoginContainer>
+                    <Header3>User:{isLoggedIn ? userLogged : 'Not Logged'}</Header3>
+                    <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt>
+                    </LoginContainer>
+               
                 <IconContext.Provider value={{ style: { 'margin-right': '10px', color: 'grey', cursor: 'pointer' } }}  >
                     <FaShoppingCart size={30} onClick={() => { dispatch(toggleCart()) }} />
                 </IconContext.Provider>

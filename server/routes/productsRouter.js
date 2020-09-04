@@ -13,27 +13,28 @@ const Product = require('../models/Product');
 
 router.post('/add-product', async (req, res, next) => {
   // Here I create the DB instance of the item added using the req queries
-  //let item = new Item({})
+  
+  console.log(req.body)
   try {
-    let product = new Product({ ...req.body, soldNTimes: 2 });
+    let product = new Product({ ...req.body, soldNTimes: 0 });
     let productDB = await product.save();
-    res.status(200).redirect('/');
+    res.status(200).send({isOk:true})
   } catch {
     console.log('Adding product to DB met an error');
-    res.status(400).redirect('/error-page');
+    res.status(400).send({isOk:false, error:'There was an error during the registration of the product'});
   }
 
 })
 
 //Alternative to serve image as a static asset
-router.get('/get-product', async (req, res) => {
+router.get('/get-products', async (req, res) => {
   let products = [];
   try {
     products = await Product.find();
   } catch {
     console.log("Couldn't reach the DB")
   }
-  console.log(products);
+ 
   products = products.map(obj => ({
     type: obj.type,
     productName: obj.productName,
@@ -48,7 +49,7 @@ router.get('/get-product', async (req, res) => {
 });
 
 
-router.get('/get-products', async (req, res) => {
+/*router.get('/get-products', async (req, res) => {
   //Here I make the initial DB call for the items in db
   let products = [];
   try {
@@ -69,7 +70,7 @@ router.get('/get-products', async (req, res) => {
     console.log("Error, some promise did not resolve");
   }
   res.status(200).send(products);
-});
+});*/
 
 
 //-------------------------------------------------------------------------------------------------------
@@ -82,11 +83,13 @@ router.get('/get-products', async (req, res) => {
   let imgPath = type === 'Vegetables' ?
     '/vegs-pics' + '/' + picName + '.png' :
     '/fruit-pics' + '/' + picName + '.png';
-    console.log(imgPath)
+    
   return imgPath;
 }
 
 
+
+//This is an alternative way to serve the image to client as base64 and not as a static asset
 async function addPicToObject(obj) {
 
   let picName = obj.productName.toLowerCase().replace(/\s/g, '_');

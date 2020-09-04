@@ -1,69 +1,123 @@
-import React,  { useEffect, useState }  from 'react';
-import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, TextArea } from '../styled-components/globalStyles';
+import React, { useEffect, useState } from 'react';
+import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, flexRowSpace, TextArea, Select } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import {  } from '../slices/shopSlice';
+import { fetchItems, fetchRegisterProduct, setIsProductRegistrationOk } from '../slices/shopSlice';
+
 
 
 
 
 export default function () {
-   
+
     const dispatch = useDispatch();
+    const isProductRegistrationOk = useSelector( state => state.shop.isProductRegistrationOk);
     const [productType, setProductType] = useState('Fruit');
+    const [lengthOfText, setLengthOfText] = useState(0);
     return (<FormWrapper>
-    <Form action='/products/add-product' method='post'>
-    <OptionsMenu name='type' onChange={(ev)=>{setProductType(ev.target.value)}}>
-        <Option value='Fruit'>Fruit</Option>
-        <Option value='Vegetables' >Vegetables</Option>
-    </OptionsMenu>
-    <OptionsMenu name='productName'>
-    { productType === 'Fruit' ? (
-        <>
-        <optgroup label='Fruit'></optgroup>
-        <Option value='Oranges'>Oranges</Option>
-        <Option value='Apples'>Apples</Option>
-        <Option value='Bananas'>Bananas</Option>
-        <Option value='Kiwis'>Kiwis</Option>
-        <Option value='Lemons'>Lemons</Option>
-        <Option value='Peaches'>Peaches</Option>
-        <Option value='Pomegranates'>Pomegranates</Option>
-        <Option value='Strawberries'>Strawberries</Option>
-        <Option value='Watermelons'Watermelons></Option>
-        </>) : null}
-        { productType === 'Vegetables' ?
-        (<>
-        <optgroup label='Vegetables'></optgroup>
-        <Option value='Broccoli'>Broccoli</Option>
-        <Option value='Cabbages'>Cabbages</Option>
-        <Option value='Carrots'>Carrots</Option>
-        <Option value='Cauliflowers'>Cauliflowers</Option>
-        <Option value='Corn'>Corn</Option>
-        <Option value='Cucumbers'>Cucumbers</Option>
-        <Option value='Eggplant'>Eggplant</Option>
-        <Option value='Potatoes'>Potatoes</Option>
-        <Option value='Pumpkins'>Pumpkins</Option>
-        <Option value='Red Chili Peppers'>Red Chili Peppers</Option>
-        <Option value='Red Peppers'>Red Peppers</Option>
-        <Option value='Salad'>Salad</Option>
-        <Option value='Tomatoes'>Tomatoes</Option>
-        </>) : null}
-    </OptionsMenu>
-    <Input placeholder='Name of Seller' name='sellerName'></Input>
-    <Input placeholder='Price in € per Kg' name='price'></Input>
-    <Input placeholder='Amount of Kg available for selling' name='quantityAvailable'></Input>
-    <TextAreaForm placeholder={'Insert the description of your product here'} name='description'rows={4} onChange={handleAutoResize}></TextAreaForm>
-    <ButtonAlt type="submit">Register the product!</ButtonAlt>
-    </Form>
-   </FormWrapper>);
-        
+        <Form onSubmit={(ev) => {
+            ev.preventDefault();
+            dispatch(fetchRegisterProduct(ev));
+            dispatch(fetchItems());
+            setTimeout(()=>{ dispatch(setIsProductRegistrationOk(false))},5000)//Refetch the new products with the one just added
+        }} >
+            <FormElementWrapper>
+                <OptionsMenu name='type' onChange={(ev) => { setProductType(ev.target.value) }} required>
+                    <Option value='Fruit'>Fruit</Option>
+                    <Option value='Vegetables' >Vegetables</Option>
+                </OptionsMenu>
+                <Label>Pick the type</Label>
+            </FormElementWrapper>
+            <FormElementWrapper>
+                <OptionsMenu name='productName' required>
+                    {productType === 'Fruit' ? (
+                        <>
+                            <optgroup label='Fruit'></optgroup>
+                            <Option value='Oranges'>Oranges</Option>
+                            <Option value='Apples'>Apples</Option>
+                            <Option value='Bananas'>Bananas</Option>
+                            <Option value='Kiwis'>Kiwis</Option>
+                            <Option value='Lemons'>Lemons</Option>
+                            <Option value='Peaches'>Peaches</Option>
+                            <Option value='Pomegranates'>Pomegranates</Option>
+                            <Option value='Strawberries'>Strawberries</Option>
+                            <Option value='Watermelons' Watermelons></Option>
+                        </>) : null}
+                    {productType === 'Vegetables' ?
+                        (<>
+                            <optgroup label='Vegetables'></optgroup>
+                            <Option value='Broccoli'>Broccoli</Option>
+                            <Option value='Cabbages'>Cabbages</Option>
+                            <Option value='Carrots'>Carrots</Option>
+                            <Option value='Cauliflowers'>Cauliflowers</Option>
+                            <Option value='Corn'>Corn</Option>
+                            <Option value='Cucumbers'>Cucumbers</Option>
+                            <Option value='Eggplant'>Eggplant</Option>
+                            <Option value='Potatoes'>Potatoes</Option>
+                            <Option value='Pumpkins'>Pumpkins</Option>
+                            <Option value='Red Chili Peppers'>Red Chili Peppers</Option>
+                            <Option value='Red Peppers'>Red Peppers</Option>
+                            <Option value='Salad'>Salad</Option>
+                            <Option value='Tomatoes'>Tomatoes</Option>
+                        </>) : null}
+                </OptionsMenu>
+                <Label>Pick The Name Of Your Product</Label>
+            </FormElementWrapper>
+            <FormElementWrapper>
+                <FormInput type='email' placeholder='PayPal e-mail to receive the payment' name='paypalEmail' required></FormInput>
+                <Label>Type your PayPal e-mail here to receive the payments</Label>
+            </FormElementWrapper>
+            <FormElementWrapper>
+                <FormInput type='text' pattern='[\w\s]{4,}' placeholder='Name of Seller' name='sellerName' required></FormInput>
+                <Label>Type your name here</Label>
+            </FormElementWrapper>
+            <FormElementWrapper>
+                <FormInput type='text' pattern='\d+.\d\d' placeholder='Price in € per Kg' name='price' required></FormInput>
+                <Label>Type the price of your product eg. 1.50</Label>
+            </FormElementWrapper>
+            <FormElementWrapper>
+                <FormInput type='text' pattern='\d{1,3}' placeholder='Amount of Kg available for selling' name='quantityAvailable' required></FormInput>
+                <Label>Type the amount of Kg of the product you have now readily available to sell</Label>
+            </FormElementWrapper>
+            <FormElementWrapper>
+                <TextAreaForm
+                    type='text'
+                    placeholder={'Insert the description of your product here'}
+                    name='description' rows={4}
+                    onChange={(ev) => {
+                        validateTextArea(ev);
+                        handleAutoResize(ev);
+                        setLengthOfText(ev.target.value.length);
+                    }}
+                    required></TextAreaForm>
+                <Label>{`Actual: ${lengthOfText}. `}Type here the description of your product min. 100, max. 500 characters</Label>
+               
+            </FormElementWrapper>
+
+
+            <ButtonAlt type="submit">Register the product!</ButtonAlt>
+        </Form>
+        {isProductRegistrationOk ? <div>Product Successfully Registered</div> : null}
+    </FormWrapper>);
+
 }
 
-function handleAutoResize (ev) {
-    if (ev.target.scrollHeight > ev.target.clientHeight) {
-       ev.target.rows += 1;
+//Logic and Helper functions
+function validateTextArea(ev) {
+    
+    if (ev.target.value.length < 100 || ev.target.value.length > 500)
+        ev.target.setCustomValidity("Wrong length of text"); //Adds a custom html validity check
+    else ev.target.setCustomValidity("");//Removes the custom validity check
 }
+//Resize textarea
+function handleAutoResize(ev) {
+    if (ev.target.scrollHeight > ev.target.clientHeight) {
+        ev.target.rows += 1;
+    }
+
+
+
 }
 const FormWrapper = styled.div`
 ${flexColCenter};
@@ -74,19 +128,32 @@ margin-top:300px;
 const Form = styled.form`
 ${flexColCenter};
 justify-content:flex-start;
-width:20%;
-background:white;
-
+width:60%;
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+box-shadow:  5px 5px 13px #6b6b6b, 
+             -5px -5px 13px #ffffff;
+             padding:20px;
 `
-const OptionsMenu = styled.select`
-padding:10px;
-font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive;
-font-weight:bold;
-border-radius: 5px;
+const FormElementWrapper = styled.div`
+${flexRowSpace};
+width:100%;
+`
+const OptionsMenu = styled(Select)`
+width:50%;
+
 `
 const Option = styled.option`
 
 `
+const FormInput = styled(Input)`
+width:50%;
+`
 const TextAreaForm = styled(TextArea)`
-width:100%;
+width:50%;
+
+`
+
+const Label = styled.label`
+font-size:14px;
+width:50%;
 `
