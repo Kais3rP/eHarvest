@@ -19,7 +19,8 @@ export default function ({ item }) {
             <IconContainer>
                 <IconContext.Provider value={{ style: { display: 'inline', color: 'grey', cursor: 'pointer' } }}  >
                     <FaShoppingCart size={20} />
-                </IconContext.Provider>  </IconContainer>
+                </IconContext.Provider>
+            </IconContainer>
             <Title>Add To Cart</Title>
         </ButtonItem>
 
@@ -32,11 +33,19 @@ ${flexRowCenter};
 justify-content:flex-start;
 height:10%;
 width:100%;
+border-bottom-left-radius:50px;
+border-bottom-right-radius:50px;
+
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+box-shadow:  5px 5px 13px #6b6b6b, 
+             -5px -5px 13px #ffffff;
 `
 const Title = styled(Header5)`
 width:90%;`
+
 const IconContainer = styled.div`
 ${flexRowCenter};
 justify-content:flex-start;
 width:10%;
+margin-left:5px;
 `

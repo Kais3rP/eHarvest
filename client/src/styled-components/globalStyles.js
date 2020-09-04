@@ -60,13 +60,17 @@ font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI'
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     font-weight:600;
-    box-shadow:1px 1px 10px 2px grey;
+    box-shadow: 
+    12px 12px 16px 0 rgba(0, 0, 0, 0.25),
+    -8px -8px 12px 0 rgba(255, 255, 255, 0.3);
 &:hover{
-    box-shadow:2px 2px 10px 4px grey;
+    
     
 };
 &:active{
-   background:rgb(208, 208, 247);
+    background: #ffffff;
+box-shadow: inset 5px 0px 13px #6b6b6b, 
+            inset -5px 0px 13px #ffffff;
 }
 `
 export const ButtonAlt = styled.button`

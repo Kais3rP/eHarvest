@@ -40,7 +40,7 @@ position: fixed;
 top:0;
 left:0;
 text-align:center;
-z-index:3;
+z-index:4;
 background:white;
 box-shadow: 1px 2px 10px 2px grey;
 `

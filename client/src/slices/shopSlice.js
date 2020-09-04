@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-const itemsURL = '/api/products';
-/*const mostSoldURL = '/api/mostsold';
-const vegsURL = '/api/vegs';
-const fruitURL = '/api/fruit';*/
+const itemsURL = '/products/get-products';
+
 
 export const shopSlice = createSlice({
   name: 'shop',

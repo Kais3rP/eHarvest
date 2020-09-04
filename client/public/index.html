@@ -16,5 +16,28 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAi5BkYfcfjcLwDwXQzH11mbWOnjj-a5E8",
+    authDomain: "eharvest-9020a.firebaseapp.com",
+    databaseURL: "https://eharvest-9020a.firebaseio.com",
+    projectId: "eharvest-9020a",
+    storageBucket: "eharvest-9020a.appspot.com",
+    messagingSenderId: "755032549399",
+    appId: "1:755032549399:web:343d04fdb094f9eddf5452",
+    measurementId: "G-TQQQDBQ78T"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
   </body>
 </html>

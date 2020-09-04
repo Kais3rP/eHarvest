@@ -23,7 +23,7 @@ export default function () {
    return (
       <RegLogWrapper>
       <RegLogContainer>
-         <RegisterForm>
+         <RegisterForm action={'/auth/register'} method={'POST'}>
             <Input placeholder={'Name'} type={'text'} name="name" required />
             <Input placeholder={'Surname'} type={'text'} name="surname" required />
             <Input placeholder={'email@example.it'} type={'email'} name="email" required />
@@ -42,7 +42,7 @@ export default function () {
            {passwordConfirm ? password === passwordConfirm ? <ValidHeader>✔ Passwords Match</ValidHeader> : <InvalidHeader>✖ Password don't match</InvalidHeader> : null}
             <ButtonAlt type='submit'>Register</ButtonAlt>
            </RegisterForm>
-         <LoginForm>
+         <LoginForm action={'/auth/login'} method={'POST'}>
             <Input placeholder={'email@example.it'} type={'email'} name="email" required />
             <Input placeholder={'Password'} type={'password'} name="password" required />
             <ButtonAlt type='submit'>Log In</ButtonAlt>

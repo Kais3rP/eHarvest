@@ -14,7 +14,7 @@ export default function ({ item }) {
       <PicContainer>
         <Pic src={`data:${mimeType};base64,${item.pic}`} />
       </PicContainer>
-      
+      <InfoContainer>
       <Header3>
         {item.productName}
       </Header3>
@@ -23,6 +23,8 @@ export default function ({ item }) {
      
       <Header2>{item.price}€/Kg</Header2>
      
+      
+      </InfoContainer>
       <AddToCart item={item} />
     </ThumbnailContainer>)
 
@@ -33,13 +35,20 @@ const ThumbnailContainer = styled.div`
 position:relative;
 ${flexColSpace};
 width:25%;
-min-width:100px;
+min-width:170px;
 height:350px;
 text-align:center;
 margin:5px;
-
 background:white;
-box-shadow: 1px 2px 10px 2px grey;
+
+
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+box-shadow:  5px 5px 13px #6b6b6b, 
+             -5px -5px 13px #ffffff;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
 &:hover{
   box-shadow: 2px 3px 10px 5px grey;
 }
@@ -48,11 +57,21 @@ box-shadow: 1px 2px 10px 2px grey;
 const PicContainer = styled.div`
 ${flexRowCenter};
 width:100%;
-height:60%;
+height:50%;
+
+
+
+`
+
+const InfoContainer = styled.div`
+${flexColSpace};
+width:100%;
+height:40%;
+
 
 `
 const Pic = styled.img`
-height:60%;
+height:100px;
 z-index:1;
 `
 
