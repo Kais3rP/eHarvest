@@ -22,7 +22,7 @@ export default function ({ position }) {
             </TotalPriceContainer>
             <ThumbnailsWrapper>
                 {cart.map((item, i) => (<ThumbnailProductContainer>
-                    <ProductPic key={i} id={item.productName} src={`data:${mimeType};base64,${item.pic}`}></ProductPic>
+                    <ProductPic key={i} id={item.productName} src={item.pic}></ProductPic>
                     <Header3>{item.productName}</Header3>
                     <Header5>from </Header5>
                     <Header3>{item.sellerName}</Header3>

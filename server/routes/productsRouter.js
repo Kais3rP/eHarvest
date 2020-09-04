@@ -25,6 +25,29 @@ router.post('/add-product', async (req, res, next) => {
 
 })
 
+//Alternative to serve image as a static asset
+router.get('/get-product', async (req, res) => {
+  let products = [];
+  try {
+    products = await Product.find();
+  } catch {
+    console.log("Couldn't reach the DB")
+  }
+  console.log(products);
+  products = products.map(obj => ({
+    type: obj.type,
+    productName: obj.productName,
+    sellerName: obj.sellerName,
+    price: obj.price,
+    quantityAvailable: obj.quantityAvailable,
+    soldNTimes: obj.soldNTimes,
+    pic: lookForImagePath(obj),
+    description: obj.description
+  }))
+  res.status(200).send(products);
+});
+
+
 router.get('/get-products', async (req, res) => {
   //Here I make the initial DB call for the items in db
   let products = [];
@@ -52,41 +75,70 @@ router.get('/get-products', async (req, res) => {
 //-------------------------------------------------------------------------------------------------------
 //------ Logic Functions  -----------------------------------------------------------------------------
 
+ function lookForImagePath(obj) {
+  let picName = obj.productName.toLowerCase().replace(/\s/g, '_');
+  let fileNames = [];
+  let type = obj.type;
+  let imgPath = type === 'Vegetables' ?
+    '/vegs-pics' + '/' + picName + '.png' :
+    '/fruit-pics' + '/' + picName + '.png';
+    console.log(imgPath)
+  return imgPath;
+}
+
 
 async function addPicToObject(obj) {
 
   let picName = obj.productName.toLowerCase().replace(/\s/g, '_');
   let fileNames = [];
   let picB64 = '';
-  let type = '';
-  try {
-    vegsFileNames = await readDir(path.resolve(__dirname, '../models/vegs-pics'));
-    fruitFileNames = await readDir(path.resolve(__dirname, '../models/fruit-pics'));
-  } catch {
-    console.log("Error, couldn't read the full directory");
+  let type = obj.type;
+  if (type === 'Vegetables') type = 'vegs';
+  if (type === 'Fruit') type = 'fruit';
+  switch (type) {
+    case 'vegs': {
+      try {
+        vegsFileNames = await readDir(path.resolve(__dirname, '../public/vegs-pics'));
+      } catch {
+        console.log("Error, couldn't read the full directory");
+      }
+      vegsFileId = vegsFileNames.map(x => convertIdNames(x));
+      if (vegsFileId.includes(picName)) {
+        let filePath = path.resolve(__dirname, '../public/vegs-pics') + '/' + picName + '.png';
+        try {
+          picB64 = await readFile(filePath, 'base64');
+        } catch {
+          console.log("Error, couldn't read the image file");
+        }
+      } else console.log(picName, 'Not found');
+    };
+      break;
+    case 'fruit': {
+      try {
+        fruitFileNames = await readDir(path.resolve(__dirname, '../public/fruit-pics'));
+      } catch {
+        console.log("Error, couldn't read the full directory");
+      }
+      fruitFileId = fruitFileNames.map(x => convertIdNames(x));
+      if (fruitFileId.includes(picName)) {
+        let filePath = path.resolve(__dirname, '../public/vegs-pics') + '/' + picName + '.png';
+        try {
+          picB64 = await readFile(filePath, 'base64');
+        } catch {
+          console.log("Error, couldn't read the image file");
+        }
+      } else console.log(picName, 'Not found')
+    };
+      break;
   }
-  vegsFileId = vegsFileNames.map(x => convertIdNames(x));
-  fruitFileId = fruitFileNames.map(x => convertIdNames(x));
-  if (vegsFileId.includes(picName)) {
-    type = 'vegetables';
-    let filePath = path.resolve(__dirname, '../models/vegs-pics') + '/' + picName + '.png';
-    try {
-      picB64 = await readFile(filePath, 'base64');
-    } catch {
-      console.log("Error, couldn't read the image file");
-    }
-  } else if (fruitFileId.includes(picName)) {
-    type = 'fruit';
-    let filePath = path.resolve(__dirname, '../models/fruit-pics') + '/' + picName + '.png';
-    try {
-      picB64 = await readFile(filePath, 'base64');
-    } catch {
-      console.log("Error, couldn't read the image file");
-    }
-  } else console.log(picName, 'Not found')
-  let result = { type: type, productName: obj.productName, sellerName: obj.sellerName, price: obj.price, quantityAvailable: obj.quantityAvailable, soldNTimes: obj.soldNTimes, pic: picB64, description: obj.description };
+  let result = { type: obj.type, productName: obj.productName, sellerName: obj.sellerName, price: obj.price, quantityAvailable: obj.quantityAvailable, soldNTimes: obj.soldNTimes, pic: picB64, description: obj.description };
   return result;
 }
+
+
+
+
+
 
 
 module.exports = router;

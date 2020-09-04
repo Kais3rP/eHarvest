@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-const itemsURL = '/products/get-products';
+const itemsURL = '/products/get-product'; //Alternative '/products/get-products'  uses the base64 pics
 
 
 export const shopSlice = createSlice({
@@ -53,16 +53,16 @@ export const shopSlice = createSlice({
       console.log('ok');
       state.isHeaderModalOpen = false;
     },
-    fetchOffers: (state, action) => {
+   setOffers: (state, action) => {
       state.offersItems = action.payload;
     },
-    fetchMostSold: (state, action) => {
+    setMostSold: (state, action) => {
       state.mostSoldItems = action.payload;
     },
-    fetchVegs: (state, action) => {
+    setVegs: (state, action) => {
       state.vegetables = action.payload;
     },
-    fetchFruit: (state, action) => {
+    setFruit: (state, action) => {
       state.fruit = action.payload;
     },
     calculateTotalPrice: (state, action) => {
@@ -79,13 +79,13 @@ export const shopSlice = createSlice({
 export const {  addToCart,
                 resetCart,
                 toggleCart,
-                fetchOffers,
-                fetchMostSold,
+                setOffers,
+                setMostSold,
                 calculateTotalPrice,
                 openHeaderModal,
                 closeHeaderModal,
-                fetchVegs,
-                fetchFruit,
+                setVegs,
+                setFruit,
                 increaseCart,
                 decreaseCart } = shopSlice.actions;
 
@@ -97,18 +97,18 @@ export const fetchItems = () => async dispatch => {
   let fruit = [];
   let mostSold = findTenMostSold(data);
   let offers = findTenCheapest(data);
-
+console.log(data)
   for (let item of data) {
     item.quantityInCart = 1;  //Adds the cart quantity property
     item.price = parseFloat(item.price);  //converts the price string to number
-    if (item.type === 'vegetables') vegs.push(item);
-    if (item.type === 'fruit') fruit.push(item);
+    if (item.type === 'Vegetables') vegs.push(item);
+    if (item.type === 'Fruit') fruit.push(item);
   }
 
-  dispatch(fetchOffers(offers));
-  dispatch(fetchMostSold(mostSold));
-  dispatch(fetchVegs(vegs));
-  dispatch(fetchFruit(fruit));
+  dispatch(setOffers(offers));
+  dispatch(setMostSold(mostSold));
+  dispatch(setVegs(vegs));
+  dispatch(setFruit(fruit));
 
 };
 

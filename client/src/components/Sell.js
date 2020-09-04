@@ -1,4 +1,4 @@
-import React,  { useEffect }  from 'react';
+import React,  { useEffect, useState }  from 'react';
 import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, TextArea } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
@@ -11,11 +11,17 @@ import {  } from '../slices/shopSlice';
 export default function () {
    
     const dispatch = useDispatch();
- 
+    const [productType, setProductType] = useState('Fruit');
     return (<FormWrapper>
-    <Form action='/api/add-product' method='post'>
+    <Form action='/products/add-product' method='post'>
+    <OptionsMenu name='type' onChange={(ev)=>{setProductType(ev.target.value)}}>
+        <Option value='Fruit'>Fruit</Option>
+        <Option value='Vegetables' >Vegetables</Option>
+    </OptionsMenu>
     <OptionsMenu name='productName'>
-    <optgroup label='Fruit'></optgroup>
+    { productType === 'Fruit' ? (
+        <>
+        <optgroup label='Fruit'></optgroup>
         <Option value='Oranges'>Oranges</Option>
         <Option value='Apples'>Apples</Option>
         <Option value='Bananas'>Bananas</Option>
@@ -25,6 +31,9 @@ export default function () {
         <Option value='Pomegranates'>Pomegranates</Option>
         <Option value='Strawberries'>Strawberries</Option>
         <Option value='Watermelons'Watermelons></Option>
+        </>) : null}
+        { productType === 'Vegetables' ?
+        (<>
         <optgroup label='Vegetables'></optgroup>
         <Option value='Broccoli'>Broccoli</Option>
         <Option value='Cabbages'>Cabbages</Option>
@@ -39,11 +48,12 @@ export default function () {
         <Option value='Red Peppers'>Red Peppers</Option>
         <Option value='Salad'>Salad</Option>
         <Option value='Tomatoes'>Tomatoes</Option>
+        </>) : null}
     </OptionsMenu>
     <Input placeholder='Name of Seller' name='sellerName'></Input>
     <Input placeholder='Price in € per Kg' name='price'></Input>
     <Input placeholder='Amount of Kg available for selling' name='quantityAvailable'></Input>
-    <TextAreaForm placeholder={'Insert the description of your product here'} rows={4} onChange={handleAutoResize}></TextAreaForm>
+    <TextAreaForm placeholder={'Insert the description of your product here'} name='description'rows={4} onChange={handleAutoResize}></TextAreaForm>
     <ButtonAlt type="submit">Register the product!</ButtonAlt>
     </Form>
    </FormWrapper>);

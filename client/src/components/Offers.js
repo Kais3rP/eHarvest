@@ -39,7 +39,7 @@ const OffersTitle = styled.div`
  
  `
 const PicThumbnailContainer = styled.div`
-${flexRowSpace};
+${flexRowCenter};
 width:100%;
 height:80%;
 

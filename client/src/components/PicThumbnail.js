@@ -6,13 +6,14 @@ import circle from '../img/circle.svg'
 
 
 export default function ({ item }) {
-
-  let mimeType = "image/png";
+ 
+  //let mimeType = "image/png";
   return (
     <ThumbnailContainer>
       <Circle src={circle}></Circle>
       <PicContainer>
-        <Pic src={`data:${mimeType};base64,${item.pic}`} />
+        {/*<Pic src={`data:${mimeType};base64,${item.pic}`} />*/}
+        <Pic src={item.pic} />
       </PicContainer>
       <InfoContainer>
       <Header3>
@@ -36,6 +37,7 @@ position:relative;
 ${flexColSpace};
 width:25%;
 min-width:170px;
+max-width:200px;
 height:350px;
 text-align:center;
 margin:5px;
