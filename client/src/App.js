@@ -12,7 +12,7 @@ import MidSection from './components/MidSection';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
 import FullShop from './components/FullShop';
-import Login from './components/Login';
+import RegLog from './components/RegLog';
 import HeaderModal from './components/HeaderModal';
 import HowItWorks from './components/HowItWorks';
 import Feedbacks from './components/Feedbacks';
@@ -44,7 +44,7 @@ export default function () {
                         <FullShop />
                     </Route>
                     <Route path="/login" >
-                        <Login />
+                        <RegLog />
                     </Route>
                     <Route path="/howitworks" >
                         <HowItWorks />

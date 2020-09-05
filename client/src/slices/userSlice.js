@@ -7,7 +7,8 @@ export const userSlice = createSlice({
   initialState: {
    isLoggedIn: false,
    userLogged: '',
-   registrationResponse: {}
+   registrationResponse: {},
+   loginResponse:{}
   },
   reducers: {
     setRegistrationResponse: (state, action) => {
@@ -20,12 +21,15 @@ state.registrationResponse = action.payload;
     state.isLoggedIn = false;
 },
 setUserLogged: (state, action) => {
-    state.userLogged = action.payload
+    state.userLogged = action.payload;
+},
+setLoginResponse: (state,action) => {
+  state.loginResponse = action.payload;
 }
   }
 });
 
-export const { logIn, logOut, setUserLogged, setRegistrationResponse } = userSlice.actions;
+export const { logIn, logOut, setUserLogged, setRegistrationResponse, setLoginResponse } = userSlice.actions;
 
 //Thunks
 
@@ -45,6 +49,7 @@ dispatch(setRegistrationResponse(data));
 
 export const fetchLogin = (ev) => async dispatch => {
    //To pass variables to a thunk you just need to pass it to the first action creator
+   //This is how you manage to pass the form data as urlencoded params with a custom fetch
     const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
   let res = await fetch('/auth/login', {
         method: 'POST',
@@ -53,9 +58,10 @@ export const fetchLogin = (ev) => async dispatch => {
 let data = await res.json();
 console.log(data)
 if (data.isOk) {
-     dispatch(logIn());
+dispatch(logIn());
 dispatch(setUserLogged(data.user))
-    }
+}
+dispatch(setLoginResponse(data))
 }
 
 export const fetchLogout = () => async dispatch => {

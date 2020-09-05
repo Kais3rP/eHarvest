@@ -9,7 +9,7 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const sessionStore = new session.MemoryStore(); //Store in memory, not a good idea for memory leak
-
+const flash = require('connect-flash');
 //......................................................................
 const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
@@ -42,6 +42,7 @@ app.use(
     store: sessionStore
   })
 );
+app.use(flash()); //Support for flash messagesi in req
 //----------------------------------------------------------------------
 //Auth Strategies
 setAuthStrategies(app);

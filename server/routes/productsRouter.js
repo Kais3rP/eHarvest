@@ -31,9 +31,9 @@ router.get('/get-products', async (req, res) => {
   let products = [];
   try {
     products = await Product.find();
-  } catch {
-    console.log("Couldn't reach the DB")
-  }
+  } catch (error){
+    console.log(error)
+}
  
   products = products.map(obj => ({
     type: obj.type,

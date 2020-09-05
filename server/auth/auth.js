@@ -36,27 +36,31 @@ module.exports = function(app) {
       new LocalStrategy(
         {
         usernameField: 'email',
-        passwordField: 'password'
+        passwordField: 'password',
         },
         async function(username, password, done) {
         let user = {};
         try {
             console.log("User " + username + " attempted to log in.");
-           user = await User.findOne({ email: username });
-          } catch {
-              console.log('DB fetching for email failed')
-          }
-  
+           user = await User.findOne({ email: username });  
+        }catch (error){
+            console.log(error);
+            done(error);
+        }    
           if (!user) {
             console.log("User non registered");
-            return done(null, false);
+            //res.status(404).send({isOk:false, error:'E-mail not registered '});
+            return done(null, false,  {message: 'E-mail not registered'});//req.flash let's you send a custom message
           }
-          let passwordIsValid = bcrypt.compareSync(password, user.password);
+          let passwordIsValid = await bcrypt.compareSync(password, user.password);
+          
           if (!passwordIsValid) {
             console.log("Wrong Password");
-            return done(null, false);
+            //res.status(404).send({isOk:false, error:'Wrong Password'});
+            return done(null, false,  {message: 'Wrong Password'});
           } //password wrong { return done(null, false); }
   
-          return done(null, user);
-        }));
+          return done(null, user, {message: 'Login Successful'});
+        }
+        ));
     }
