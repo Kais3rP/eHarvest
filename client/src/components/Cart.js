@@ -21,8 +21,8 @@ export default function ({ position }) {
                 <Header3> TOTAL TO PAY: {totalPrice.toFixed(2)}€</Header3>
             </TotalPriceContainer>
             <ThumbnailsWrapper>
-                {cart.map((item, i) => (<ThumbnailProductContainer>
-                    <ProductPic key={i} id={item.productName} src={item.pic}></ProductPic>
+                {cart.map((item, i) => (<ThumbnailProductContainer key={i}>
+                    <ProductPic  id={item.productName} src={item.pic}></ProductPic>
                     <Header3>{item.productName}</Header3>
                     <Header5>from </Header5>
                     <Header3>{item.sellerName}</Header3>
@@ -52,8 +52,10 @@ margin-top:200px;
 transition: right 0.5s ease-in;
 z-index:2;
 overflow-y: scroll;
-background:white;
-box-shadow: 0px 2px 10px 2px grey;
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+
+box-shadow:  1px 1px 5px #878787, 
+             -1px -1px 5px #ffffff;
 `
 
 const ControlCart = styled.div`
@@ -84,7 +86,10 @@ height:10%;
 width:98%;
 text-align:center;
 margin:5px;
-box-shadow: 1px 2px 10px 2px grey;
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+
+box-shadow:  1px 1px 5px #878787, 
+             -1px -1px 5px #ffffff;
 `
 const ProductPic = styled.img`
 

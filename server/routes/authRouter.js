@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
     let userEmail = {};
     try {
         userEmail = await User.findOne({ email }).exec();
-    if (userEmail) return res.status(400).send({ error: "E-mail already registered", isOk: false });
+    if (userEmail) return res.status(400).send({ isOk: false, error: "E-mail already registered" });
   
     let hashedPwd = await bcrypt.hashSync(req.body.password, 8); //crpyting pwd
    
@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
     res.send({ isOk: true })
 })
 
-router.get('/login', (req,res) => {
+router.get('/login-error', (req,res) => {
 
    
     let message = req.flash().error[0];
@@ -36,7 +36,7 @@ router.get('/login', (req,res) => {
     
 })
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/auth/login', failureFlash: true, successFlash: true }), (req, res) => {
+router.post('/login', passport.authenticate('local', {failureRedirect: '/auth/login-error', failureFlash: true, successFlash: true }), (req, res) => {
     
    
     let message = req.flash().success[0];

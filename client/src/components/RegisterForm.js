@@ -26,7 +26,7 @@ export default function () {
         dispatch(fetchRegister(ev));
         ev.target.reset();
      }}>
-        <Label>Register</Label>
+        <Header3>Register</Header3>
         <FormElementWrapper>
            <FormInput placeholder={'Name'} type={'text'} name="name" required />
            <Label>Name</Label>
@@ -94,6 +94,7 @@ export default function () {
 const RegisterForm = styled.form`
 ${flexColCenter};
 justify-content:flex-start;
+align-items:flex-start;
 width:50%;
 `
 const FormElementWrapper = styled.div`
@@ -109,7 +110,7 @@ const FormInput = styled(Input)`
 width:50%;
 `
 const PasswordCheckContainer = styled.div`
-width:20%;
+width:100%;
 `
 const CheckersWrapper = styled.div`
 ${flexRowCenter};

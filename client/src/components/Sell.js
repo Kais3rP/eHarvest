@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, flexRowSpace, TextArea, Select } from '../styled-components/globalStyles';
+import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, flexRowSpace, TextArea, Select, Header3 } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,14 +13,19 @@ export default function () {
 
     const dispatch = useDispatch();
     const isProductRegistrationOk = useSelector( state => state.shop.isProductRegistrationOk);
+    const isLoggedIn = useSelector( state => state.user.isLoggedIn);
     const [productType, setProductType] = useState('Fruit');
     const [lengthOfText, setLengthOfText] = useState(0);
+    const [registerErrMsg, setRegisterErrMsg] = useState('');
     return (<FormWrapper>
-        <Form onSubmit={(ev) => {
-            ev.preventDefault();
+        <Form onSubmit={  (ev) => { 
+             ev.preventDefault();
+            if (isLoggedIn) {
+           
             dispatch(fetchRegisterProduct(ev));
-            dispatch(fetchItems());
-            setTimeout(()=>{ dispatch(setIsProductRegistrationOk(false))},5000)//Refetch the new products with the one just added
+            dispatch(fetchItems());//Refetch the new products with the one just added
+            setTimeout(()=>{ dispatch(setIsProductRegistrationOk(false))},5000)//Resets the message
+            } else setRegisterErrMsg('Please Log In to start selling your products!');
         }} >
             <FormElementWrapper>
                 <OptionsMenu name='type' onChange={(ev) => { setProductType(ev.target.value) }} required>
@@ -97,6 +102,7 @@ export default function () {
 
 
             <ButtonAlt type="submit">Register the product!</ButtonAlt>
+            <Header3>{registerErrMsg}</Header3>
         </Form>
         {isProductRegistrationOk ? <div>Product Successfully Registered</div> : null}
     </FormWrapper>);

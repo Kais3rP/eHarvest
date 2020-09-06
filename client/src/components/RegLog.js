@@ -13,17 +13,12 @@ import LoginForm from './LoginForm';
 
 
 export default function () {
-
   
-   
-  
-
-
-   return (
+return (
       <RegLogWrapper>
          <RegLogContainer>
            <RegisterForm/>
-           <LoginForm/>
+          { <LoginForm/> }
          </RegLogContainer>       
       </RegLogWrapper>
    )

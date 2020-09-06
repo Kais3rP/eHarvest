@@ -1,13 +1,12 @@
-import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, getDefaultMiddleware } from '@reduxjs/toolkit';
 import shopReducer from '../slices/shopSlice';
 import userReducer from '../slices/userSlice';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-
+import localForage from 'localforage';
 const persistConfig = {
   key: 'root',
-  storage,
-  blacklist: ['shop']
+  storage: localForage
 }
 const rootReducer = combineReducers({
   shop: shopReducer,
@@ -19,6 +18,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
  
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware({  //This is needed to get rid of error message of redux non serializable object
+    serializableCheck: false,         //due to redux-persist
+  }),
 devTools: true
 });
 

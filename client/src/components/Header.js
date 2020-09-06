@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart, Header3, ButtonAlt } from '../styled-components/globalStyles';
+import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart, Header3, Header5, ButtonAlt } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCart, openHeaderModal } from '../slices/shopSlice';
 import { fetchLogout } from '../slices/userSlice';
@@ -24,12 +24,13 @@ export default function () {
                 <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} ><a>WHAT'S eHARVEST</a></HeaderLink> </MidHeaderContainer>
             <RightHeaderContainer>
                 <LoginContainer>
-                    <HeaderLink><Link to="/login">Sign In / Register</Link></HeaderLink>
-                    <Header3>User:{isLoggedIn ? userLogged : 'Not Logged'}</Header3>
-                    <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt>
+                {isLoggedIn ? <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt> :  <HeaderLink><Link to="/login">Welcome! Login</Link></HeaderLink>}
+                   
+                    <Header5> {isLoggedIn ? userLogged : 'Not Logged'}</Header5>
+                    
                     </LoginContainer>
                
-                <IconContext.Provider value={{ style: { 'margin-right': '10px', color: 'grey', cursor: 'pointer' } }}  >
+                <IconContext.Provider value={{ style: { 'marginRight': '10px', color: 'grey', cursor: 'pointer' } }}  >
                     <FaShoppingCart size={30} onClick={() => { dispatch(toggleCart()) }} />
                 </IconContext.Provider>
             </RightHeaderContainer>

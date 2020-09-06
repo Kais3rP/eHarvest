@@ -45,14 +45,15 @@ background:white;
 
 
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
-box-shadow:  5px 5px 13px #6b6b6b, 
-             -5px -5px 13px #ffffff;
+box-shadow:  1px 1px 5px #6b6b6b, 
+             -1px -1px 5px #ffffff;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   border-bottom-left-radius: 35px;
   border-bottom-right-radius: 35px;
 &:hover{
-  box-shadow: 2px 3px 10px 5px grey;
+  box-shadow:  2px 2px 5px #6b6b6b, 
+             -2px -2px 5px #ffffff;
 }
 `
 

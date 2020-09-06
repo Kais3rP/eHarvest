@@ -56,7 +56,6 @@ export const Button = styled.button`
 width:100%;
 height:10%;
 border:none;
-background:lavender;
 outline:none;
 cursor:pointer;
 font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -68,7 +67,8 @@ font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI'
     -8px -8px 12px 0 rgba(255, 255, 255, 0.3);
 &:hover{
     
-    
+    box-shadow:  2px 2px 5px #6b6b6b, 
+             -2px -2px 5px #ffffff;
 };
 &:active{
     background: #ffffff;
@@ -80,16 +80,22 @@ export const ButtonAlt = styled.button`
 
 width:100px;
 height:40px;
-background: lavender;
 outline:none;
 margin:5px;
 cursor: pointer;
+border:none;
 font-family: -apple-system, BlinkMacSystemFont,'Poiret One', cursive, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     font-weight:600;
+    border-radius: 5px;
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+
+box-shadow:  1px 1px 5px #878787, 
+             -1px -1px 5px #ffffff;
 &:hover{
-    opacity:0.7;
+    box-shadow:  2px 2px 5px #6b6b6b, 
+             -2px -2px 5px #ffffff;
     
 };
 

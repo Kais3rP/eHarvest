@@ -51,7 +51,7 @@ export const shopSlice = createSlice({
       state.isHeaderModalOpen = true;
     },
     closeHeaderModal: (state, action) => {
-      console.log('ok');
+    
       state.isHeaderModalOpen = false;
     },
    setOffers: (state, action) => {
@@ -102,7 +102,7 @@ export const fetchItems = () => async dispatch => {
   let fruit = [];
   let mostSold = findTenMostSold(data);
   let offers = findTenCheapest(data);
-console.log(data)
+
   for (let item of data) {
     item.quantityInCart = 1;  //Adds the cart quantity property
     item.price = parseFloat(item.price);  //converts the price string to number

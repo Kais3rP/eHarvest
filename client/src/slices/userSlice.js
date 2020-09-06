@@ -56,7 +56,6 @@ export const fetchLogin = (ev) => async dispatch => {
         body:params
 });
 let data = await res.json();
-console.log(data)
 if (data.isOk) {
 dispatch(logIn());
 dispatch(setUserLogged(data.user))
@@ -71,6 +70,7 @@ export const fetchLogout = () => async dispatch => {
 if(data.isOk) {
     dispatch(logOut());
     dispatch(setUserLogged(''));
+    dispatch(setLoginResponse(''));
 }
 }
 ///Helper functions:
