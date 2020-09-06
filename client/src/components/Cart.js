@@ -65,9 +65,10 @@ const ControlCart = styled.div`
 
 ${flexRowSpace};
 width:100%;
-height:5%;
+height:10%;
 font-size:20px;
 font-weight:bold;
+padding:10px;
 
 
 
@@ -77,7 +78,7 @@ const ThumbnailsWrapper = styled.div`
 ${flexColCenter};
 justify-content:flex-start;
 width:100%;
-height:70%;
+height:80%;
 
 
 
@@ -114,9 +115,8 @@ cursor: pointer;
 font-size:50px;
 `
 const TotalPriceContainer = styled.div`
-display:block;
 width:98%;
-height:5%;
+height:10%;
 `
 const Increase = styled(Header1)`
 

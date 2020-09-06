@@ -8,7 +8,7 @@ import localForage from 'localforage';
 const persistConfig = {
   key: 'root',
   storage: localForage,
-  blacklist: [uiReducer]
+  blacklist: ['ui']
 }
 const rootReducer = combineReducers({
   shop: shopReducer,

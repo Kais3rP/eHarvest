@@ -21,8 +21,7 @@ import Sell from './components/Sell';
 import Faq from './components/Faq';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems } from './slices/shopSlice';
-import {toggleHeaderMobile } from './slices/uiSlice';
-import { setWindowSize } from './slices/uiSlice';
+import {setWindowSize, toggleHeaderMobile, toggleCart } from './slices/uiSlice';
 import { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { IconContext } from "react-icons";
@@ -40,6 +39,7 @@ export default function () {
 
     useEffect(() => {
         dispatch(fetchItems());
+        updateWidthAndHeight();
         window.addEventListener("resize", updateWidthAndHeight);
         return () => window.removeEventListener("resize", updateWidthAndHeight);
     }, [dispatch]);
@@ -57,9 +57,11 @@ export default function () {
                 {windowSize.width>768 ? <Header /> 
                      : 
                      <IconContext.Provider value={{ style: { display: 'inline', color: 'grey', zIndex:5, alignSelf:'flex-start' } }}  >
-                     <FaBars size={50} onClick={()=>{dispatch(toggleHeaderMobile())}}/>
+                     <FaBars size={50} onClick={()=>{
+                         if (isCartOpen) dispatch(toggleCart());
+                         dispatch(toggleHeaderMobile())}}/>
                      </IconContext.Provider>}
-                {isHeaderMobileOpen ? <HeaderMobile position={0}/> : <HeaderMobile position={'-500px'}/>}
+                {isHeaderMobileOpen ? windowSize.width<768 ? <HeaderMobile position={0}/> : <HeaderMobile position={'-500px'}/> : <HeaderMobile position={'-500px'}/>}
                 {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-220px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>

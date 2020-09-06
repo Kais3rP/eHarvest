@@ -24,7 +24,7 @@ margin-top:230px;
     ${flexColCenter};
     justify-content:flex-start;
     margin-top:10px;
-width:100%;
+
 
 
 

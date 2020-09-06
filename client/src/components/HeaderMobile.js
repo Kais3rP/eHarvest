@@ -24,10 +24,10 @@ export default function ({ position }) {
                 <HeaderLink><Link onClick={()=>{dispatch(toggleHeaderMobile())}} to="/">HOME</Link></HeaderLink>
                 <HeaderLink><Link onClick={()=>{dispatch(toggleHeaderMobile())}} to="/fullshop">FULL SHOP</Link></HeaderLink>
                 <HeaderLink onClick={()=>{dispatch(toggleHeaderMobileModal())}} ><a>WHAT'S eHARVEST</a></HeaderLink>
-                <HeaderLink><Link to='/howitworks'>HOW IT WORKS</Link></HeaderLink>
-          <HeaderLink><Link to='/feedbacks'>OUR FEEDBACKS</Link></HeaderLink>
-          <HeaderLink><Link to='/sell'>SELL YOU HARVEST</Link></HeaderLink>
-          <HeaderLink><Link to='/faq'>FAQ</Link></HeaderLink>
+                <HeaderLink><Link onClick={()=>{dispatch(toggleHeaderMobile())}}to='/howitworks'>HOW IT WORKS</Link></HeaderLink>
+          <HeaderLink><Link onClick={()=>{dispatch(toggleHeaderMobile())}}to='/feedbacks'>OUR FEEDBACKS</Link></HeaderLink>
+          <HeaderLink><Link onClick={()=>{dispatch(toggleHeaderMobile())}}to='/sell'>SELL YOU HARVEST</Link></HeaderLink>
+          <HeaderLink><Link onClick={()=>{dispatch(toggleHeaderMobile())}}to='/faq'>FAQ</Link></HeaderLink>
                  </MidHeaderContainer>
                  
             <BottomHeaderContainer>
