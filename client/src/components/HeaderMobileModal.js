@@ -2,7 +2,7 @@ import React from 'react';
 import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart, Header3 } from '../styled-components/globalStyles';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { closeHeaderModal } from '../slices/uiSlice';
+import { } from '../slices/uiSlice';
 import {  useDispatch } from 'react-redux';
 
 
@@ -11,7 +11,7 @@ import {  useDispatch } from 'react-redux';
 export default function ( { position }) {
 const dispatch = useDispatch();
     return (
-        <Modal onMouseLeave={() => { dispatch(closeHeaderModal()) }} style={{top:position}}>
+        <Modal>
         <ModalWrapper>
           <Header3><Link to='/howitworks'>How it works</Link></Header3>
           <Header3><Link to='/feedbacks'>Our Feedbacks</Link></Header3>
@@ -25,9 +25,7 @@ const dispatch = useDispatch();
 
 const Modal = styled.div`
 ${flexRowCenter};
-margin-top:100px;
-position:fixed;
-width:80%;
+width:90%;
 padding:20px;
 background:white;
 transition:top 0.4s ease-in;
@@ -37,7 +35,7 @@ z-index:3;
 `
 const ModalWrapper = styled.div`
 ${flexRowSpace};
-width:50%;
+width:100%;
 
 
 `

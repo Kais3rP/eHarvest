@@ -13,4 +13,5 @@ const FooterWrapper = styled.div`
 width:100%;
 height:150px;
 text-align:center;
+
 `

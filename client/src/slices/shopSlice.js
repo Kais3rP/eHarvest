@@ -5,8 +5,6 @@ const itemsURL = '/products/get-products'; //Alternative '/products/get-products
 export const shopSlice = createSlice({
   name: 'shop',
   initialState: {
-    isCartOpen: false,
-    isHeaderModalOpen: false,
     cart: [],
     totalPrice: 0,
     offersItems: [],
@@ -43,16 +41,7 @@ export const shopSlice = createSlice({
     },
     resetCart: (state, action) => {
       state.cart = [];
-    },
-    toggleCart: (state, action) => {
-      state.isCartOpen = !state.isCartOpen
-    },
-    openHeaderModal: (state, action) => {
-      state.isHeaderModalOpen = true;
-    },
-    closeHeaderModal: (state, action) => {
-    
-      state.isHeaderModalOpen = false;
+      state.totalPrice = 0;
     },
    setOffers: (state, action) => {
       state.offersItems = action.payload;
@@ -82,12 +71,9 @@ export const shopSlice = createSlice({
 
 export const {  addToCart,
                 resetCart,
-                toggleCart,
                 setOffers,
                 setMostSold,
-                calculateTotalPrice,
-                openHeaderModal,
-                closeHeaderModal,
+                calculateTotalPrice,             
                 setVegs,
                 setFruit,
                 increaseCart,
@@ -100,8 +86,8 @@ export const fetchItems = () => async dispatch => {
   let data = await res.json();
   let vegs = [];
   let fruit = [];
-  let mostSold = findTenMostSold(data);
-  let offers = findTenCheapest(data);
+  let mostSold = findFiveMostSold(data);
+  let offers = findFiveCheapest(data);
 
   for (let item of data) {
     item.quantityInCart = 1;  //Adds the cart quantity property
@@ -134,16 +120,16 @@ export const addItem = () => async dispatch => {
 
 }
 ///Helper functions:
-function findTenMostSold(arr) {
+function findFiveMostSold(arr) {
   return arr.sort((a, b) => b.sold - a.sold)
-    .slice(0, 10)
+    .slice(0, 5)
 }
 
 
-function findTenCheapest(arr) {
+function findFiveCheapest(arr) {
 
   return arr.sort((a, b) => a.price - b.price)
-    .slice(0, 10)
+    .slice(0, 5)
 }
 
 // The function below is called a selector and allows us to select a value from

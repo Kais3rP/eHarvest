@@ -14,7 +14,7 @@ const Product = require('../models/Product');
 router.post('/add-product', async (req, res, next) => {
   // Here I create the DB instance of the item added using the req queries
   
-  console.log(req.body)
+  console.log(req.isAuthenticated())
   try {
     let product = new Product({ ...req.body, soldNTimes: 0 });
     let productDB = await product.save();

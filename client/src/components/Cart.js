@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter, ButtonAlt, Header1, Header3, Header5, Input } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetCart, toggleCart, increaseCart, decreaseCart, calculateTotalPrice } from '../slices/shopSlice';
+import { resetCart, increaseCart, decreaseCart, calculateTotalPrice } from '../slices/shopSlice';
+import { toggleCart } from '../slices/uiSlice';
 
 
 export default function ({ position }) {
     const cart = useSelector(state => state.shop.cart);
     const totalPrice = useSelector(state => state.shop.totalPrice);
     const dispatch = useDispatch();
-    let mimeType = "image/png";
+
 
     return (
         <CartWrapper style={{ right: position }}>
@@ -44,18 +45,20 @@ export default function ({ position }) {
 const CartWrapper = styled.div`
 position:fixed;
 right:0;
-width:20%;
+width:320px;
 height:100%;
 ${flexColCenter};
 justify-content:flex-start;
-margin-top:200px;
+margin-top:0px;
 transition: right 0.5s ease-in;
 z-index:2;
 overflow-y: scroll;
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
-
 box-shadow:  1px 1px 5px #878787, 
              -1px -1px 5px #ffffff;
+@media(min-width:768px){
+    margin-top:200px;
+}
 `
 
 const ControlCart = styled.div`

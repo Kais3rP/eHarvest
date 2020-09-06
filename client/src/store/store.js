@@ -1,16 +1,19 @@
 import { configureStore, combineReducers, getDefaultMiddleware } from '@reduxjs/toolkit';
 import shopReducer from '../slices/shopSlice';
 import userReducer from '../slices/userSlice';
+import uiReducer from '../slices/uiSlice';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import localForage from 'localforage';
 const persistConfig = {
   key: 'root',
-  storage: localForage
+  storage: localForage,
+  blacklist: [uiReducer]
 }
 const rootReducer = combineReducers({
   shop: shopReducer,
-  user: userReducer
+  user: userReducer,
+  ui: uiReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

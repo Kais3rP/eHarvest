@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import styled from 'styled-components';
 import Header from './components/Header';
+import HeaderMobile from './components/HeaderMobile';
 import MidSection from './components/MidSection';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
@@ -19,28 +20,50 @@ import Feedbacks from './components/Feedbacks';
 import Sell from './components/Sell';
 import Faq from './components/Faq';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems, closeHeaderModal } from './slices/shopSlice';
-import { useEffect } from 'react';
+import { fetchItems } from './slices/shopSlice';
+import {toggleHeaderMobile } from './slices/uiSlice';
+import { setWindowSize } from './slices/uiSlice';
+import { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { IconContext } from "react-icons";
 
 
-
+ 
 
 export default function () {
-    const isCartOpen = useSelector(state => state.shop.isCartOpen);
-    const isHeaderModalOpen = useSelector(state => state.shop.isHeaderModalOpen);
+
+    const isCartOpen = useSelector(state => state.ui.isCartOpen);
+    const isHeaderModalOpen = useSelector(state => state.ui.isHeaderModalOpen);
+    const isHeaderMobileOpen = useSelector ( state => state.ui.isHeaderMobileOpen);
+    const windowSize = useSelector( state => state.ui.windowSize);
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(fetchItems());
-    }, [dispatch])
+        window.addEventListener("resize", updateWidthAndHeight);
+        return () => window.removeEventListener("resize", updateWidthAndHeight);
+    }, [dispatch]);
+
+    const updateWidthAndHeight = () => {
+        dispatch(setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        }))
+      };
+
     return (
         <Router>
             <AppWrapper>
-
-                <Header />
-                {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-200px'} />}
+                {windowSize.width>768 ? <Header /> 
+                     : 
+                     <IconContext.Provider value={{ style: { display: 'inline', color: 'grey', zIndex:5, alignSelf:'flex-start' } }}  >
+                     <FaBars size={50} onClick={()=>{dispatch(toggleHeaderMobile())}}/>
+                     </IconContext.Provider>}
+                {isHeaderMobileOpen ? <HeaderMobile position={0}/> : <HeaderMobile position={'-500px'}/>}
+                {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-220px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
-                <Route path="/fullshop" >
+                    <Route path="/fullshop" >
                         <FullShop />
                     </Route>
                     <Route path="/login" >

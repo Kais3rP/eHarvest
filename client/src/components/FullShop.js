@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PicThumbnail from './PicThumbnail.js';
 import Loader from 'react-loader-spinner';
 
-export default function () {
+export default function ({ width, height }) {
     const vegetables = useSelector(state => state.shop.vegetables);
     const fruit = useSelector(state => state.shop.fruit);
     const dispatch = useDispatch();

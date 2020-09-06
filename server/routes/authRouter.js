@@ -50,5 +50,7 @@ router.get('/logout', function(req, res){
     res.status(200).send({isOk:true, message:"Logout Successful"})
   });
 
+  2
+
 
 module.exports = router;

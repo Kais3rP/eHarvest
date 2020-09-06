@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { flexRowCenter, flexColSpace, flexColCenter, flexRowSpace, flexRowStart, Header3, Header5, ButtonAlt } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleCart, openHeaderModal } from '../slices/shopSlice';
+import { toggleCart, toggleHeaderModal, openHeaderModal } from '../slices/uiSlice';
 import { fetchLogout } from '../slices/userSlice';
 import { FaShoppingCart } from 'react-icons/fa';
 import { IconContext } from "react-icons";
@@ -14,6 +14,7 @@ import Logo from './Logo';
 export default function () {
     const isLoggedIn = useSelector( state => state.user.isLoggedIn);
     const userLogged = useSelector( state => state.user.userLogged);
+   
     const dispatch = useDispatch();
     return (
         <HeaderWrapper>
@@ -24,12 +25,9 @@ export default function () {
                 <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} ><a>WHAT'S eHARVEST</a></HeaderLink> </MidHeaderContainer>
             <RightHeaderContainer>
                 <LoginContainer>
-                {isLoggedIn ? <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt> :  <HeaderLink><Link to="/login">Welcome! Login</Link></HeaderLink>}
-                   
-                    <Header5> {isLoggedIn ? userLogged : 'Not Logged'}</Header5>
-                    
-                    </LoginContainer>
-               
+                {isLoggedIn ? <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt> :  <HeaderLink><Link to="/login">Welcome! Login</Link></HeaderLink>}                  
+                    <Header5> {isLoggedIn ? userLogged : 'Not Logged'}</Header5>                   
+                    </LoginContainer>              
                 <IconContext.Provider value={{ style: { 'marginRight': '10px', color: 'grey', cursor: 'pointer' } }}  >
                     <FaShoppingCart size={30} onClick={() => { dispatch(toggleCart()) }} />
                 </IconContext.Provider>

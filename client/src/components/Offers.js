@@ -29,8 +29,8 @@ export default function () {
 const OffersWrapper = styled.div`
 ${flexColSpace};
 width:98%;
-height:400px;
 text-align:center;
+
 `
 
 const OffersTitle = styled.div`
@@ -42,6 +42,7 @@ const PicThumbnailContainer = styled.div`
 ${flexRowCenter};
 width:100%;
 height:80%;
+flex-wrap:wrap;
 
 `
 
