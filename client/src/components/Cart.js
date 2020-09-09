@@ -62,16 +62,12 @@ box-shadow:  1px 1px 5px #878787,
 `
 
 const ControlCart = styled.div`
-
 ${flexRowSpace};
 width:100%;
 height:10%;
 font-size:20px;
 font-weight:bold;
 padding:10px;
-
-
-
 `
 
 const ThumbnailsWrapper = styled.div`
@@ -79,10 +75,6 @@ ${flexColCenter};
 justify-content:flex-start;
 width:100%;
 height:80%;
-
-
-
-
 `
 const ThumbnailProductContainer = styled.div`
 ${flexRowSpace};
@@ -96,9 +88,7 @@ box-shadow:  1px 1px 5px #878787,
              -1px -1px 5px #ffffff;
 `
 const ProductPic = styled.img`
-
 height:100%;
-
 `
 const ProductQuantity = styled.div`
 ${flexRowCenter};
@@ -107,7 +97,6 @@ height:100%;
 font-size:25px;
 margin-right:10px;
 margin-left:10px
-
 `
 const CloseCartButton = styled.div`
 margin-right:5px;
@@ -119,11 +108,9 @@ width:98%;
 height:10%;
 `
 const Increase = styled(Header1)`
-
 cursor:pointer;
 `
 
 const Decrease = styled(Header1)`
-
 cursor:pointer;
 `

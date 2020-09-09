@@ -42,8 +42,8 @@ export const fetchRegister = (ev) => async dispatch => {
  });
  let data = await res.json();
  console.log(data)
-
-dispatch(setRegistrationResponse(data));
+if (res.ok) dispatch(setRegistrationResponse({isOk:true, msg:data}));
+else dispatch(setRegistrationResponse({isOk:false, msg:data}));
 
  }
 
@@ -56,10 +56,11 @@ export const fetchLogin = (ev) => async dispatch => {
         body:params
 });
 let data = await res.json();
-if (data.isOk) {
+if (res.ok) {
 dispatch(logIn());
-dispatch(setUserLogged(data.user))
-}
+dispatch(setUserLogged(data.user));
+dispatch(setLoginResponse(data))
+} else
 dispatch(setLoginResponse(data))
 }
 
@@ -67,7 +68,7 @@ export const fetchLogout = () => async dispatch => {
     let res = await fetch('/auth/logout');
     let data = await res.json();
 
-if(data.isOk) {
+if(res.ok) {
     dispatch(logOut());
     dispatch(setUserLogged(''));
     dispatch(setLoginResponse(''));

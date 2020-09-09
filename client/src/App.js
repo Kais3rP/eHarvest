@@ -17,7 +17,7 @@ import RegLog from './components/RegLog';
 import HeaderModal from './components/HeaderModal';
 import HowItWorks from './components/HowItWorks';
 import Feedbacks from './components/Feedbacks';
-import Sell from './components/Sell';
+import SellForm from './components/SellForm';
 import Faq from './components/Faq';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems } from './slices/shopSlice';
@@ -78,7 +78,7 @@ export default function () {
                         <Feedbacks />
                     </Route>
                     <Route path="/sell" >
-                        <Sell />
+                        <SellForm />
                     </Route>
                     <Route path="/faq" >
                         <Faq />

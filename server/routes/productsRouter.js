@@ -15,13 +15,14 @@ router.post('/add-product', async (req, res, next) => {
   // Here I create the DB instance of the item added using the req queries
   
   console.log(req.isAuthenticated())
+  if (!req.isAuthenticated()) return res.status(500).send({msg: "You need to Log In to start selling your products"});
   try {
     let product = new Product({ ...req.body, soldNTimes: 0 });
     let productDB = await product.save();
-    res.status(200).send({isOk:true})
+    res.status(200).send({msg:'Congrats! Your Product has been added to the store!'})
   } catch {
     console.log('Adding product to DB met an error');
-    res.status(400).send({isOk:false, error:'There was an error during the registration of the product'});
+    res.status(400).send({msg:'There was an error during the registration of the product'});
   }
 
 })

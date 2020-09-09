@@ -9,22 +9,19 @@ export default function ({ width, height }) {
     const vegetables = useSelector(state => state.shop.vegetables);
     const fruit = useSelector(state => state.shop.fruit);
     const dispatch = useDispatch();
-  
+
     return (vegetables.length > 0 && fruit.length > 0) ?
 
         (<FullShopWrapper>
-        <VegsContainer>
-       <Header3>Vegetables</Header3>
-        <PicThumbnailContainer> {vegetables.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
-        </VegsContainer>
-        <FruitContainer>
-        <Header3>Fruit</Header3>
-        <PicThumbnailContainer> {fruit.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
-        </FruitContainer>
-           
-           
+            <VegsContainer>
+                <Header3>Vegetables</Header3>
+                <PicThumbnailContainer> {vegetables.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
+            </VegsContainer>
+            <FruitContainer>
+                <Header3>Fruit</Header3>
+                <PicThumbnailContainer> {fruit.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
+            </FruitContainer>
         </FullShopWrapper>) :
-
         (<FullShopWrapper>
             <Loader
                 type="TailSpin"
@@ -34,9 +31,6 @@ export default function ({ width, height }) {
                 timeout={3000} //3 secs
             />
         </FullShopWrapper>)
-
-       
-    
 }
 
 const FullShopWrapper = styled.div`
@@ -48,24 +42,18 @@ margin-top:300px;
     ${flexColCenter};
     justify-content:flex-start;
     margin-top:10px;
-
-
-
-
 }
 `
 const VegsContainer = styled.div`
 ${flexColCenter};
 width:100%;
 height:90%;
-
 `
 
 const FruitContainer = styled.div`
 ${flexColCenter};
 width:100%;
 height:90%;
-
 `
 
 const PicThumbnailContainer = styled.div`

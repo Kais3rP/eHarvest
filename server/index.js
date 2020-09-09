@@ -16,7 +16,8 @@ const authRouter = require('./routes/authRouter');
 const setAuthStrategies = require('./auth/auth');
 
 //Connect to the DB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,
+  useNewUrlParser: true });
 
 //----------------------------------------------------------------------
 //Serve index.html and public files to index.html
@@ -27,7 +28,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
 });
 //----------------------------------------------------------------------
-// Set the bodyparsers for urlencoded and json and for passport cookies
+// Set the bodyparsers for urlencoded and json and cookieParser for passport cookies
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

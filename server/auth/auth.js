@@ -59,8 +59,9 @@ module.exports = function(app) {
             //res.status(404).send({isOk:false, error:'Wrong Password'});
             return done(null, false,  {message: 'Wrong Password'});
           } //password wrong { return done(null, false); }
-  
-          return done(null, user, {message: 'Login Successful'});
+   // Make sure the user has been verified
+   if (!user.isVerified) return done(null, false,{ type: 'not-verified', msg: 'Your account has not been verified.' }); 
+          return done(null,user, {message: 'Login Successful'});
         }
         ));
     }

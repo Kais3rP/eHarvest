@@ -27,8 +27,6 @@ export default function ({ item }) {
       </InfoContainer>
       <AddToCart item={item} />
     </ThumbnailContainer>)
-
-
 }
 
 const ThumbnailContainer = styled.div`
@@ -58,8 +56,6 @@ height:170px;
   width:170px;
   height:350px;
 }
-
-
 `
 
 const PicContainer = styled.div`
@@ -79,8 +75,6 @@ font-size:10px;
 @media(min-width:1200px){
 font-size:16px;
 }
-
-
 `
 const Pic = styled.img`
 z-index:1;
@@ -91,12 +85,9 @@ const ItemPrice = styled.div`
 width:100%;
 height:10%;
 background:white;
-
-
 `
 
 const Circle = styled.img`
 position:absolute;
 z-index:0;
-
 `

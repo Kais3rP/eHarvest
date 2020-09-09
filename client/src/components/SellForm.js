@@ -3,7 +3,7 @@ import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCen
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems, fetchRegisterProduct, setIsProductRegistrationOk } from '../slices/shopSlice';
+import { fetchItems, fetchRegisterProduct, setProductRegistrationResponse } from '../slices/shopSlice';
 
 
 
@@ -12,7 +12,7 @@ import { fetchItems, fetchRegisterProduct, setIsProductRegistrationOk } from '..
 export default function () {
 
     const dispatch = useDispatch();
-    const isProductRegistrationOk = useSelector( state => state.shop.isProductRegistrationOk);
+    const productRegistrationResponse = useSelector( state => state.shop.productRegistrationResponse);
     const isLoggedIn = useSelector( state => state.user.isLoggedIn);
     const [productType, setProductType] = useState('Fruit');
     const [lengthOfText, setLengthOfText] = useState(0);
@@ -24,7 +24,7 @@ export default function () {
            
             dispatch(fetchRegisterProduct(ev));
             dispatch(fetchItems());//Refetch the new products with the one just added
-            setTimeout(()=>{ dispatch(setIsProductRegistrationOk(false))},5000)//Resets the message
+            setTimeout(()=>{ dispatch(setProductRegistrationResponse(''))},5000)//Resets the message
             } else setRegisterErrMsg('Please Log In to start selling your products!');
         }} >
             <FormElementWrapper>
@@ -104,7 +104,7 @@ export default function () {
             <ButtonAlt type="submit">Register the product!</ButtonAlt>
             <Header3>{registerErrMsg}</Header3>
         </Form>
-        {isProductRegistrationOk ? <div>Product Successfully Registered</div> : null}
+        {productRegistrationResponse ? productRegistrationResponse.msg : null}
     </FormWrapper>);
 
 }

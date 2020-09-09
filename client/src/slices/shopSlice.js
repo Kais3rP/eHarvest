@@ -11,7 +11,7 @@ export const shopSlice = createSlice({
     mostSoldItems: [],
     vegetables: [],
     fruit: [],
-    isProductRegistrationOk: false
+    productRegistrationResponse: {}
   },
   reducers: {
     addToCart: (state, action) => {
@@ -63,8 +63,8 @@ export const shopSlice = createSlice({
       };
       state.totalPrice = total;
     },
-    setIsProductRegistrationOk : (state, action) => {
-      state.isProductRegistrationOk = action.payload;
+    setProductRegistrationResponse : (state, action) => {
+      state.productRegistrationResponse = action.payload;
     }
   }
 });
@@ -78,7 +78,7 @@ export const {  addToCart,
                 setFruit,
                 increaseCart,
                 decreaseCart,
-                setIsProductRegistrationOk } = shopSlice.actions;
+                setProductRegistrationResponse } = shopSlice.actions;
 
 //Thunks
 export const fetchItems = () => async dispatch => {
@@ -111,8 +111,8 @@ export const fetchRegisterProduct = (ev) => async dispatch => {
 });
 let data = await res.json();
 console.log(data)
-if (data.isOk) {
-    dispatch(setIsProductRegistrationOk(data.isOk));
+if (res.ok) {
+    dispatch(setProductRegistrationResponse(data));
    }
 }
 export const addItem = () => async dispatch => { 

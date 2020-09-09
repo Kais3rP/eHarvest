@@ -53,7 +53,6 @@ const LeftHeaderContainer = styled.div`
 ${flexRowStart};
 width:30%;
 height:100%;
-
 `
 const RightHeaderContainer = styled.div`
 
@@ -61,14 +60,11 @@ ${flexRowCenter}
 justify-content: flex-end;
 width:30%;
 height:100%;
-
-
 `
 const MidHeaderContainer = styled.div`
 
 ${flexRowCenter};
 width:40%;
-
 `
 
 

@@ -37,10 +37,6 @@ margin-top:300px;
     justify-content:flex-start;
     margin-top:10px;
     width:100%;
-
-
-
-
 }
 `
 const RegLogContainer = styled.div`
