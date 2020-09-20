@@ -9,18 +9,18 @@ const readFile = util.promisify(fs.readFile);
 const readDir = util.promisify(fs.readdir);
 const convertIdNames = require('../helpers/convertIdNames.js');
 const Product = require('../models/Product');
+const isAuthenticated = require('../helpers/authMiddleware');
 
 
-router.post('/add-product', async (req, res, next) => {
+router.post('/add-product', isAuthenticated, async (req, res, next) => {
   // Here I create the DB instance of the item added using the req queries
-  
-  console.log(req.isAuthenticated())
-  if (!req.isAuthenticated()) return res.status(500).send({msg: "You need to Log In to start selling your products"});
+  console.log(req.user)
+  console.log('isAuth:'+req.isAuthenticated())
   try {
     let product = new Product({ ...req.body, soldNTimes: 0 });
     let productDB = await product.save();
     res.status(200).send({msg:'Congrats! Your Product has been added to the store!'})
-  } catch {
+  } catch(err) {
     console.log('Adding product to DB met an error');
     res.status(400).send({msg:'There was an error during the registration of the product'});
   }
@@ -50,6 +50,7 @@ router.get('/get-products', async (req, res) => {
 });
 
 
+//Alternative serving of images with base64
 /*router.get('/get-products', async (req, res) => {
   //Here I make the initial DB call for the items in db
   let products = [];
@@ -91,7 +92,7 @@ router.get('/get-products', async (req, res) => {
 
 
 //This is an alternative way to serve the image to client as base64 and not as a static asset
-async function addPicToObject(obj) {
+/*async function addPicToObject(obj) {
 
   let picName = obj.productName.toLowerCase().replace(/\s/g, '_');
   let fileNames = [];
@@ -138,7 +139,7 @@ async function addPicToObject(obj) {
   let result = { type: obj.type, productName: obj.productName, sellerName: obj.sellerName, price: obj.price, quantityAvailable: obj.quantityAvailable, soldNTimes: obj.soldNTimes, pic: picB64, description: obj.description };
   return result;
 }
-
+*/
 
 
 

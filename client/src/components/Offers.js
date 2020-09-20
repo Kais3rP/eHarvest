@@ -11,7 +11,7 @@ export default function () {
         <OffersWrapper>
             <OffersTitle>OFFERS</OffersTitle>
             <PicThumbnailContainer>
-                {offersItems.map((item, i) => (<PicThumbnail key={i} item={item} />))}
+                {offersItems.map((item, i) => (<PicThumbnail key={i} item={item} idx={i} />))}
             </PicThumbnailContainer>
         </OffersWrapper>) :
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //-------------MongoDB Model---------------
-  var productSchema = new mongoose.Schema({type: String, productName:String, sellerName:String, price:Number, quantityAvailable:Number, soldNTimes:Number, description:String});
+  var productSchema = new mongoose.Schema({owner:String, type: String, productName:String, sellerName:String, price:Number, quantityAvailable:Number, soldNTimes:Number, description:String});
   var Product = mongoose.model('Products', productSchema)
  //----------------------------------------------------- 
   

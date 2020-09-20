@@ -104,17 +104,22 @@ export const fetchItems = () => async dispatch => {
 };
 export const fetchRegisterProduct = (ev) => async dispatch => {
   //To pass variables to a thunk you just need to pass it to the first action creator
-   const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
- let res = await fetch('/products/add-product', {
+  const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
+ try {
+  let res = await fetch('/products/add-product', {
        method: 'POST',
        body:params
 });
 let data = await res.json();
-console.log(data)
-if (res.ok) {
+console.log(data);
+ 
+
     dispatch(setProductRegistrationResponse(data));
-   }
+  } catch(err){
+    console.log(err);
+  }
 }
+
 export const addItem = () => async dispatch => { 
 
 

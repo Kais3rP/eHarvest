@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components';
+import Star from 'star-rating-react-component';
+
+
 
 export default function (){
     return (
         <FooterWrapper>
-            Footer
+           
         </FooterWrapper>
     )
 }

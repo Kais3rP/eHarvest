@@ -65,7 +65,7 @@ router.post('/login', passport.authenticate('local', {failureRedirect: '/auth/lo
     
    
     let message = req.flash().success[0];
-    console.log(message)
+    console.log(message,'isAuth:'+req.isAuthenticated())
 res.status(200).send({user:req.body.email, msg: message});
 });
 
@@ -80,9 +80,8 @@ router.get('/logout', function(req, res){
   router.get('/confirmation/:token', confirmationPost);
   router.get('/resend', resendTokenPost);
 
+
 function confirmationPost (req, res, next) {
-   
- 
    console.log(req.params.token);
  
     // Find a matching token
@@ -106,9 +105,6 @@ function confirmationPost (req, res, next) {
 
 function resendTokenPost(req, res, next) {
    
- 
-   
- 
     User.findOne({ email: req.body.email }, function (err, user) {
         if (!user) return res.status(400).send({ msg: 'We were unable to find a user with that email.' });
         if (user.isVerified) return res.status(400).send({ msg: 'This account has already been verified. Please log in.' });

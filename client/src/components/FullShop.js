@@ -15,11 +15,11 @@ export default function ({ width, height }) {
         (<FullShopWrapper>
             <VegsContainer>
                 <Header3>Vegetables</Header3>
-                <PicThumbnailContainer> {vegetables.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
+                <PicThumbnailContainer> {vegetables.map((item, i) => (<PicThumbnail key={i} item={item} idx={i+200} />))}</PicThumbnailContainer>
             </VegsContainer>
             <FruitContainer>
                 <Header3>Fruit</Header3>
-                <PicThumbnailContainer> {fruit.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
+                <PicThumbnailContainer> {fruit.map((item, i) => (<PicThumbnail key={i} item={item} idx={i+300}/>))}</PicThumbnailContainer>
             </FruitContainer>
         </FullShopWrapper>) :
         (<FullShopWrapper>

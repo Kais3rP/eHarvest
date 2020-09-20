@@ -13,8 +13,7 @@ module.exports = function(app) {
   
     passport.serializeUser((user, done) => {
         console.log("serialize")
-      if (user.id) done(null, user.id);
-      else done(null, user._id); //This needs to identify the id in deserializeuser that comes from a user registered locally and not with OAuth2
+       done(null, user._id); //This needs to identify the id in deserializeuser that comes from a user registered locally and not with OAuth2
     });
   
     passport.deserializeUser((id, done) => {
@@ -34,6 +33,7 @@ module.exports = function(app) {
     //Local Strategy
     passport.use(
       new LocalStrategy(
+        //email and password are the 'name' of the form elements 
         {
         usernameField: 'email',
         passwordField: 'password',
@@ -60,7 +60,8 @@ module.exports = function(app) {
             return done(null, false,  {message: 'Wrong Password'});
           } //password wrong { return done(null, false); }
    // Make sure the user has been verified
-   if (!user.isVerified) return done(null, false,{ type: 'not-verified', msg: 'Your account has not been verified.' }); 
+   console.log(user.isVerified)
+   if (!user.isVerified) return done(null, false,{ type: 'not-verified', msg: 'Your account has not been verified.' }); //isVerified is the user property modified through email verification during registration
           return done(null,user, {message: 'Login Successful'});
         }
         ));

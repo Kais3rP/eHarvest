@@ -12,7 +12,7 @@ export default function () {
   return (
     <MostSoldWrapper>
       <ProductsTitle>MOST SOLD</ProductsTitle>
-      {mostSold ? mostSold.length > 0 ? <PicThumbnailContainer> {mostSold.map((item, i) => (<PicThumbnail key={i} item={item} />))}</PicThumbnailContainer>
+      {mostSold ? mostSold.length > 0 ? <PicThumbnailContainer> {mostSold.map((item, i) => (<PicThumbnail key={i} item={item} idx={i+100} />))}</PicThumbnailContainer>
         :
         <Loader
           type="TailSpin"

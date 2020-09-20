@@ -24,9 +24,12 @@ export default function ({ position }) {
             <ThumbnailsWrapper>
                 {cart.map((item, i) => (<ThumbnailProductContainer key={i}>
                     <ProductPic  id={item.productName} src={item.pic}></ProductPic>
+                    <Text>
                     <Header3>{item.productName}</Header3>
-                    <Header5>from </Header5>
+                    <Header5>Sold by: </Header5>
                     <Header3>{item.sellerName}</Header3>
+                    </Text>
+                    <QuantityControlContainer>
                     <Decrease onClick={() => {
                         dispatch(decreaseCart(item));
                         dispatch(calculateTotalPrice());
@@ -36,6 +39,7 @@ export default function ({ position }) {
                         dispatch(increaseCart(item));
                         dispatch(calculateTotalPrice());
                     }}>+</Increase>
+                    </QuantityControlContainer>
                 </ThumbnailProductContainer>))}
             </ThumbnailsWrapper>
         </CartWrapper>
@@ -87,16 +91,20 @@ background: linear-gradient(145deg, #ffffff, #e6e6e6);
 box-shadow:  1px 1px 5px #878787, 
              -1px -1px 5px #ffffff;
 `
+
+
 const ProductPic = styled.img`
-height:100%;
+width:23%;
 `
-const ProductQuantity = styled.div`
+const Text = styled.div`
+${flexColCenter}
+
+width:43%;
+
+`
+const QuantityControlContainer = styled.div`
 ${flexRowCenter};
-width:10%;
-height:100%;
-font-size:25px;
-margin-right:10px;
-margin-left:10px
+width:30%;
 `
 const CloseCartButton = styled.div`
 margin-right:5px;
@@ -106,6 +114,10 @@ font-size:50px;
 const TotalPriceContainer = styled.div`
 width:98%;
 height:10%;
+`
+
+const ProductQuantity = styled.div`
+margin:10px;
 `
 const Increase = styled(Header1)`
 cursor:pointer;

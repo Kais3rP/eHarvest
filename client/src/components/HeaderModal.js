@@ -33,6 +33,8 @@ background:white;
 transition:top 0.4s ease-in;
 box-shadow:1px 1px 10px 2px grey;
 z-index:3;
+border-bottom-left-radius:50%;
+border-bottom-right-radius:50%;
 
 `
 const ModalWrapper = styled.div`
