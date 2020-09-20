@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-const itemsURL = '/products/get-products'; //Alternative '/products/get-products'  uses the base64 pics
+const itemsURL = '/products/get-products'; 
 
 
 export const shopSlice = createSlice({
@@ -88,10 +88,12 @@ export const fetchItems = () => async dispatch => {
   let fruit = [];
   let mostSold = findFiveMostSold(data);
   let offers = findFiveCheapest(data);
-
+ 
+  console.log(data);
   for (let item of data) {
     item.quantityInCart = 1;  //Adds the cart quantity property
     item.price = parseFloat(item.price);  //converts the price string to number
+    item.rating = (item.rating).toFixed(1);
     if (item.type === 'Vegetables') vegs.push(item);
     if (item.type === 'Fruit') fruit.push(item);
   }
@@ -118,6 +120,22 @@ console.log(data);
   } catch(err){
     console.log(err);
   }
+}
+
+export const rateProduct = (ratingData) => async dispatch => {
+ try{
+  let res = await fetch('/products/rate-product', {
+    method: 'POST',
+    headers:{
+      'content-type':'application/json'
+    },
+    body: JSON.stringify(ratingData)
+  });
+ 
+  if (res.ok) dispatch(fetchItems());
+ } catch(err){
+   console.log(err);
+ }
 }
 
 export const addItem = () => async dispatch => { 

@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 //......................................................................
 const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
+const userDataRouter = require('./routes/getUserData');
 const setAuthStrategies = require('./auth/auth');
 
 //Connect to the DB
@@ -57,6 +58,7 @@ setAuthStrategies(app);
 //API Endpoints
 app.use('/products', productsRouter);
 app.use('/auth', authRouter);
+app.use('/user', userDataRouter);
 
 
 

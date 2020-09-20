@@ -61,12 +61,22 @@ router.get('/login-error', (req,res) => {
     
 })
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/auth/login-error', failureFlash: true, successFlash: true }), (req, res) => {
-    
-   
+router.post('/login', passport.authenticate('local', {failureRedirect: '/auth/login-error', failureFlash: true, successFlash: true }), async (req, res) => {
+    let user;
+    try{
+    user = await User.findOne({email:req.body.email});
+    } catch(err){
+        console.log(err);
+
+    }
     let message = req.flash().success[0];
     console.log(message,'isAuth:'+req.isAuthenticated())
-res.status(200).send({user:req.body.email, msg: message});
+    user = {
+        name:user.name,
+        surname:user.surname,
+        email:user.email,
+}
+res.status(200).send({user:user, msg: message});
 });
 
 router.get('/logout', function(req, res){

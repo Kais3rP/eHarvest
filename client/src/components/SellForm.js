@@ -67,15 +67,7 @@ export default function () {
                             <Option value='Tomatoes'>Tomatoes</Option>
                         </>) : null}
                 </OptionsMenu>
-                <Label>Pick The Name Of Your Product</Label>
-            </FormElementWrapper>
-            <FormElementWrapper>
-                <FormInput type='email' placeholder='PayPal e-mail to receive the payment' name='paypalEmail' required></FormInput>
-                <Label>Type your PayPal e-mail here to receive the payments</Label>
-            </FormElementWrapper>
-            <FormElementWrapper>
-                <FormInput type='text' pattern='[\w\s]{4,}' placeholder='Name of Seller' name='sellerName' required></FormInput>
-                <Label>Type your name here</Label>
+                <Label>Pick Your Product</Label>
             </FormElementWrapper>
             <FormElementWrapper>
                 <FormInput type='text' pattern='\d+.\d\d' placeholder='Price in € per Kg' name='price' required></FormInput>

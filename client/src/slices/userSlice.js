@@ -6,9 +6,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
    isLoggedIn: false,
-   userLogged: '',
+   userData: {},
    registrationResponse: {},
-   loginResponse:{}
+   loginResponse:{},
+   personalProducts:[],
+   
   },
   reducers: {
     setRegistrationResponse: (state, action) => {
@@ -20,16 +22,19 @@ state.registrationResponse = action.payload;
   logOut: (state, action) => {
     state.isLoggedIn = false;
 },
-setUserLogged: (state, action) => {
-    state.userLogged = action.payload;
+setUserData: (state, action) => {
+    state.userData = action.payload;
 },
 setLoginResponse: (state,action) => {
   state.loginResponse = action.payload;
+},
+setPersonalProducts: (state,action) => {
+state.personalProducts = action.payload;
 }
   }
 });
 
-export const { logIn, logOut, setUserLogged, setRegistrationResponse, setLoginResponse } = userSlice.actions;
+export const { logIn, logOut, setUserData, setRegistrationResponse, setLoginResponse, setPersonalProducts } = userSlice.actions;
 
 //Thunks
 
@@ -58,21 +63,28 @@ export const fetchLogin = (ev) => async dispatch => {
 let data = await res.json();
 if (res.ok) {
 dispatch(logIn());
-dispatch(setUserLogged(data.user));
-dispatch(setLoginResponse(data))
+dispatch(setUserData(data.user));
+dispatch(setLoginResponse(data.msg))
 } else
-dispatch(setLoginResponse(data))
+dispatch(setLoginResponse(data.msg))
 }
 
 export const fetchLogout = () => async dispatch => {
     let res = await fetch('/auth/logout');
-    let data = await res.json();
 
 if(res.ok) {
     dispatch(logOut());
-    dispatch(setUserLogged(''));
+    dispatch(setUserData(''));
     dispatch(setLoginResponse(''));
+
 }
+}
+
+export const fetchPersonalProducts = () => async dispatch => {
+  let res = await fetch('/user/get-user-products');
+  let data = await res.json();
+  console.log('Fetching Personal Products');
+  dispatch(setPersonalProducts(data));
 }
 ///Helper functions:
 

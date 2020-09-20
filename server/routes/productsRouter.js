@@ -10,33 +10,45 @@ const readDir = util.promisify(fs.readdir);
 const convertIdNames = require('../helpers/convertIdNames.js');
 const Product = require('../models/Product');
 const isAuthenticated = require('../helpers/authMiddleware');
+const lookForImagePath = require('../helpers/lookForImagePath');
+const ObjectId = require("mongodb").ObjectID;
 
 
 router.post('/add-product', isAuthenticated, async (req, res, next) => {
   // Here I create the DB instance of the item added using the req queries
   console.log(req.user)
-  console.log('isAuth:'+req.isAuthenticated())
+  console.log('isAuth:' + req.isAuthenticated())
   try {
-    let product = new Product({ ...req.body, soldNTimes: 0 });
+    let product = new Product(
+      {
+        ...req.body,
+        owner: req.user.email,
+        sellerName: `${req.user.name} ${req.user.surname}`,
+        soldNTimes: 0,
+        numberOfVotes: 0,
+        rating:0
+      });
     let productDB = await product.save();
-    res.status(200).send({msg:'Congrats! Your Product has been added to the store!'})
-  } catch(err) {
+    res.status(200).send({ msg: 'Congrats! Your Product has been added to the store!' })
+  } catch (err) {
     console.log('Adding product to DB met an error');
-    res.status(400).send({msg:'There was an error during the registration of the product'});
+    res.status(400).send({ msg: 'There was an error during the registration of the product' });
   }
 
 })
 
 //Alternative to serve image as a static asset
 router.get('/get-products', async (req, res) => {
+  console.log('Client is fetching products');
   let products = [];
   try {
     products = await Product.find();
-  } catch (error){
+  } catch (error) {
     console.log(error)
-}
- 
+  }
+
   products = products.map(obj => ({
+    _id:obj._id,
     type: obj.type,
     productName: obj.productName,
     sellerName: obj.sellerName,
@@ -44,12 +56,36 @@ router.get('/get-products', async (req, res) => {
     quantityAvailable: obj.quantityAvailable,
     soldNTimes: obj.soldNTimes,
     pic: lookForImagePath(obj),
-    description: obj.description
+    description: obj.description,
+    numberOfVotes: obj.numberOfVotes,
+    rating: obj.rating
   }))
+
+ 
   res.status(200).send(products);
 });
 
-
+router.post('/rate-product', async (req, res) => {
+  let product;
+  const _id = req.body._id;
+  const score = req.body.score;
+  //console.log(req.body);
+  try {
+    product = await Product.findOne({ _id });
+    
+    let numberOfVotes = product.numberOfVotes+1;
+    let rating = ((product.rating*product.numberOfVotes)+score) / numberOfVotes;
+    console.log(numberOfVotes, product.rating, score)
+    console.log(rating);
+    updatedProduct = await Product.updateOne({ _id }, {
+      numberOfVotes,
+      rating
+})
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error)
+  }
+});
 //Alternative serving of images with base64
 /*router.get('/get-products', async (req, res) => {
   //Here I make the initial DB call for the items in db
@@ -75,19 +111,8 @@ router.get('/get-products', async (req, res) => {
 });*/
 
 
-//-------------------------------------------------------------------------------------------------------
-//------ Logic Functions  -----------------------------------------------------------------------------
 
- function lookForImagePath(obj) {
-  let picName = obj.productName.toLowerCase().replace(/\s/g, '_');
-  let fileNames = [];
-  let type = obj.type;
-  let imgPath = type === 'Vegetables' ?
-    '/vegs-pics' + '/' + picName + '.png' :
-    '/fruit-pics' + '/' + picName + '.png';
-    
-  return imgPath;
-}
+
 
 
 

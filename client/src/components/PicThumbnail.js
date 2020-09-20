@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { rateProduct } from '../slices/shopSlice'
 import styled from 'styled-components';
 import { flexColSpace, flexColCenter, flexRowCenter, Header1, Header2, Header3, Header5 } from '../styled-components/globalStyles';
 import AddToCart from './AddToCart';
@@ -14,10 +15,12 @@ let options = {
   color: "#e6e6e6",
   bgColor: "white",
   borderColor: "white",
-  scoreColor: "inherit"
+  scoreColor: "inherit",
+
 }
 export default function ({ item, idx }) {
-
+console.log(item.rating)
+  const dispatch = useDispatch();
   return (
     <ThumbnailContainer>
       <Circle src={circle}></Circle>
@@ -33,7 +36,8 @@ export default function ({ item, idx }) {
         <Header3>{item.price}€/Kg</Header3>
         
       </InfoContainer>
-      <Star options={{...options, name:idx}}/>
+      <Star options={{...options, name:idx}} handleScore={(score)=>{dispatch(rateProduct({_id:item._id, score}))}}/>
+      <Header3>Total Score: {item.rating} ({item.numberOfVotes})</Header3>
       <AddToCart item={item} />
       
     </ThumbnailContainer>)

@@ -6,6 +6,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import AuthRoute from './components/AuthRoute';
 import styled from 'styled-components';
 import Header from './components/Header';
 import HeaderMobile from './components/HeaderMobile';
@@ -19,6 +20,7 @@ import HowItWorks from './components/HowItWorks';
 import Feedbacks from './components/Feedbacks';
 import SellForm from './components/SellForm';
 import Faq from './components/Faq';
+import PrivateArea from './components/PrivateArea';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems } from './slices/shopSlice';
 import {setWindowSize, toggleHeaderMobile, toggleCart } from './slices/uiSlice';
@@ -42,7 +44,7 @@ export default function () {
         updateWidthAndHeight();
         window.addEventListener("resize", updateWidthAndHeight);
         return () => window.removeEventListener("resize", updateWidthAndHeight);
-    }, [dispatch]);
+    }, []);
 
     const updateWidthAndHeight = () => {
         dispatch(setWindowSize({
@@ -65,27 +67,30 @@ export default function () {
                 {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-220px'} />}
                 {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
                 <Switch>
-                    <Route path="/fullshop" >
+                    <AuthRoute path="/fullshop" >
                         <FullShop />
-                    </Route>
-                    <Route path="/login" >
+                    </AuthRoute>
+                    <AuthRoute path="/login" type="guest">
                         <RegLog />
-                    </Route>
-                    <Route path="/howitworks" >
+                    </AuthRoute>
+                    <AuthRoute path="/howitworks" >
                         <HowItWorks />
-                    </Route>
-                    <Route path="/feedbacks" >
+                    </AuthRoute>
+                    <AuthRoute path="/feedbacks" >
                         <Feedbacks />
-                    </Route>
-                    <Route path="/sell" >
+                    </AuthRoute>
+                    <AuthRoute path="/sell" type="private">
                         <SellForm />
-                    </Route>
-                    <Route path="/faq" >
+                    </AuthRoute>
+                    <AuthRoute path="/faq" >
                         <Faq />
-                    </Route>
-                    <Route path="/" >
+                    </AuthRoute>
+                    <AuthRoute path="/private-area" type="private" >
+                        <PrivateArea />
+                    </AuthRoute>
+                    <AuthRoute path="/" >
                         <MidSection />
-                    </Route>
+                    </AuthRoute>
                 </Switch>
                 <Footer />
             </AppWrapper>
