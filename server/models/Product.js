@@ -12,7 +12,8 @@ var productSchema = new mongoose.Schema(
     soldNTimes: Number,
     description: String,
     numberOfVotes: Number,
-    rating: Number
+    rating: Number,
+    ratedBy: [String]
   });
 var Product = mongoose.model('Products', productSchema)
 //----------------------------------------------------- 

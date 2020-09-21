@@ -58,30 +58,34 @@ router.get('/get-products', async (req, res) => {
     pic: lookForImagePath(obj),
     description: obj.description,
     numberOfVotes: obj.numberOfVotes,
-    rating: obj.rating
+    rating: obj.rating,
+    
   }))
 
  
   res.status(200).send(products);
 });
 
-router.post('/rate-product', async (req, res) => {
+router.post('/rate-product', isAuthenticated, async (req, res) => {
   let product;
   const _id = req.body._id;
   const score = req.body.score;
-  //console.log(req.body);
+  console.log('Rating the product');
   try {
     product = await Product.findOne({ _id });
+    if (product.owner === req.user.email) return res.status(400).send({msg: "You can't rate your product!"})
+    if (product.ratedBy.includes(req.user.email)) return res.status(400).send({msg: "You already  rated this product"});
     
     let numberOfVotes = product.numberOfVotes+1;
     let rating = ((product.rating*product.numberOfVotes)+score) / numberOfVotes;
-    console.log(numberOfVotes, product.rating, score)
-    console.log(rating);
     updatedProduct = await Product.updateOne({ _id }, {
       numberOfVotes,
-      rating
-})
-    res.sendStatus(200);
+      rating,
+      $push:{
+        ratedBy: req.user.email
+      }
+});
+res.status(200).send({msg: "Your vote has been processed"})
   } catch (error) {
     console.log(error)
   }

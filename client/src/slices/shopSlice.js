@@ -11,7 +11,8 @@ export const shopSlice = createSlice({
     mostSoldItems: [],
     vegetables: [],
     fruit: [],
-    productRegistrationResponse: {}
+    productRegistrationResponse: {},
+    productRatingResponse: {}
   },
   reducers: {
     addToCart: (state, action) => {
@@ -65,6 +66,9 @@ export const shopSlice = createSlice({
     },
     setProductRegistrationResponse : (state, action) => {
       state.productRegistrationResponse = action.payload;
+    },
+    setProductRatingResponse : (state, action) => {
+      state.productRatingResponse = action.payload;
     }
   }
 });
@@ -78,7 +82,8 @@ export const {  addToCart,
                 setFruit,
                 increaseCart,
                 decreaseCart,
-                setProductRegistrationResponse } = shopSlice.actions;
+                setProductRegistrationResponse,
+                setProductRatingResponse } = shopSlice.actions;
 
 //Thunks
 export const fetchItems = () => async dispatch => {
@@ -89,7 +94,7 @@ export const fetchItems = () => async dispatch => {
   let mostSold = findFiveMostSold(data);
   let offers = findFiveCheapest(data);
  
-  console.log(data);
+  
   for (let item of data) {
     item.quantityInCart = 1;  //Adds the cart quantity property
     item.price = parseFloat(item.price);  //converts the price string to number
@@ -97,7 +102,7 @@ export const fetchItems = () => async dispatch => {
     if (item.type === 'Vegetables') vegs.push(item);
     if (item.type === 'Fruit') fruit.push(item);
   }
-
+ console.log(vegs.length,fruit.length)
   dispatch(setOffers(offers));
   dispatch(setMostSold(mostSold));
   dispatch(setVegs(vegs));
@@ -114,9 +119,14 @@ export const fetchRegisterProduct = (ev) => async dispatch => {
 });
 let data = await res.json();
 console.log(data);
- 
+ if (res.ok){
+  dispatch(fetchItems());
+  dispatch(setProductRegistrationResponse(data.msg));
+ } else dispatch(setProductRegistrationResponse(data.msg));
 
-    dispatch(setProductRegistrationResponse(data));
+    setTimeout(()=>{
+      dispatch(setProductRegistrationResponse(''));
+    },3000)
   } catch(err){
     console.log(err);
   }
@@ -131,8 +141,15 @@ export const rateProduct = (ratingData) => async dispatch => {
     },
     body: JSON.stringify(ratingData)
   });
- 
-  if (res.ok) dispatch(fetchItems());
+ let data = await res.json();
+  if (res.ok){
+  dispatch(fetchItems());
+  dispatch(setProductRatingResponse(data.msg));
+  }
+  else dispatch(setProductRatingResponse(data.msg));
+  setTimeout(()=>{
+    dispatch(setProductRatingResponse(''));
+  },3000)
  } catch(err){
    console.log(err);
  }

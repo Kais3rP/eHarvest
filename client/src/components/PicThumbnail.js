@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { rateProduct } from '../slices/shopSlice'
 import styled from 'styled-components';
@@ -12,16 +12,20 @@ let options = {
   name: 'main',
   numOfStars: 5,
   starsWidth: '15%',
-  color: "#e6e6e6",
-  bgColor: "white",
+  color: "white",
+  bgColor: "#e6e6e6",
   borderColor: "white",
   scoreColor: "inherit",
+  showText:false
 
 }
 export default function ({ item, idx }) {
-console.log(item.rating)
+  const productRatingResponse = useSelector(state=> state.shop.productRatingResponse);
   const dispatch = useDispatch();
+  const [hasBeenRated, setHasBeenRated] = useState(false);
+ 
   return (
+    <WrapperDiv>
     <ThumbnailContainer>
       <Circle src={circle}></Circle>
       <PicContainer>
@@ -34,15 +38,24 @@ console.log(item.rating)
         <Header5>Grown by: </Header5>
         <Header3>{item.sellerName}</Header3>
         <Header3>{item.price}€/Kg</Header3>
-        
+        <Header3>Total Score: {item.rating} <Header5>({item.numberOfVotes})</Header5></Header3>
       </InfoContainer>
-      <Star options={{...options, name:idx}} handleScore={(score)=>{dispatch(rateProduct({_id:item._id, score}))}}/>
-      <Header3>Total Score: {item.rating} ({item.numberOfVotes})</Header3>
+      <Star options={{...options, name:idx}} handleScore={(score)=>{
+        dispatch(rateProduct({_id:item._id, score}));
+        setHasBeenRated(true);
+        setTimeout(()=> {setHasBeenRated(false)},3000)
+        }}/>
+      
       <AddToCart item={item} />
       
-    </ThumbnailContainer>)
+    </ThumbnailContainer>
+    <RateMessage>{hasBeenRated ? productRatingResponse : null}</RateMessage>
+    </WrapperDiv>)
 }
 
+const WrapperDiv = styled.div`
+${flexColCenter};
+`
 const ThumbnailContainer = styled.div`
 position:relative;
 ${flexColSpace};
@@ -105,4 +118,17 @@ const Circle = styled.img`
 position:absolute;
 z-index:0;
 height:40%;
+`
+const RateMessage = styled(Header5)`
+text-align:center;
+width:80px;
+height:170px;
+@media(min-width:768px){
+  width:120px;
+  height:250px;
+}
+@media(min-width:1200px){
+  width:170px;
+  height:350px;
+}
 `
