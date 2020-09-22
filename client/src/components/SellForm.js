@@ -21,10 +21,7 @@ export default function () {
         <Form onSubmit={  (ev) => { 
              ev.preventDefault();
             if (isLoggedIn) {
-           
             dispatch(fetchRegisterProduct(ev));
-           /* dispatch(fetchItems());//Refetch the new products with the one just added
-            setTimeout(()=>{ dispatch(setProductRegistrationResponse(''))},5000)//Resets the message*/
             } else setRegisterErrMsg('Please Log In to start selling your products!');
         }} >
             <FormElementWrapper>

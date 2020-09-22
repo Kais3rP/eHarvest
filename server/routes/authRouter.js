@@ -57,7 +57,7 @@ router.get('/login-error', (req,res) => {
    
     let message = req.flash().error[0];
     console.log(message)
-    res.status(404).send({isOk:false, msg: message})
+    res.status(404).send({msg: message})
     
 })
 

@@ -66,7 +66,7 @@ export default function () {
          </FormElementWrapper>
          <ButtonAlt type='submit'>Register</ButtonAlt>
          {(passwordConfirm.length === password.length && password.length !== 0) ? password === passwordConfirm ? <ValidHeader>✔ Passwords Match</ValidHeader> : <InvalidHeader>✖ Password don't match</InvalidHeader> : null}
-         <Header3>{registrationResponse ? registrationResponse.msg : null}</Header3>
+         <Header3>{registrationResponse ? registrationResponse : null}</Header3>
          {isPwdCheckerOpen ? (
             <PasswordChecker isLowerCase={isLowerCase} isUpperCase={isUpperCase} isNumber={isNumber} isLongEnough={isLongEnough} />
              ) :

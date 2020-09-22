@@ -7,8 +7,8 @@ export const userSlice = createSlice({
   initialState: {
    isLoggedIn: false,
    userData: {},
-   registrationResponse: {},
-   loginResponse:{},
+   registrationResponse: '',
+   loginResponse:'',
    personalProducts:[],
    
   },
@@ -47,9 +47,11 @@ export const fetchRegister = (ev) => async dispatch => {
  });
  let data = await res.json();
  console.log(data)
-if (res.ok) dispatch(setRegistrationResponse({isOk:true, msg:data}));
-else dispatch(setRegistrationResponse({isOk:false, msg:data}));
-
+if (res.ok) dispatch(setRegistrationResponse(data.msg));
+else dispatch(setRegistrationResponse(data.msg));
+setTimeout(()=>{
+dispatch(setRegistrationResponse(''))
+},3000)
  }
 
 export const fetchLogin = (ev) => async dispatch => {
@@ -61,12 +63,15 @@ export const fetchLogin = (ev) => async dispatch => {
         body:params
 });
 let data = await res.json();
+console.log(data.msg)
 if (res.ok) {
 dispatch(logIn());
 dispatch(setUserData(data.user));
-dispatch(setLoginResponse(data.msg))
-} else
-dispatch(setLoginResponse(data.msg))
+dispatch(setLoginResponse(data.msg));
+} else dispatch(setLoginResponse(data.msg));
+setTimeout(()=>{
+  dispatch(setLoginResponse(''));
+  },3000)
 }
 
 export const fetchLogout = () => async dispatch => {

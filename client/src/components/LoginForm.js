@@ -35,7 +35,7 @@ export default function () {
         </FormElementWrapper>
         <Footer>
         <ButtonAlt type='submit'>Log In</ButtonAlt>
-        <Header3>{loginResponse ? loginResponse.msg : null}</Header3>
+        <Header3>{loginResponse ? loginResponse : null}</Header3>
         <Header3>{errMsgLogin}</Header3>
         </Footer>
      </LoginForm>
