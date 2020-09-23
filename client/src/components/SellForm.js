@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems, fetchRegisterProduct, setProductRegistrationResponse } from '../slices/shopSlice';
-
+import handleAutoResize from '../helpers/autoResizeTextArea'
+import validateTextArea from '../helpers/validateTextArea'
 
 
 
@@ -16,13 +17,14 @@ export default function () {
     const isLoggedIn = useSelector( state => state.user.isLoggedIn);
     const [productType, setProductType] = useState('Fruit');
     const [lengthOfText, setLengthOfText] = useState(0);
-    const [registerErrMsg, setRegisterErrMsg] = useState('');
+    const [hasRegistered, setHasRegistered] = useState(false);
     return (<FormWrapper>
         <Form onSubmit={  (ev) => { 
              ev.preventDefault();
-            if (isLoggedIn) {
-            dispatch(fetchRegisterProduct(ev));
-            } else setRegisterErrMsg('Please Log In to start selling your products!');
+             dispatch(fetchRegisterProduct(ev));
+             setHasRegistered(true);
+             setTimeout(()=>{setHasRegistered(false)},3000);
+           
         }} >
             <FormElementWrapper>
                 <OptionsMenu name='type' onChange={(ev) => { setProductType(ev.target.value) }} required>
@@ -91,29 +93,16 @@ export default function () {
 
 
             <ButtonAlt type="submit">Register the product!</ButtonAlt>
-            <Header3>{registerErrMsg}</Header3>
+            <Header3>{hasRegistered ? productRegistrationResponse : null}</Header3>
         </Form>
-        {productRegistrationResponse ? productRegistrationResponse : null}
     </FormWrapper>);
 
 }
 
-//Logic and Helper functions
-function validateTextArea(ev) {
-    
-    if (ev.target.value.length < 100 || ev.target.value.length > 500)
-        ev.target.setCustomValidity("Wrong length of text"); //Adds a custom html validity check
-    else ev.target.setCustomValidity("");//Removes the custom validity check
-}
-//Resize textarea
-function handleAutoResize(ev) {
-    if (ev.target.scrollHeight > ev.target.clientHeight) {
-        ev.target.rows += 1;
-    }
 
 
 
-}
+
 const FormWrapper = styled.div`
 ${flexColCenter};
 width:100%;

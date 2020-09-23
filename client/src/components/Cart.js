@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter, ButtonAlt, Header1, Header3, Header5, Input } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetCart, increaseCart, decreaseCart, calculateTotalPrice } from '../slices/shopSlice';
 import { toggleCart } from '../slices/uiSlice';
+import { pay } from '../slices/shopSlice';
 
 
 export default function ({ position }) {
     const cart = useSelector(state => state.shop.cart);
     const totalPrice = useSelector(state => state.shop.totalPrice);
+    const payResponse = useSelector(state=>state.shop.payResponse);
+    const [hasPaid, setHasPaid] = useState(false);
     const dispatch = useDispatch();
 
 
@@ -16,9 +19,15 @@ export default function ({ position }) {
         <CartWrapper style={{ right: position }}>
             <ControlCart>
                 <ButtonAlt onClick={() => { dispatch(resetCart()) }}>Reset Cart</ButtonAlt>
-                <ButtonAlt>Pay Now</ButtonAlt>
+                <ButtonAlt onClick={() => { 
+                    dispatch(pay({cart,totalPrice})) 
+                    setHasPaid(true);
+                    setTimeout(()=>{setHasPaid(false)},3000)
+                    }}>Pay Now</ButtonAlt>
                 <CloseCartButton onClick={() => { dispatch(toggleCart()) }}>&times;</CloseCartButton>
+                
             </ControlCart>
+           
             <TotalPriceContainer>
                 <Header3> TOTAL TO PAY: {totalPrice.toFixed(2)}€</Header3>
             </TotalPriceContainer>
@@ -42,6 +51,7 @@ export default function ({ position }) {
                     }}>+</Increase>
                     </QuantityControlContainer>
                 </ThumbnailProductContainer>))}
+                <Header3>{hasPaid ? payResponse : null}</Header3>
             </ThumbnailsWrapper>
             
         </CartWrapper>
@@ -63,6 +73,7 @@ background: linear-gradient(145deg, #ffffff, #e6e6e6);
 box-shadow:  1px 1px 5px #878787, 
              -1px -1px 5px #ffffff;
 @media(min-width:768px){
+    
     margin-top:200px;
 }
 `

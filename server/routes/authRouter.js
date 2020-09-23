@@ -107,6 +107,7 @@ function confirmationPost (req, res, next) {
             user.isVerified = true;
             user.save(function (err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
+                //Alternativley I can set a redirect to / after verification succeded
                 res.status(200).send("The account has been verified. Please log in.");
             });
         });

@@ -91,9 +91,15 @@ res.status(200).send({msg: "Your vote has been processed"})
   }
 });
 
-router.post('/buy-product', isAuthenticated, async (req, res) => {
+router.post('/pay', isAuthenticated, async (req, res) => {
 
-
+//console.log(req.body);
+let cart = req.body.cart.map( x => ({_id: x._id, price: x.price, quantity: x.quantityInCart, productName:x.productName}));
+console.log(cart)
+let payments = [];
+//Here I have to integrate Paypal SDK marketplace payments
+if(false) res.status(400).send({msg:"impossible to process the payment"});
+res.status(200).send({msg:"Payment Received"})
 
 });
 

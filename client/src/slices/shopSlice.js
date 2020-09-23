@@ -11,8 +11,9 @@ export const shopSlice = createSlice({
     mostSoldItems: [],
     vegetables: [],
     fruit: [],
-    productRegistrationResponse: {},
-    productRatingResponse: {}
+    productRegistrationResponse: '',
+    productRatingResponse: '',
+    payResponse: ''
   },
   reducers: {
     addToCart: (state, action) => {
@@ -69,6 +70,9 @@ export const shopSlice = createSlice({
     },
     setProductRatingResponse : (state, action) => {
       state.productRatingResponse = action.payload;
+    },
+    setPayResponse: (state, action) => {
+      state.payResponse = action.payload;
     }
   }
 });
@@ -83,7 +87,8 @@ export const {  addToCart,
                 increaseCart,
                 decreaseCart,
                 setProductRegistrationResponse,
-                setProductRatingResponse } = shopSlice.actions;
+                setProductRatingResponse,
+                setPayResponse } = shopSlice.actions;
 
 //Thunks
 export const fetchItems = () => async dispatch => {
@@ -102,13 +107,12 @@ export const fetchItems = () => async dispatch => {
     if (item.type === 'Vegetables') vegs.push(item);
     if (item.type === 'Fruit') fruit.push(item);
   }
- console.log(vegs.length,fruit.length)
   dispatch(setOffers(offers));
   dispatch(setMostSold(mostSold));
   dispatch(setVegs(vegs));
   dispatch(setFruit(fruit));
-
 };
+
 export const fetchRegisterProduct = (ev) => async dispatch => {
   //To pass variables to a thunk you just need to pass it to the first action creator
   const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
@@ -118,15 +122,11 @@ export const fetchRegisterProduct = (ev) => async dispatch => {
        body:params
 });
 let data = await res.json();
-console.log(data);
  if (res.ok){
   dispatch(fetchItems());
   dispatch(setProductRegistrationResponse(data.msg));
  } else dispatch(setProductRegistrationResponse(data.msg));
 
-    setTimeout(()=>{
-      dispatch(setProductRegistrationResponse(''));
-    },3000)
   } catch(err){
     console.log(err);
   }
@@ -142,11 +142,8 @@ export const rateProduct = (ratingData) => async dispatch => {
     body: JSON.stringify(ratingData)
   });
  let data = await res.json();
-  if (res.ok){
-  dispatch(fetchItems());
+  if (res.ok)dispatch(fetchItems());
   dispatch(setProductRatingResponse(data.msg));
-  }
-  else dispatch(setProductRatingResponse(data.msg));
   setTimeout(()=>{
     dispatch(setProductRatingResponse(''));
   },3000)
@@ -155,10 +152,27 @@ export const rateProduct = (ratingData) => async dispatch => {
  }
 }
 
-export const addItem = () => async dispatch => { 
+export const pay = (payData) => async dispatch => {
+  try{
+   let res = await fetch('/products/pay', {
+     method: 'POST',
+     headers:{
+       'content-type':'application/json'
+     },
+     body: JSON.stringify(payData)
+   });
+  let data = await res.json();
+   if (res.ok) {dispatch(resetCart())};
+   dispatch(setPayResponse(data.msg));
+   setTimeout(()=>{
+     dispatch(setPayResponse(''));
+   },3000)
+  } catch(err){
+    console.log(err);
+  }
+ }
 
-
-}
+ 
 ///Helper functions:
 function findFiveMostSold(arr) {
   return arr.sort((a, b) => b.sold - a.sold)

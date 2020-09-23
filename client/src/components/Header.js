@@ -13,7 +13,7 @@ import Logo from './Logo';
 
 export default function () {
     const isLoggedIn = useSelector( state => state.user.isLoggedIn);
-    const userData = useSelector( state => state.user.userData);
+    const username = useSelector( state => state.user.username);
    
     const dispatch = useDispatch();
     return (
@@ -26,7 +26,7 @@ export default function () {
             <RightHeaderContainer>
                 <LoginContainer>
                 {isLoggedIn ? <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt> :  <HeaderLink><Link to="/login">Welcome! Login</Link></HeaderLink>}                  
-                    <Header5> {isLoggedIn ? `${userData.name} ${userData.surname}` : 'Not Logged'}</Header5> 
+                    <Header5> {isLoggedIn ? username : 'Not Logged'}</Header5> 
                     <Header5> {isLoggedIn ?  <HeaderLink><Link to="/private-area">Personal Area</Link></HeaderLink> : null}</Header5>                   
                     </LoginContainer>              
                 <IconContext.Provider value={{ style: { 'marginRight': '10px', color: 'grey', cursor: 'pointer' } }}  >

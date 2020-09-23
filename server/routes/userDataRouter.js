@@ -3,6 +3,7 @@ const router = express.Router();
 const isAuthenticated = require('../helpers/authMiddleware');
 const Product = require('../models/Product');
 const lookForImagePath = require('../helpers/lookForImagePath');
+const User = require("../models/User");
 
 router.get('/get-user-products', isAuthenticated, async (req, res) => {
     let products = [];
@@ -28,9 +29,40 @@ router.get('/get-user-products', isAuthenticated, async (req, res) => {
     res.status(200).send(products);
   });
 
-  router.get('/get-user-data', isAuthenticated, async (req, res) => {
-   res.status(200).send(req.user);
+  router.get('/get-personal-data', isAuthenticated, async (req, res) => {
+console.log('Fetching personal user data')
+let user;
+    try{
+   user = await User.findOne({email:req.user.email});
+  user = {
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+    description: user.description
+
+  }
+    } catch(err){
+      console.log(err)
+    }
+    console.log(user)
+   res.status(200).send(user);
   });
+  router.post('/update-personal-data', isAuthenticated, async (req, res) => {
+    console.log('Updating personal user data')
+   
+    let user;
+        try{
+       user = await User.findOne({email:req.user.email});
+  
+      Object.assign(user,{...req.body})
+     
+      await user.save();
+        } catch(err){
+          console.log(err)
+        }
+        console.log('Update SUccessful')
+       res.status(200).send({msg:'Update Successful'});
+      });
 
   router.get('/get-user-bought', isAuthenticated, async (req, res) => {
 

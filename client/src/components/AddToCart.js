@@ -8,17 +8,19 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 
 
-export default function ({ item, priv, setHasBeenAdded }) {
+export default function ({ item, setHasBeenAdded, setAddedMessage }) {
     const isCartOpen = useSelector(state => state.ui.isCartOpen);
     const windowSize = useSelector(state => state.ui.windowSize);
+    const username = useSelector(state => state.user.username);
     const dispatch = useDispatch();
     return (
         <ButtonItem onClick={() => {
-            if (!priv){
-            dispatch(addToCart(item));
+            if (username !== item.sellerName){
+                dispatch(addToCart(item));
             dispatch(calculateTotalPrice());
             if (!isCartOpen) dispatch(toggleCart());
-            }
+            setAddedMessage('Product Added to Cart')
+            } else setAddedMessage("You can't add your own products to Cart");
             setHasBeenAdded(true);
             setTimeout(()=> {setHasBeenAdded(false)},3000)    
         }}>

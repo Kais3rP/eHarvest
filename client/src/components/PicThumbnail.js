@@ -21,10 +21,10 @@ let options = {
 }
 export default function ({ item, idx, priv }) {
   const productRatingResponse = useSelector(state=> state.shop.productRatingResponse);
-  const productAddMsg = priv ? "You can't add your own products to cart!" : "Product added to cart"
   const dispatch = useDispatch();
   const [hasBeenRated, setHasBeenRated] = useState(false);
   const [hasBeenAdded, setHasBeenAdded] = useState(false);
+  const [addedMessage, setAddedMessage] = useState('');
   return (
     <WrapperDiv>
     <ThumbnailContainer>
@@ -47,10 +47,10 @@ export default function ({ item, idx, priv }) {
         setTimeout(()=> {setHasBeenRated(false)},3000)
         }}/>
       
-      <AddToCart item={item} priv={priv} setHasBeenAdded={setHasBeenAdded}/>
+      <AddToCart item={item} priv={priv} setHasBeenAdded={setHasBeenAdded} setAddedMessage={setAddedMessage}/>
       
     </ThumbnailContainer>
-    <Message>{hasBeenRated ? productRatingResponse : hasBeenAdded ? productAddMsg : null}</Message>
+    <Message>{hasBeenRated ? productRatingResponse : hasBeenAdded ? addedMessage : null}</Message>
     
     </WrapperDiv>)
 }
