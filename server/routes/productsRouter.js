@@ -58,7 +58,7 @@ router.get('/get-products', async (req, res) => {
     pic: lookForImagePath(obj),
     description: obj.description,
     numberOfVotes: obj.numberOfVotes,
-    rating: obj.rating,
+    rating: obj.rating
     
   }))
 
@@ -90,87 +90,12 @@ res.status(200).send({msg: "Your vote has been processed"})
     console.log(error)
   }
 });
-//Alternative serving of images with base64
-/*router.get('/get-products', async (req, res) => {
-  //Here I make the initial DB call for the items in db
-  let products = [];
-  try {
-    products = await Product.find();
-  } catch {
-    console.log("Couldn't reach the DB")
-  }
-  try {
-    //Add pics to the retrieved objects
-    products = await Promise.all(products.map(async (obj) => {
-      try {
-        return await addPicToObject(obj);
-      } catch {
-        console.log("Error adding the picture data to the object")
-      }
-    }))
-  } catch {
-    console.log("Error, some promise did not resolve");
-  }
-  res.status(200).send(products);
-});*/
+
+router.post('/buy-product', isAuthenticated, async (req, res) => {
 
 
 
-
-
-
-
-//This is an alternative way to serve the image to client as base64 and not as a static asset
-/*async function addPicToObject(obj) {
-
-  let picName = obj.productName.toLowerCase().replace(/\s/g, '_');
-  let fileNames = [];
-  let picB64 = '';
-  let type = obj.type;
-  if (type === 'Vegetables') type = 'vegs';
-  if (type === 'Fruit') type = 'fruit';
-  switch (type) {
-    case 'vegs': {
-      try {
-        vegsFileNames = await readDir(path.resolve(__dirname, '../public/vegs-pics'));
-      } catch {
-        console.log("Error, couldn't read the full directory");
-      }
-      vegsFileId = vegsFileNames.map(x => convertIdNames(x));
-      if (vegsFileId.includes(picName)) {
-        let filePath = path.resolve(__dirname, '../public/vegs-pics') + '/' + picName + '.png';
-        try {
-          picB64 = await readFile(filePath, 'base64');
-        } catch {
-          console.log("Error, couldn't read the image file");
-        }
-      } else console.log(picName, 'Not found');
-    };
-      break;
-    case 'fruit': {
-      try {
-        fruitFileNames = await readDir(path.resolve(__dirname, '../public/fruit-pics'));
-      } catch {
-        console.log("Error, couldn't read the full directory");
-      }
-      fruitFileId = fruitFileNames.map(x => convertIdNames(x));
-      if (fruitFileId.includes(picName)) {
-        let filePath = path.resolve(__dirname, '../public/vegs-pics') + '/' + picName + '.png';
-        try {
-          picB64 = await readFile(filePath, 'base64');
-        } catch {
-          console.log("Error, couldn't read the image file");
-        }
-      } else console.log(picName, 'Not found')
-    };
-      break;
-  }
-  let result = { type: obj.type, productName: obj.productName, sellerName: obj.sellerName, price: obj.price, quantityAvailable: obj.quantityAvailable, soldNTimes: obj.soldNTimes, pic: picB64, description: obj.description };
-  return result;
-}
-*/
-
-
+});
 
 
 

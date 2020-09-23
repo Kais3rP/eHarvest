@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import localForage from 'localforage';
 
 
 
@@ -81,6 +82,11 @@ if(res.ok) {
     dispatch(logOut());
     dispatch(setUserData(''));
     dispatch(setLoginResponse(''));
+    localForage.clear().then(()=>{
+      console.log('Forage cleared')
+    }).catch((err)=>{
+      console.log(err)
+    });
 
 }
 }
@@ -89,6 +95,10 @@ export const fetchPersonalProducts = () => async dispatch => {
   let res = await fetch('/user/get-user-products');
   let data = await res.json();
   console.log('Fetching Personal Products');
+  console.log(data)
+  for (let item of data) {
+    item.price = parseFloat(item.price);  //converts the price string to number
+    item.rating = (item.rating).toFixed(1);}
   dispatch(setPersonalProducts(data));
 }
 ///Helper functions:

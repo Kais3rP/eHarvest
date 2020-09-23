@@ -8,15 +8,19 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 
 
-export default function ({ item }) {
+export default function ({ item, priv, setHasBeenAdded }) {
     const isCartOpen = useSelector(state => state.ui.isCartOpen);
     const windowSize = useSelector(state => state.ui.windowSize);
     const dispatch = useDispatch();
     return (
         <ButtonItem onClick={() => {
+            if (!priv){
             dispatch(addToCart(item));
             dispatch(calculateTotalPrice());
             if (!isCartOpen) dispatch(toggleCart());
+            }
+            setHasBeenAdded(true);
+            setTimeout(()=> {setHasBeenAdded(false)},3000)    
         }}>
             <IconContainer>
                 <IconContext.Provider value={{ style: { color: 'grey', cursor: 'pointer' } }}  >

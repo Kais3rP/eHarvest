@@ -34,7 +34,7 @@ export default function () {
       <RightContainerDiv>
       <Header3>Personal Products</Header3>
             <PicThumbnailContainer>
-                {personalProducts.map((item, i) => (<PicThumbnail key={i} item={item} idx={i} />))}
+                {personalProducts.map((item, i) => (<PicThumbnail key={i} item={item} idx={i} priv={true}/>))}
             </PicThumbnailContainer>
           </RightContainerDiv>
         

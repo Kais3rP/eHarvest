@@ -19,11 +19,12 @@ let options = {
   showText:false
 
 }
-export default function ({ item, idx }) {
+export default function ({ item, idx, priv }) {
   const productRatingResponse = useSelector(state=> state.shop.productRatingResponse);
+  const productAddMsg = priv ? "You can't add your own products to cart!" : "Product added to cart"
   const dispatch = useDispatch();
   const [hasBeenRated, setHasBeenRated] = useState(false);
- 
+  const [hasBeenAdded, setHasBeenAdded] = useState(false);
   return (
     <WrapperDiv>
     <ThumbnailContainer>
@@ -46,10 +47,11 @@ export default function ({ item, idx }) {
         setTimeout(()=> {setHasBeenRated(false)},3000)
         }}/>
       
-      <AddToCart item={item} />
+      <AddToCart item={item} priv={priv} setHasBeenAdded={setHasBeenAdded}/>
       
     </ThumbnailContainer>
-    <RateMessage>{hasBeenRated ? productRatingResponse : null}</RateMessage>
+    <Message>{hasBeenRated ? productRatingResponse : hasBeenAdded ? productAddMsg : null}</Message>
+    
     </WrapperDiv>)
 }
 
@@ -119,7 +121,9 @@ position:absolute;
 z-index:0;
 height:40%;
 `
-const RateMessage = styled(Header5)`
+
+
+const Message = styled(Header5)`
 text-align:center;
 width:80px;
 height:170px;

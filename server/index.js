@@ -13,7 +13,7 @@ const MongoStore = require('connect-mongo')(session);
 //......................................................................
 const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
-const userDataRouter = require('./routes/getUserData');
+const userDataRouter = require('./routes/userDataRouter');
 const setAuthStrategies = require('./auth/auth');
 
 //Connect to the DB

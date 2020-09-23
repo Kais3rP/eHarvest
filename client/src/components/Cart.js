@@ -16,6 +16,7 @@ export default function ({ position }) {
         <CartWrapper style={{ right: position }}>
             <ControlCart>
                 <ButtonAlt onClick={() => { dispatch(resetCart()) }}>Reset Cart</ButtonAlt>
+                <ButtonAlt>Pay Now</ButtonAlt>
                 <CloseCartButton onClick={() => { dispatch(toggleCart()) }}>&times;</CloseCartButton>
             </ControlCart>
             <TotalPriceContainer>
@@ -42,6 +43,7 @@ export default function ({ position }) {
                     </QuantityControlContainer>
                 </ThumbnailProductContainer>))}
             </ThumbnailsWrapper>
+            
         </CartWrapper>
     )
 }

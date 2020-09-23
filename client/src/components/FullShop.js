@@ -9,8 +9,7 @@ export default function ({ width, height }) {
     const vegetables = useSelector(state => state.shop.vegetables);
     const fruit = useSelector(state => state.shop.fruit);
     const dispatch = useDispatch();
-console.log(vegetables)
-console.log(fruit)
+
     return (vegetables.length >= 0 && fruit.length >= 0) ?
 
         (<FullShopWrapper>
