@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import localForage from 'localforage';
-
+import { fetchItems } from './shopSlice';
 
 
 export const userSlice = createSlice({
@@ -125,20 +125,22 @@ export const fetchPersonalData = () => async dispatch => {
   dispatch(setPersonalData(data));
 }
 
-export const fetchUserDataUpdate = (personalData) => async dispatch => {
+export const fetchUserDataUpdate = (newPersonalData) => async dispatch => {
   try{
     let res = await fetch('/user/update-personal-data', {
       method: 'POST',
       headers:{
         'content-type':'application/json'
       },
-      body: JSON.stringify(personalData)
+      body: JSON.stringify(newPersonalData)
     });
    let data = await res.json();
-   const username = `${personalData.name} ${personalData.surname}`
+   const username = `${newPersonalData.name} ${newPersonalData.surname}`
     if (res.ok) {
       dispatch(fetchPersonalData());
       dispatch(setUsername(username));
+      dispatch(fetchItems());
+      dispatch(fetchPersonalProducts());
     };
    
    } catch(err){

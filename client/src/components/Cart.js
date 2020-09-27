@@ -65,16 +65,18 @@ width:320px;
 height:100%;
 ${flexColCenter};
 justify-content:flex-start;
-margin-top:0px;
+margin-top:200px;
 transition: right 0.5s ease-in;
 z-index:2;
 overflow-y: scroll;
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
 box-shadow:  1px 1px 5px #878787, 
              -1px -1px 5px #ffffff;
-@media(min-width:768px){
-    
-    margin-top:200px;
+@media(max-width:768px){
+margin-top:0px;
+}
+@media(max-height:500px){
+margin-top:0px;
 }
 `
 
@@ -82,6 +84,7 @@ const ControlCart = styled.div`
 ${flexRowSpace};
 width:100%;
 height:10%;
+min-height:80px;
 font-size:20px;
 font-weight:bold;
 padding:10px;
@@ -92,10 +95,12 @@ ${flexColCenter};
 justify-content:flex-start;
 width:100%;
 height:80%;
+min-height:500px;
 `
 const ThumbnailProductContainer = styled.div`
 ${flexRowSpace};
 height:10%;
+min-height:80px;
 width:98%;
 text-align:center;
 margin:5px;
@@ -127,6 +132,7 @@ font-size:50px;
 const TotalPriceContainer = styled.div`
 width:98%;
 height:10%;
+min-height:80px;
 `
 
 const ProductQuantity = styled.div`
@@ -139,3 +145,4 @@ cursor:pointer;
 const Decrease = styled(Header1)`
 cursor:pointer;
 `
+

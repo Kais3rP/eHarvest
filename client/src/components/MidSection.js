@@ -23,7 +23,12 @@ margin-top:230px;
 @media (max-width:768px){
     ${flexColCenter};
     justify-content:flex-start;
-    margin-top:10px;
+    margin-top:20px;
+}
+@media (max-height:500px){
+    ${flexColCenter};
+    justify-content:flex-start;
+    margin-top:20px;
 }
 `
 

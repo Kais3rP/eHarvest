@@ -99,6 +99,12 @@ console.log(cart)
 let payments = [];
 //Here I have to integrate Paypal SDK marketplace payments
 if(false) res.status(400).send({msg:"impossible to process the payment"});
+
+//In case payment succeeded update the "bought by" category of product:
+for (let productBought of cart)
+   Product.updateOne({_id: productBought._id}, {$push:{
+    boughtBy: req.user.email
+  }})
 res.status(200).send({msg:"Payment Received"})
 
 });

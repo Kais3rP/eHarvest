@@ -30,9 +30,11 @@ export default function () {
   
    dispatch(fetchPersonalProducts());
    dispatch(fetchPersonalData());
+   console.log('Personal Data: '+ nameInput, surnameInput, emailInput);
+   console.log('Personal Prod: '+personalProducts);
   },[]);
 
-  return personalProducts ? personalProducts.length>0 ? (
+  return personalProducts ? personalProducts.length>=0 ? (
       <MainDiv>
       <LeftWrapperDiv>
       <LeftContainerDiv>

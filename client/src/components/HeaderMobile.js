@@ -68,6 +68,7 @@ const TopHeaderContainer = styled.div`
 ${flexRowCenter};
 width:100%;
 height:40%;
+min-height:200px;
 
 
 `
@@ -76,6 +77,7 @@ const MidHeaderContainer = styled.div`
 ${flexColCenter};
 width:100%;
 height:40%;
+min-height:300px;
 
 
 `
@@ -85,6 +87,7 @@ ${flexRowCenter}
 
 width:100%;
 height:20%;
+min-height:100px;
 
 
 `

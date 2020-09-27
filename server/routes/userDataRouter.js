@@ -47,19 +47,35 @@ let user;
     console.log(user)
    res.status(200).send(user);
   });
+
   router.post('/update-personal-data', isAuthenticated, async (req, res) => {
     console.log('Updating personal user data')
-   
+
+    let previousUserData = {owner:req.user.email,sellerName: `${req.user.name} ${req.user.surname}`};
     let user;
         try{
+          if (req.body.email !== req.user.email) 
+            await Product.updateMany({ratedBy: req.user.email},
+               {$push:{
+              ratedBy: req.body.email
+            }})
        user = await User.findOne({email:req.user.email});
   
-      Object.assign(user,{...req.body})
+      Object.assign(user,{...req.body});
      
       await user.save();
+      //console.log(user)
+      let products = await Product.updateMany({owner:previousUserData.owner},
+                                              {owner:req.body.email,
+                                                 sellerName: `${req.body.name} ${req.body.surname}`,
+                                                 });
+  
         } catch(err){
           console.log(err)
         }
+      
+
+        
         console.log('Update SUccessful')
        res.status(200).send({msg:'Update Successful'});
       });
