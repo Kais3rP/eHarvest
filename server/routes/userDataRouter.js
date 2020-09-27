@@ -13,7 +13,7 @@ const isBlob = require('is-blob');
 //Multer configuration:
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'assets/user-pics');
+    cb(null, path.resolve(__dirname,'..','assets','user-pics'));
   },
   filename: (req, file, cb) => {
     console.log(file);
