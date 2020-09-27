@@ -46,10 +46,7 @@ app.use(flash()); //Support for flash messagesi in req
 setAuthStrategies(app);
 //----------------------------------------------------------------------
 //API Endpoints
-app.get('/', (req, res) => {
-  console.log(req.isAuthenticated())
-  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
-});
+
 app.get('/test', (req, res) => {
   console.log(req.isAuthenticated())
   console.log(req.session)
@@ -60,6 +57,10 @@ app.use('/products', productsRouter);
 app.use('/auth', authRouter);
 app.use('/user', userDataRouter);
 
+//manages non existant url so react router can handle it
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+});
 
 
 const listener = app.listen(process.env.PORT, () => {
