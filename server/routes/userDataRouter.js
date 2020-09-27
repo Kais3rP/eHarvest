@@ -65,7 +65,7 @@ router.get('/get-user-products', isAuthenticated, async (req, res) => {
 
 router.get('/get-personal-data', isAuthenticated, async (req, res) => {
   console.log('Fetching personal user data')
-  const pathToUserPic = path.resolve('assets','user-pics');
+  const pathToUserPic = path.resolve(__dirname,'..','assets','user-pics');
   console.log(pathToUserPic)
   try {
   let user = await User.findOne({ email: req.user.email });
@@ -73,14 +73,6 @@ router.get('/get-personal-data', isAuthenticated, async (req, res) => {
   const nameOfUserPic = user._id.toString(); 
     const buffer = await readFileAsync(pathToUserPic+'/'+nameOfUserPic)
     picture = buffer.toString('base64')
-
-
-
-
-
-
-
-
 
     user = {
       name: user.name,
