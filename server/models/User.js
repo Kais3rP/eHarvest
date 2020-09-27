@@ -11,7 +11,7 @@ var userSchema = new mongoose.Schema({
   passwordResetExpires: Date,
   description:String
 });
-var User = mongoose.model('Users', userSchema)
+var User = mongoose.model('Users', userSchema);
 //----------------------------------------------------- 
 
 module.exports = User;

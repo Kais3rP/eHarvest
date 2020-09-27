@@ -13,6 +13,7 @@ var productSchema = new mongoose.Schema(
     description: String,
     numberOfVotes: Number,
     rating: Number,
+    realPicture: [String],
     ratedBy: [String],
     boughtBy: [String]
   });
