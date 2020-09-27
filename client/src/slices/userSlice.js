@@ -147,6 +147,21 @@ export const fetchUserDataUpdate = (newPersonalData) => async dispatch => {
      console.log(err);
    }
 }
+
+export const asyncUpdateUserPicture = (userPic) => async dispatch => {
+  try{
+  let res = await fetch('/user/upload-personal-picture', {
+    method: 'POST',
+    body: userPic
+  });
+  console.log('Uploading User Pic');
+  if (res.ok) {
+  dispatch(fetchPersonalData());
+  }
+} catch(err){
+  console.log(err);
+}
+}
 ///Helper functions:
 
 

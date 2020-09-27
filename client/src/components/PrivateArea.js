@@ -8,94 +8,68 @@ import { } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import PicThumbnail from './PicThumbnail.js';
 import Loader from 'react-loader-spinner';
-import handleAutoResize from '../helpers/autoResizeTextArea'
-
+import handleAutoResize from '../helpers/autoResizeTextArea';
+import UserInfo from './UserInfo';
+import UserPicture from './UserPicture';
+import UserDescription from './UserDescription';
 
 
 
 
 
 export default function () {
-    const personalProducts = useSelector(state=>state.user.personalProducts);
-    const personalData = useSelector(state=>state.user.personalData);
+    const personalProducts = useSelector(state => state.user.personalProducts);
+    const personalData = useSelector(state => state.user.personalData);
     const [isEditDescriptionMode, setIsEditDescriptionMode] = useState(false);
     const [descriptionText, setDescriptionText] = useState(personalData.description)
     const [isEditInfoMode, setIsEditInfoMode] = useState(false);
     const [nameInput, setNameInput] = useState(personalData.name);
     const [surnameInput, setSurnameInput] = useState(personalData.surname);
     const [emailInput, setEmailInput] = useState(personalData.email);
+    const [isEditPicMode, setIsEditPicMode] = useState(false);
+    const [userPic, setUserPic] = useState('');
     const dispatch = useDispatch();
-    
-  useEffect(()=>{
-  
-   dispatch(fetchPersonalProducts());
-   dispatch(fetchPersonalData());
-   console.log('Personal Data: '+ nameInput, surnameInput, emailInput);
-   console.log('Personal Prod: '+personalProducts);
-  },[]);
 
-  return personalProducts ? personalProducts.length>=0 ? (
-      <MainDiv>
-      <LeftWrapperDiv>
-      <LeftContainerDiv>
-      <Header3>User Info:</Header3>
-      <Header5>Name:  {`${personalData.name} ${personalData.surname}`}</Header5>
-      <Header5>E-mail:  {personalData.email}</Header5>
-      {isEditInfoMode ? (
-          <>
-        <Input   onChange={(ev) => {setNameInput(ev.target.value)}} value={nameInput}></Input>
-        <Input   onChange={(ev) => {setSurnameInput(ev.target.value)}} value={surnameInput}></Input>
-        <Input   onChange={(ev) => {setEmailInput(ev.target.value)}} value={emailInput}></Input>
-        </>
-        )
-        
-        
-         : null}
-                     <ButtonAlt onClick={()=>{
-          if (isEditInfoMode){ 
-              dispatch(fetchUserDataUpdate({...personalData, name: nameInput, surname:surnameInput, email:emailInput}))
-              setIsEditInfoMode(false);
-              } 
-          else setIsEditInfoMode(true)
-      }}>{ isEditDescriptionMode ? 'Submit Changes' : 'Edit Info'}</ButtonAlt>
-      </LeftContainerDiv>
-      <LeftContainerDiv>
-      <Header3>Your personal description as a seller:</Header3>
-      <Descriptiontext>{personalData.description}</Descriptiontext>
-      {isEditDescriptionMode ? <DescriptionTextArea   onChange={(ev) => {
-          handleAutoResize(ev);
-          setDescriptionText(ev.target.value);             
-                    }} value={descriptionText}></DescriptionTextArea> : null}
-                     <ButtonAlt onClick={()=>{
-          if (isEditDescriptionMode){ 
-              dispatch(fetchUserDataUpdate({...personalData, description: descriptionText}))
-              setIsEditDescriptionMode(false);
-              } 
-          else setIsEditDescriptionMode(true)
-      }}>{ isEditDescriptionMode ? 'Submit Changes' : 'Edit Description'}</ButtonAlt>
-      </LeftContainerDiv>
-      <LeftContainerDiv>
-      <Header3>Products you bought:</Header3>
-      {/* Here goes the picthumbnail of productsBought array*/}
-      </LeftContainerDiv>
-      </LeftWrapperDiv>
-      <RightContainerDiv>
-      <Header3>Personal Products</Header3>
-            <PicThumbnailContainer>
-                {personalProducts.map((item, i) => (<PicThumbnail key={i} item={item} idx={i} priv={true}/>))}
-            </PicThumbnailContainer>
-          </RightContainerDiv>
-        
-      </MainDiv>
-  ) :
+    useEffect(() => {
 
-  (    <Loader
-      type="TailSpin"
-      color="black"
-      height={50}
-      width={50}
-      timeout={6000} //6 secs
-    />) : null
+        dispatch(fetchPersonalProducts());
+        dispatch(fetchPersonalData());
+        
+    }, []);
+
+    return personalProducts ? personalProducts.length >= 0 ? (
+        <MainDiv>
+            <LeftWrapperDiv>
+                <LeftContainerDiv>
+                    <UserInfo />
+                </LeftContainerDiv>
+                <LeftContainerDiv>
+                    <UserPicture />
+                </LeftContainerDiv>
+                <LeftContainerDiv>
+                    <UserDescription />
+                </LeftContainerDiv>
+                <LeftContainerDiv>
+                    <Header3>Products you bought:</Header3>
+                    {/* Here goes the picthumbnail of productsBought array*/}
+                </LeftContainerDiv>
+            </LeftWrapperDiv>
+            <RightContainerDiv>
+                <Header3>Personal Products</Header3>
+                <PicThumbnailContainer>
+                    {personalProducts.map((item, i) => (<PicThumbnail key={i} item={item} idx={i} priv={true} />))}
+                </PicThumbnailContainer>
+            </RightContainerDiv>
+        </MainDiv>
+    ) :
+
+        (<Loader
+            type="TailSpin"
+            color="black"
+            height={50}
+            width={50}
+            timeout={6000} //6 secs
+        />) : null
 }
 
 const MainDiv = styled.div`
@@ -161,6 +135,3 @@ const Descriptiontext = styled.p`
 
 
 `
-
-
-
