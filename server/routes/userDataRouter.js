@@ -9,7 +9,6 @@ const fs = require('fs'); //needed to delete the file uploaded once done
 const util = require('util');
 const readFileAsync = util.promisify(fs.readFile);
 const path = require('path');
-const isBlob = require('is-blob');
 //Multer configuration:
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -66,10 +65,8 @@ router.get('/get-user-products', isAuthenticated, async (req, res) => {
 router.get('/get-personal-data', isAuthenticated, async (req, res) => {
   console.log('Fetching personal user data')
   const pathToUserPic = path.resolve(__dirname,'..','assets','user-pics');
-  console.log(pathToUserPic)
   try {
   let user = await User.findOne({ email: req.user.email });
-    console.log(user._id)
   const nameOfUserPic = user._id.toString(); 
     const buffer = await readFileAsync(pathToUserPic+'/'+nameOfUserPic)
     picture = buffer.toString('base64')

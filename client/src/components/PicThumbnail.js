@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { rateProduct } from '../slices/shopSlice'
+import { rateProduct, setProductClicked } from '../slices/shopSlice'
 import styled from 'styled-components';
 import { flexColSpace, flexColCenter, flexRowCenter, Header1, Header2, Header3, Header5 } from '../styled-components/globalStyles';
 import AddToCart from './AddToCart';
 import circle from '../img/circle.svg';
 import { pictureSizes } from '../styled-components/inlineStyles';
 import Star from 'star-rating-react-component';
+import { Link, useLocation } from "react-router-dom";
 
 let options = {
   name: 'main',
@@ -19,25 +20,35 @@ let options = {
   showText:false
 
 }
-export default function ({ item, idx, priv }) {
+export default function ({ item, idx }) {
   const productRatingResponse = useSelector(state=> state.shop.productRatingResponse);
   const dispatch = useDispatch();
   const [hasBeenRated, setHasBeenRated] = useState(false);
   const [hasBeenAdded, setHasBeenAdded] = useState(false);
   const [addedMessage, setAddedMessage] = useState('');
+  const location = useLocation();
   return (
     <WrapperDiv>
-    <ThumbnailContainer>
+   
+    <ThumbnailContainer onClick={()=>{
+      dispatch(setProductClicked(item))
+    }}>
       <Circle src={circle}></Circle>
       <PicContainer>
+      <Link to={`product/${item.productName}`}>
+     
         <Pic src={item.pic}/>
-      </PicContainer>
+      
+      </Link>
+      </PicContainer> 
       <InfoContainer>
         <Header3>
           {item.productName}
         </Header3>
         <Header5>Grown by: </Header5>
+        <Link to={location}>
         <Header3>{item.sellerName}</Header3>
+        </Link>
         <Header3>{item.price}€/Kg</Header3>
         <Header3>Total Score: {item.rating} <Header5>({item.numberOfVotes})</Header5></Header3>
       </InfoContainer>
@@ -46,12 +57,9 @@ export default function ({ item, idx, priv }) {
         setHasBeenRated(true);
         setTimeout(()=> {setHasBeenRated(false)},3000)
         }}/>
-      
-      <AddToCart item={item} priv={priv} setHasBeenAdded={setHasBeenAdded} setAddedMessage={setAddedMessage}/>
-      
+      <AddToCart item={item} setHasBeenAdded={setHasBeenAdded} setAddedMessage={setAddedMessage}/>
     </ThumbnailContainer>
     <Message>{hasBeenRated ? productRatingResponse : hasBeenAdded ? addedMessage : null}</Message>
-    
     </WrapperDiv>)
 }
 

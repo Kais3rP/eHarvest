@@ -22,6 +22,7 @@ import SellForm from './components/SellForm';
 import Faq from './components/Faq';
 import PrivateArea from './components/PrivateArea';
 import Temp404Component from './components/Temp404Component';
+import Product from './components/Product';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems } from './slices/shopSlice';
 import {setWindowSize, toggleHeaderMobile, toggleCart } from './slices/uiSlice';
@@ -87,6 +88,9 @@ export default function () {
                     </AuthRoute>
                     <AuthRoute exact path="/private-area" type="private" >
                         <PrivateArea />
+                    </AuthRoute>
+                    <AuthRoute exact path="/product/*">
+                        <Product />
                     </AuthRoute>
                     <AuthRoute exact path="/" >
                         <MidSection />

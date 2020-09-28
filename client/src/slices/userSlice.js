@@ -77,8 +77,9 @@ export const fetchLogin = (ev) => async dispatch => {
   });
   let data = await res.json();
   console.log(data.msg)
-  const username = `${data.user.name} ${data.user.surname}`
+ 
   if (res.ok) {
+    const username = `${data.user.name} ${data.user.surname}`
     dispatch(logIn());
     dispatch(setUsername(username));
     dispatch(setLoginResponse(data.msg));

@@ -14,7 +14,9 @@ export default function ({ item, setHasBeenAdded, setAddedMessage }) {
     const username = useSelector(state => state.user.username);
     const dispatch = useDispatch();
     return (
-        <ButtonItem onClick={() => {
+        <Container>
+        <ButtonItem onClick={(e) => {
+           
             if (username !== item.sellerName){
                 dispatch(addToCart(item));
             dispatch(calculateTotalPrice());
@@ -22,7 +24,7 @@ export default function ({ item, setHasBeenAdded, setAddedMessage }) {
             setAddedMessage('Product Added to Cart')
             } else setAddedMessage("You can't add your own products to Cart");
             setHasBeenAdded(true);
-            setTimeout(()=> {setHasBeenAdded(false)},3000)    
+            setTimeout(()=> {setHasBeenAdded(false)},3000);   
         }}>
             <IconContainer>
                 <IconContext.Provider value={{ style: { color: 'grey', cursor: 'pointer' } }}  >
@@ -31,16 +33,18 @@ export default function ({ item, setHasBeenAdded, setAddedMessage }) {
             </IconContainer>
             <Title>Add To Cart</Title>
         </ButtonItem>
-
+        </Container>
     )
 }
 
-
+const Container = styled.div`
+width:100%;
+height:15%;
+`
 const ButtonItem = styled(Button)`
 ${flexRowCenter};
 justify-content:flex-start;
-
-height:10%;
+height:100%;
 width:100%;
 border-bottom-left-radius:50px;
 border-bottom-right-radius:50px;

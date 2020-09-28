@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCenter, flexRowSpace, TextArea, Select, Header3 } from '../styled-components/globalStyles';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems, fetchRegisterProduct, setProductRegistrationResponse } from '../slices/shopSlice';
+import { fetchItems, fetchRegisterProduct, asyncUploadProductPicture } from '../slices/shopSlice';
 import handleAutoResize from '../helpers/autoResizeTextArea'
 import validateTextArea from '../helpers/validateTextArea'
 
@@ -18,14 +18,26 @@ export default function () {
     const [productType, setProductType] = useState('Fruit');
     const [lengthOfText, setLengthOfText] = useState(0);
     const [hasRegistered, setHasRegistered] = useState(false);
+    const [productPic, setProductPic] = useState('');
+    const [isNewPicUploaded, setIsNewPicUploaded] = useState('');
     return (<FormWrapper>
-        <Form onSubmit={  (ev) => { 
+        <Form onSubmit={(ev) => { 
              ev.preventDefault();
-             dispatch(fetchRegisterProduct(ev));
-             setHasRegistered(true);
-             setTimeout(()=>{setHasRegistered(false)},3000);
-           
-        }} >
+             const productPicName = `productpic_${new Date().getTime()}`;
+             
+             //Set the object to add to db with the name of the picture
+             const productObject = new URLSearchParams([...new FormData(ev.target).entries(),['productPicName',productPicName]]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
+             setIsNewPicUploaded(true);
+             //Set the picture as formdata
+             const data = new FormData();
+          if (productPic instanceof Blob){
+          data.append('product-picture', productPic, 'product-picture' );
+          
+             dispatch(fetchRegisterProduct(productObject));
+             dispatch(asyncUploadProductPicture({productPic:data, name:productPicName}));
+             setHasRegistered(true); 
+        }}}>
+        {hasRegistered ? <Redirect to='/'/> : null }
             <FormElementWrapper>
                 <OptionsMenu name='type' onChange={(ev) => { setProductType(ev.target.value) }} required>
                     <Option value='Fruit'>Fruit</Option>
@@ -90,11 +102,18 @@ export default function () {
                 <Label>{`Actual: ${lengthOfText}. `}Type here the description of your product min. 100, max. 500 characters</Label>
                
             </FormElementWrapper>
-
-
+            <FormElementWrapper>
+            <FileInput type="file" onChange={(e) => {
+              setProductPic(e.target.files[0]);
+            }} name="product-picture" accept="image/*" required></FileInput>
+            <Label>{`Upload the image of your product, the file must be a *.jpg/png file not bigger than 2MB`}</Label>
+           
+            </FormElementWrapper>
+        
             <ButtonAlt type="submit">Register the product!</ButtonAlt>
-            <Header3>{hasRegistered ? productRegistrationResponse : null}</Header3>
         </Form>
+       
+            {isNewPicUploaded ? <ProductPicPreview src={URL.createObjectURL(productPic)} alt='Product'></ProductPicPreview> : null}
     </FormWrapper>);
 
 }
@@ -152,4 +171,13 @@ width:50%;
 const Label = styled.label`
 font-size:14px;
 width:50%;
+`
+
+const FileInput = styled(Input)`
+    width:50%;
+    `
+
+const ProductPicPreview = styled.img`
+
+width:80%;
 `

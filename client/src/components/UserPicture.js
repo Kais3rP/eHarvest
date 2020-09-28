@@ -31,7 +31,7 @@ export default function () {
             {isNewPicUploaded ? <UserPicPreview src={URL.createObjectURL(userPic)} alt='User'></UserPicPreview> : null}
           </>)
         :
-        <UserPic src={`data:image/png;base64,${personalData.picture}`}></UserPic>
+        <UserPic src={personalData.picture ? `data:image/png;base64,${personalData.picture}` : '/assets/dummy-avatar.jpg'}></UserPic>
       }
       <ButtonAlt onClick={() => {
         if (isEditPicMode) {

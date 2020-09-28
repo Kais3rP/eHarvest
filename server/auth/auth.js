@@ -45,7 +45,7 @@ module.exports = function(app) {
            user = await User.findOne({ email: username });  
         }catch (error){
             console.log(error);
-            done(error);
+            done(null, false,  {message: 'Email not registered'});
         }    
           if (!user) {
             console.log("User non registered");
