@@ -47,7 +47,8 @@ setAuthStrategies(app);
 //----------------------------------------------------------------------
 //API Endpoints
 
-app.get('/test', (req, res) => {
+app.get('/test', (err, req, res,next) => {
+  console.log('test:',err,req,res,next)
   console.log(req.isAuthenticated())
   console.log(req.session)
   res.redirect('/');
@@ -60,8 +61,16 @@ app.use('/user', userDataRouter);
 //manages non existant url so react router can handle it
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+ 
 });
 
+//Custom error handler
+app.use((error, req, res, next) => {
+  console.log('Custom Error Handler');
+  res.status(error.status || 500);
+  res.send(`Error ${error.status || 500} ${error.message} ${error.stack}`);
+  console.log(error);
+})
 
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);

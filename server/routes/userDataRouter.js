@@ -39,13 +39,14 @@ const uploadUserPic = multer({ storage: storage, fileFilter: fileFilter });
 //------------------------------------------------------------------------------
 
 router.get('/get-user-products', isAuthenticated, async (req, res) => {
+  console.log('Client is fetching personal user products');
   let products = [];
   try {
     products = await Product.find({ owner: req.user.email });
   } catch (err) {
     console.log(err)
   }
-
+  console.log(req.user.email)
   products = products.map(obj => ({
     _id: obj._id,
     type: obj.type,
@@ -59,6 +60,7 @@ router.get('/get-user-products', isAuthenticated, async (req, res) => {
     numberOfVotes: obj.numberOfVotes,
     rating: obj.rating,
   }));
+  console.log(products)
   res.status(200).send(products);
 });
 
@@ -78,8 +80,8 @@ router.get('/get-personal-data', isAuthenticated, async (req, res) => {
       description: user.description,
       picture
     };
-
-    
+   
+    console.log(user.name)
     res.status(200).send(user);
   } catch (err) {
     console.log(err)
@@ -90,8 +92,9 @@ router.get('/get-personal-data', isAuthenticated, async (req, res) => {
 router.post('/update-personal-data', isAuthenticated, async (req, res) => {
   console.log('Updating personal user data')
 
-  let previousUserData = { owner: req.user.email, sellerName: `${req.user.name} ${req.user.surname}` };
+  //let previousUserData = { owner: req.user.email, sellerName: `${req.user.name} ${req.user.surname}` };
   let user;
+  //Need to validate non empty strings in req.body or it will return undefined in db
   try {
     if (req.body.email !== req.user.email)
       await Product.updateMany({ ratedBy: req.user.email },
@@ -100,18 +103,17 @@ router.post('/update-personal-data', isAuthenticated, async (req, res) => {
             ratedBy: req.body.email
           }
         })
-    user = await User.findOne({ email: req.user.email });
-
-    Object.assign(user, { ...req.body });
-
-    await user.save();
-    //console.log(user)
-    let products = await Product.updateMany({ owner: previousUserData.owner },
+   await Product.updateMany({ owner: req.user.email },
       {
         owner: req.body.email,
         sellerName: `${req.body.name} ${req.body.surname}`,
       });
+      user = await User.findOne({ email: req.user.email });
 
+      Object.assign(user, { ...req.body });
+  
+      await user.save();
+      //console.log(user)
   } catch (err) {
     console.log(err)
   }

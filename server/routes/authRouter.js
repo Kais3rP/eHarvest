@@ -8,6 +8,11 @@ const ObjectId = require("mongodb").ObjectID;
 const Token = require('../models/TokenVerification');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const isAuthenticated = require('../helpers/authMiddleware');
+
+router.get('/isloggedin', isAuthenticated,  async(req,res) => {
+res.status(200).send('User is logged');
+})
 
 
 router.post('/register', async (req, res) => {

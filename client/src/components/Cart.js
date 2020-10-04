@@ -68,7 +68,7 @@ justify-content:flex-start;
 margin-top:200px;
 transition: right 0.5s ease-in;
 z-index:2;
-overflow-y: scroll;
+overflow-y: auto;
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
 box-shadow:  1px 1px 5px #878787, 
              -1px -1px 5px #ffffff;

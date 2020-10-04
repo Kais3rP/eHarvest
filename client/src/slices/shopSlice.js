@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-const itemsURL = '/products/get-products'; 
+
 
 
 export const shopSlice = createSlice({
@@ -97,12 +97,14 @@ export const {  addToCart,
 
 //Thunks
 export const fetchItems = () => async dispatch => {
-  let res = await fetch(itemsURL);
+  try {
+  let res = await fetch('/products/get-products');
   let data = await res.json();
   let vegs = [];
   let fruit = [];
- 
+  
  console.log(data, data.length)
+  
   if (data.length > 0){
   for (let item of data) {
     item.quantityInCart = 1;  //Adds the cart quantity property
@@ -117,6 +119,9 @@ export const fetchItems = () => async dispatch => {
   dispatch(setMostSold(mostSold));
   dispatch(setVegs(vegs));
   dispatch(setFruit(fruit));
+}
+} catch(err){
+  console.log(err)
 }
 };
 

@@ -25,11 +25,12 @@ import Temp404Component from './components/Temp404Component';
 import Product from './components/Product';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems } from './slices/shopSlice';
+import { isLoggedChecker } from './slices/userSlice';
 import {setWindowSize, toggleHeaderMobile, toggleCart } from './slices/uiSlice';
 import { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { IconContext } from "react-icons";
-
+import MobileIconToggler from "./components/MobileIconToggler";
 
  
 
@@ -42,6 +43,7 @@ export default function () {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(isLoggedChecker());
         dispatch(fetchItems());
         updateWidthAndHeight();
         window.addEventListener("resize", updateWidthAndHeight);
@@ -56,17 +58,21 @@ export default function () {
       };
 
     return (
-            <AppWrapper>
-                { (windowSize.width>768 && windowSize.height>500) ? <Header /> 
-                     : 
-                     <IconContext.Provider value={{ style: { display: 'inline', color: 'grey', zIndex:5, position: 'fixed', left:0 } }}  >
-                     <FaBars size={50} onClick={()=>{
-                         if (isCartOpen) dispatch(toggleCart());
-                         dispatch(toggleHeaderMobile())}}/>
-                     </IconContext.Provider>}
-                {isHeaderMobileOpen ? (windowSize.width<768 || windowSize.height<500) ? <HeaderMobile position={0}/> : <HeaderMobile position={'-500px'}/> : <HeaderMobile position={'-500px'}/>}
-                {isHeaderModalOpen ? <HeaderModal position={'100px'} /> : <HeaderModal position={'-220px'} />}
-                {isCartOpen ? <Cart position={0} /> : <Cart position={'-500px'} />}
+            <AppWrapperDiv>
+                {(windowSize.width>768 && windowSize.height>500) ? 
+                <Header /> :
+                <MobileIconToggler />}
+                {isHeaderMobileOpen ? 
+                (windowSize.width<768 || windowSize.height<500) ? 
+                                   <HeaderMobile position={0}/> : 
+                            <HeaderMobile position={'-500px'}/> : 
+                            <HeaderMobile position={'-500px'}/>}
+                {isHeaderModalOpen ? 
+                <HeaderModal position={'100px'} />: 
+                <HeaderModal position={'-220px'} />}
+                {isCartOpen ? 
+                <Cart position={0} />:
+                <Cart position={'-500px'} />}
                 <Switch>
                     <AuthRoute exact path="/fullshop" >
                         <FullShop />
@@ -100,15 +106,15 @@ export default function () {
                     </AuthRoute>
                 </Switch>
                 <Footer />
-            </AppWrapper>
+            </AppWrapperDiv>
         
     )
 }
 
-const AppWrapper = styled.div`
+const AppWrapperDiv = styled.div`
 ${flexColSpace};
-width:100vw;
-min-height:100vh;
+width:100%;
+height:100%;
 margin:0;
 overflow:hidden;
 `

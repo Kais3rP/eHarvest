@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Input, ValidHeader, InvalidHeader, TextArea, flexColCenter, flexRowCenter, flexRowSpace, Header3, Header5, ButtonAlt } from '../styled-components/globalStyles';
+import { Input, Header3, ButtonAlt } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import {  asyncUpdateUserPicture } from '../slices/userSlice';
-import { } from 'react-icons/fa';
-import { IconContext } from "react-icons";
-import Loader from 'react-loader-spinner';
+import { asyncUpdateUserPicture } from '../slices/userSlice';
+
 
 
 
@@ -16,34 +13,48 @@ export default function () {
   const [userPic, setUserPic] = useState('');
   const [isNewPicUploaded, setIsNewPicUploaded] = useState('');
   const dispatch = useDispatch();
+
+  function onClick() {
+    if (isEditPicMode) {
+      const data = new FormData();
+      if (userPic instanceof Blob) {
+        data.append('user-picture', userPic, 'user-picture');
+        dispatch(asyncUpdateUserPicture(data));
+        setIsEditPicMode(false);
+      }
+    }
+    else setIsEditPicMode(true)
+  }
+
+  function onChange(e) {
+    setUserPic(e.target.files[0]);
+    setIsNewPicUploaded(true);
+  }
+
   return (
     <>
       <Header3>Personal Picture:</Header3>
-      {isEditPicMode ?
-
-        (
-          <>
-            <FileInput type="file" onChange={(e) => {
-              setUserPic(e.target.files[0]);
-              setIsNewPicUploaded(true);
-            }} name="user-picture" accept="image/*"></FileInput>
-
-            {isNewPicUploaded ? <UserPicPreview src={URL.createObjectURL(userPic)} alt='User'></UserPicPreview> : null}
+      {
+        isEditPicMode ?
+          (<>
+            <FileInput
+              type="file"
+              onChange={onChange}
+              name="user-picture"
+              accept="image/*" />
+            {isNewPicUploaded ?
+              <UserPicPreviewImg
+                src={URL.createObjectURL(userPic)}
+                alt='User' /> :
+              null}
           </>)
-        :
-        <UserPic src={personalData.picture ? `data:image/png;base64,${personalData.picture}` : '/assets/dummy-avatar.jpg'}></UserPic>
+          :
+          <UserPicImg
+            src={personalData.picture ?
+              `data:image/png;base64,${personalData.picture}` :
+              '/assets/dummy-avatar.jpg'} />
       }
-      <ButtonAlt onClick={() => {
-        if (isEditPicMode) {
-          const data = new FormData();
-          if (userPic instanceof Blob){
-          data.append('user-picture', userPic, 'user-picture' );
-          dispatch(asyncUpdateUserPicture(data));
-          setIsEditPicMode(false);
-          }
-        }
-        else setIsEditPicMode(true)
-      }}>{isEditPicMode ? 'Submit Changes' : 'Edit Picture'}</ButtonAlt>
+      <ButtonAlt onClick={onClick}>{isEditPicMode ? 'Submit Changes' : 'Edit Picture'}</ButtonAlt>
 
 
     </>
@@ -55,13 +66,12 @@ export default function () {
 const FileInput = styled(Input)`
     width:95%;
     `
-const UserPic = styled.img`
+const UserPicImg = styled.img`
 
 width:80%;
 max-width:300px;
 `
-const UserPicPreview = styled.img`
+const UserPicPreviewImg = styled.img`
 
 width:80%;
 `
-

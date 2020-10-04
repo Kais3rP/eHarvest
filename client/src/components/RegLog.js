@@ -15,16 +15,16 @@ import LoginForm from './LoginForm';
 export default function () {
   
 return (
-      <RegLogWrapper>
-         <RegLogContainer>
+      <RegLogWrapperDiv>
+         <RegLogContainerDiv>
            <RegisterForm/>
-          { <LoginForm/> }
-         </RegLogContainer>       
-      </RegLogWrapper>
+           <LoginForm/> 
+         </RegLogContainerDiv>       
+      </RegLogWrapperDiv>
    )
 }
 
-const RegLogWrapper = styled.div`
+const RegLogWrapperDiv = styled.div`
 ${flexColCenter};
 width:60%;
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
@@ -39,7 +39,7 @@ margin-top:300px;
     width:100%;
 }
 `
-const RegLogContainer = styled.div`
+const RegLogContainerDiv = styled.div`
 ${flexRowSpace};
 align-items:flex-start;
 width:100%;

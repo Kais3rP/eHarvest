@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Input, ValidHeader, InvalidHeader, TextArea, flexColCenter, flexRowCenter, flexRowSpace, Header3, Header5, ButtonAlt } from '../styled-components/globalStyles';
+import { Input, Header3, Header5, ButtonAlt } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPersonalProducts, fetchPersonalData, fetchUserDataUpdate } from '../slices/userSlice';
-import { } from 'react-icons/fa';
-import { IconContext } from "react-icons";
-import PicThumbnail from './PicThumbnail.js';
-import Loader from 'react-loader-spinner';
-import handleAutoResize from '../helpers/autoResizeTextArea';
+import { fetchUserDataUpdate } from '../slices/userSlice';
+
 
 
 export default function () {
@@ -17,6 +13,15 @@ export default function () {
     const [surnameInput, setSurnameInput] = useState(personalData.surname);
     const [emailInput, setEmailInput] = useState(personalData.email);
     const dispatch = useDispatch();
+
+    function onClick(){
+        if (isEditInfoMode){ 
+            dispatch(fetchUserDataUpdate({...personalData, name: nameInput, surname:surnameInput, email:emailInput}))
+            setIsEditInfoMode(false);
+            } 
+        else setIsEditInfoMode(true)
+    }
+
     return (
      <>
       <Header3>User Info:</Header3>
@@ -24,22 +29,12 @@ export default function () {
       <Header5>E-mail:  {personalData.email}</Header5>
      
       {isEditInfoMode ? (
-          <>
-        <Input   onChange={(ev) => {setNameInput(ev.target.value)}} value={nameInput}></Input>
-        <Input   onChange={(ev) => {setSurnameInput(ev.target.value)}} value={surnameInput}></Input>
-        <Input   onChange={(ev) => {setEmailInput(ev.target.value)}} value={emailInput}></Input>
+        <>
+            <Input  onChange={(ev) => {setNameInput(ev.target.value)}} value={personalData.name}></Input>
+            <Input  onChange={(ev) => {setSurnameInput(ev.target.value)}} value={personalData.surname}></Input>
+            <Input  onChange={(ev) => {setEmailInput(ev.target.value)}} value={personalData.email}></Input>
         </>
-        )
-        
-        
-         : null}
-                     <ButtonAlt onClick={()=>{
-          if (isEditInfoMode){ 
-              dispatch(fetchUserDataUpdate({...personalData, name: nameInput, surname:surnameInput, email:emailInput}))
-              setIsEditInfoMode(false);
-              } 
-          else setIsEditInfoMode(true)
-      }}>{ isEditInfoMode ? 'Submit Changes' : 'Edit Info'}</ButtonAlt>
+        ) : null}
+        <ButtonAlt onClick={onClick}>{ isEditInfoMode ? 'Submit Changes' : 'Edit Info'}</ButtonAlt>
       </>
-
     )}

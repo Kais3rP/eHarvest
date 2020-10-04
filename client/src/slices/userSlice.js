@@ -51,6 +51,24 @@ setUsername } = userSlice.actions;
 
 //Thunks
 
+export const isLoggedChecker = () => async dispatch => {
+  let res = await fetch('/auth/isloggedin');
+
+  if (!res.ok) {
+    dispatch(logOut());
+    dispatch(setUsername(''));
+    dispatch(setPersonalData({}));
+    dispatch(setLoginResponse(''));
+    localForage.clear().then(() => {
+      console.log('Forage cleared')
+    }).catch((err) => {
+      console.log(err)
+    });
+
+  }
+}
+
+
 export const fetchRegister = (ev) => async dispatch => {
   //To pass variables to a thunk you just need to pass it to the first action creator
   const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
@@ -110,11 +128,12 @@ export const fetchPersonalProducts = () => async dispatch => {
   let res = await fetch('/user/get-user-products');
   let data = await res.json();
   console.log('Fetching Personal Products');
-
+if (res.ok){
   for (let item of data) {
     item.price = parseFloat(item.price);  //converts the price string to number
     item.rating = (item.rating).toFixed(1);
   }
+}
   dispatch(setPersonalProducts(data));
 }
 
@@ -122,11 +141,13 @@ export const fetchPersonalData = () => async dispatch => {
   let res = await fetch('/user/get-personal-data');
   let data = await res.json();
   console.log('Fetching Personal Data');
-
+  if (res.ok){
   dispatch(setPersonalData(data));
+  }
 }
 
 export const fetchUserDataUpdate = (newPersonalData) => async dispatch => {
+  console.log('UserData Update');
   try{
     let res = await fetch('/user/update-personal-data', {
       method: 'POST',
