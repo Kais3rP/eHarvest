@@ -6,14 +6,7 @@ import { Input, ButtonAlt, ValidHeader, InvalidHeader, flexColCenter, flexRowCen
 import { fetchRegister } from '../slices/userSlice';
 
 
-
-
-
-
-
-
 export default function ({ isLowerCase, isUpperCase, isNumber, isLongEnough }) {
-console.log(isLowerCase, isUpperCase);
    return (
     <PasswordCheckContainer>
     <h3>Password must have:</h3>
@@ -35,6 +28,8 @@ console.log(isLowerCase, isUpperCase);
 
 const PasswordCheckContainer = styled.div`
 width:100%;
+${flexColCenter};
+align-items:flex-start;
 `
 const CheckersWrapper = styled.div`
 ${flexRowCenter};

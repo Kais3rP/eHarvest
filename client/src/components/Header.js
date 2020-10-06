@@ -24,14 +24,18 @@ export default function () {
                 <HeaderLink><Link to="/fullshop">FULL SHOP</Link></HeaderLink>
                 <HeaderLink onMouseOver={() => { dispatch(openHeaderModal()) }} ><a>WHAT'S eHARVEST</a></HeaderLink> </MidHeaderContainer>
             <RightHeaderContainer>
-                <LoginContainer>
-                {isLoggedIn ? <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt> :  <HeaderLink><Link to="/login">Welcome! Login</Link></HeaderLink>}                  
-                    <Header5> {isLoggedIn ? username : 'Not Logged'}</Header5> 
-                    <Header5> {isLoggedIn ?  <HeaderLink><Link to="/private-area">Personal Area</Link></HeaderLink> : null}</Header5>                   
-                    </LoginContainer>              
-                <IconContext.Provider value={{ style: { 'marginRight': '10px', color: 'grey', cursor: 'pointer' } }}  >
+            <ContainerDiv>
+            <MiniNavDiv>
+            <IconContext.Provider value={{ style: { 'marginRight': '10px', color: 'grey', cursor: 'pointer' } }}  >
                     <FaShoppingCart size={30} onClick={() => { dispatch(toggleCart()) }} />
                 </IconContext.Provider>
+                <Header5> {isLoggedIn ?  <HeaderLink><Link to="/private-area">Personal Area</Link></HeaderLink> : null}</Header5>   
+                </MiniNavDiv>    
+                <LoginContainer>
+                {isLoggedIn ? <ButtonAlt type='Button' onClick={()=>{dispatch(fetchLogout())}}>Log Out</ButtonAlt> :  <HeaderLink><Link to="/login">Welcome! Login</Link></HeaderLink>}                  
+                    <Header5> {isLoggedIn ? `Welcome ${username}!` : 'Not Logged'}</Header5>             
+                    </LoginContainer>              
+                    </ContainerDiv>
             </RightHeaderContainer>
         </HeaderWrapper>
 
@@ -58,9 +62,20 @@ height:100%;
 const RightHeaderContainer = styled.div`
 
 ${flexRowCenter}
-justify-content: flex-end;
+justify-content:flex-end;
 width:30%;
 height:100%;
+margin-right:20px;
+`
+const ContainerDiv = styled.div`
+${flexRowCenter};
+align-items:flex-start;
+`
+
+const MiniNavDiv = styled.div`
+
+${flexRowCenter};
+margin-top:12px;
 `
 const MidHeaderContainer = styled.div`
 

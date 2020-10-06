@@ -1,7 +1,7 @@
-export function validatePwd(pwd, pwdConfirm) {
-    if (pwd !== pwdConfirm.value) {
-       pwdConfirm.setCustomValidity("Passwords Don't Match");
+export function validatePwd(pwd, pwdConfirmDOMElem) {
+    if (pwd !== pwdConfirmDOMElem.value) {
+       pwdConfirmDOMElem.setCustomValidity("Passwords Don't Match");
     } else {
-       pwdConfirm.setCustomValidity('');
+       pwdConfirmDOMElem.setCustomValidity('');
     }
  }

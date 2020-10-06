@@ -40,14 +40,15 @@ export default function ({ item, setHasBeenAdded, setAddedMessage }) {
 const Container = styled.div`
 width:100%;
 height:15%;
+
 `
 const ButtonItem = styled(Button)`
 ${flexRowCenter};
 justify-content:flex-start;
 height:100%;
 width:100%;
-border-bottom-left-radius:50px;
-border-bottom-right-radius:50px;
+border-bottom-left-radius:20px;
+border-bottom-right-radius:20px;
 
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
 box-shadow:  1px 1px 5px #6b6b6b, 
@@ -55,9 +56,14 @@ box-shadow:  1px 1px 5px #6b6b6b,
              font-size:8px;
 @media(min-width:768px){
 font-size:10px;
+border-bottom-left-radius:30px;
+border-bottom-right-radius:30px;
 }
 @media(min-width:1200px){
 font-size:16px;
+border-bottom-left-radius:50px;
+border-bottom-right-radius:50px;
+}
 `
 const Title = styled(Header5)`
 width:90%;`

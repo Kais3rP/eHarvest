@@ -7,7 +7,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     isLoggedIn: false,
-    username:'',
+    username: '',
     personalData: {},
     registrationResponse: '',
     loginResponse: '',
@@ -33,13 +33,13 @@ export const userSlice = createSlice({
     setPersonalProducts: (state, action) => {
       state.personalProducts = action.payload;
     },
-    setUsername: (state,action) => {
+    setUsername: (state, action) => {
       state.username = action.payload
     }
   }
 });
 
-export const { 
+export const {
   logIn,
   logOut,
   setUserData,
@@ -47,142 +47,157 @@ export const {
   setLoginResponse,
   setPersonalProducts,
   setPersonalData,
-setUsername } = userSlice.actions;
+  setUsername } = userSlice.actions;
 
 //Thunks
 
 export const isLoggedChecker = () => async dispatch => {
-  let res = await fetch('/auth/isloggedin');
-
-  if (!res.ok) {
-    dispatch(logOut());
-    dispatch(setUsername(''));
-    dispatch(setPersonalData({}));
-    dispatch(setLoginResponse(''));
-    localForage.clear().then(() => {
-      console.log('Forage cleared')
-    }).catch((err) => {
-      console.log(err)
-    });
-
+  try {
+    let res = await fetch('/auth/isloggedin');
+    if (!res.ok) {
+      dispatch(logOut());
+      dispatch(setUsername(''));
+      dispatch(setPersonalData({}));
+      dispatch(setLoginResponse(''));
+      localForage.clear().then(() => {
+        console.log('Forage cleared')
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
 
 
 export const fetchRegister = (ev) => async dispatch => {
-  //To pass variables to a thunk you just need to pass it to the first action creator
-  const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
-  let res = await fetch('/auth/register', {
-    method: 'POST',
-    body: params
-  });
-  let data = await res.json();
-  console.log(data)
-  if (res.ok) dispatch(setRegistrationResponse(data.msg));
-  else dispatch(setRegistrationResponse(data.msg));
-  setTimeout(() => {
-    dispatch(setRegistrationResponse(''))
-  }, 3000)
+  try {
+    const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
+    let res = await fetch('/auth/register', {
+      method: 'POST',
+      body: params
+    });
+    let data = await res.json();
+    console.log(data)
+    if (res.ok) dispatch(setRegistrationResponse(data.msg));
+    else dispatch(setRegistrationResponse(data.msg));
+    setTimeout(() => {
+      dispatch(setRegistrationResponse(''))
+    }, 3000);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export const fetchLogin = (ev) => async dispatch => {
-  //To pass variables to a thunk you just need to pass it to the first action creator
-  //This is how you manage to pass the form data as urlencoded params with a custom fetch
-  const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
-  let res = await fetch('/auth/login', {
-    method: 'POST',
-    body: params
-  });
-  let data = await res.json();
-  console.log(data.msg)
- 
-  if (res.ok) {
-    const username = `${data.user.name} ${data.user.surname}`
-    dispatch(logIn());
-    dispatch(setUsername(username));
-    dispatch(setLoginResponse(data.msg));
-  } else dispatch(setLoginResponse(data.msg));
-  setTimeout(() => {
-    dispatch(setLoginResponse(''));
-  }, 3000)
+  try {
+    const params = new URLSearchParams([...new FormData(ev.target).entries()]); //This spreads the form key-value pairs and puts them in a format sendable with a www-url-encoded mime-type
+    let res = await fetch('/auth/login', {
+      method: 'POST',
+      body: params
+    });
+    let data = await res.json();
+    console.log(data.msg)
+
+    if (res.ok) {
+      const username = `${data.user.name} ${data.user.surname}`
+      dispatch(logIn());
+      dispatch(setUsername(username));
+      dispatch(setLoginResponse(data.msg));
+    } else dispatch(setLoginResponse(data.msg));
+    setTimeout(() => {
+      dispatch(setLoginResponse(''));
+    }, 3000);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export const fetchLogout = () => async dispatch => {
-  let res = await fetch('/auth/logout');
+  try {
+    let res = await fetch('/auth/logout');
 
-  if (res.ok) {
-    dispatch(logOut());
-    dispatch(setUsername(''));
-    dispatch(setPersonalData({}));
-    dispatch(setLoginResponse(''));
-    localForage.clear().then(() => {
-      console.log('Forage cleared')
-    }).catch((err) => {
-      console.log(err)
-    });
+    if (res.ok) {
+      dispatch(logOut());
+      dispatch(setUsername(''));
+      dispatch(setPersonalData({}));
+      dispatch(setLoginResponse(''));
+      localForage.clear().then(() => {
+        console.log('Forage cleared')
+      }).catch((err) => {
+        console.log(err)
+      });
 
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
 
 export const fetchPersonalProducts = () => async dispatch => {
-  let res = await fetch('/user/get-user-products');
-  let data = await res.json();
-  console.log('Fetching Personal Products');
-if (res.ok){
-  for (let item of data) {
-    item.price = parseFloat(item.price);  //converts the price string to number
-    item.rating = (item.rating).toFixed(1);
+  try {
+    let res = await fetch('/user/get-user-products');
+    let data = await res.json();
+    console.log('Fetching Personal Products');
+    if (res.ok) {
+      for (let item of data) {
+        item.price = parseFloat(item.price);  //converts the price string to number
+        item.rating = (item.rating).toFixed(1);
+      }
+    }
+    dispatch(setPersonalProducts(data));
+  } catch (err) {
+    console.log(err);
   }
-}
-  dispatch(setPersonalProducts(data));
 }
 
 export const fetchPersonalData = () => async dispatch => {
   let res = await fetch('/user/get-personal-data');
   let data = await res.json();
   console.log('Fetching Personal Data');
-  if (res.ok){
-  dispatch(setPersonalData(data));
+  if (res.ok) {
+    dispatch(setPersonalData(data));
   }
 }
 
 export const fetchUserDataUpdate = (newPersonalData) => async dispatch => {
   console.log('UserData Update');
-  try{
+  try {
     let res = await fetch('/user/update-personal-data', {
       method: 'POST',
-      headers:{
-        'content-type':'application/json'
+      headers: {
+        'content-type': 'application/json'
       },
       body: JSON.stringify(newPersonalData)
     });
-   let data = await res.json();
-   const username = `${newPersonalData.name} ${newPersonalData.surname}`
+    let data = await res.json();
+    const username = `${newPersonalData.name} ${newPersonalData.surname}`
     if (res.ok) {
       dispatch(fetchPersonalData());
       dispatch(setUsername(username));
       dispatch(fetchItems());
       dispatch(fetchPersonalProducts());
     };
-   
-   } catch(err){
-     console.log(err);
-   }
+
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export const asyncUpdateUserPicture = (userPic) => async dispatch => {
-  try{
-  let res = await fetch('/user/upload-personal-picture', {
-    method: 'POST',
-    body: userPic
-  });
-  console.log('Uploading User Pic');
-  if (res.ok) {
-  dispatch(fetchPersonalData());
+  try {
+    let res = await fetch('/user/upload-personal-picture', {
+      method: 'POST',
+      body: userPic
+    });
+    console.log('Uploading User Pic');
+    if (res.ok) {
+      dispatch(fetchPersonalData());
+    }
+  } catch (err) {
+    console.log(err);
   }
-} catch(err){
-  console.log(err);
-}
 }
 ///Helper functions:
 

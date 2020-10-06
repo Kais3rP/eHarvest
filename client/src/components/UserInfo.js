@@ -16,7 +16,7 @@ export default function () {
 
     function onClick(){
         if (isEditInfoMode){ 
-            dispatch(fetchUserDataUpdate({...personalData, name: nameInput, surname:surnameInput, email:emailInput}))
+            dispatch(fetchUserDataUpdate({ name: nameInput, surname:surnameInput, email:emailInput}));
             setIsEditInfoMode(false);
             } 
         else setIsEditInfoMode(true)
@@ -30,9 +30,9 @@ export default function () {
      
       {isEditInfoMode ? (
         <>
-            <Input  onChange={(ev) => {setNameInput(ev.target.value)}} value={personalData.name}></Input>
-            <Input  onChange={(ev) => {setSurnameInput(ev.target.value)}} value={personalData.surname}></Input>
-            <Input  onChange={(ev) => {setEmailInput(ev.target.value)}} value={personalData.email}></Input>
+            <Input  onChange={(ev) => {setNameInput(ev.target.value)}} value={nameInput}/>
+            <Input  onChange={(ev) => {setSurnameInput(ev.target.value)}} value={surnameInput}/>
+            <Input  onChange={(ev) => {setEmailInput(ev.target.value)}} value={emailInput}/>
         </>
         ) : null}
         <ButtonAlt onClick={onClick}>{ isEditInfoMode ? 'Submit Changes' : 'Edit Info'}</ButtonAlt>

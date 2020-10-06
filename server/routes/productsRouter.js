@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const isAuthenticated = require('../helpers/authMiddleware');
-const ObjectId = require("mongodb").ObjectID;
 const multer = require('multer'); //multer is a middleware that parses bodies of POST with multi-part/formdata
 const editRouter = require('../handlers/editRouter');
 const {
@@ -73,14 +72,7 @@ const routers = [{
   handler: uploadProductPicture
 }]
 
-
 for (let router of routers)
 editRouter(router)
-
-
-
-
-
-
 
 module.exports = router;

@@ -20,21 +20,12 @@ import UserDescription from './UserDescription';
 export default function () {
     const personalProducts = useSelector(state => state.user.personalProducts);
     const personalData = useSelector(state => state.user.personalData);
-    const [isEditDescriptionMode, setIsEditDescriptionMode] = useState(false);
-    const [descriptionText, setDescriptionText] = useState(personalData.description)
-    const [isEditInfoMode, setIsEditInfoMode] = useState(false);
-    const [nameInput, setNameInput] = useState(personalData.name);
-    const [surnameInput, setSurnameInput] = useState(personalData.surname);
-    const [emailInput, setEmailInput] = useState(personalData.email);
-    const [isEditPicMode, setIsEditPicMode] = useState(false);
-    const [userPic, setUserPic] = useState('');
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         dispatch(fetchPersonalProducts());
         dispatch(fetchPersonalData());
-        
+
     }, []);
 
     return personalProducts ? personalProducts.length >= 0 ? (
