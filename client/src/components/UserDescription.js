@@ -18,7 +18,7 @@ export default function () {
 
     function onClick() {
         if (isEditDescriptionMode) {
-            dispatch(fetchUserDataUpdate({ ...personalData, description: descriptionText }))
+            dispatch(fetchUserDataUpdate({ description: descriptionText }))
             setIsEditDescriptionMode(false);
         }
         else setIsEditDescriptionMode(true)

@@ -4,16 +4,26 @@ import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter } from '../sty
 import Offers from './Offers';
 import MostSold from './MostSold.js';
 import { useSelector } from 'react-redux';
+import Loader from 'react-loader-spinner';
 
 export default function () {
-    
-    return (
-        <MidSectionWrapper>
-            <Offers />
-            <MostSold />
-        </MidSectionWrapper>
-)
-}
+    const offersItems = useSelector(state => state.shop.offersItems);
+    const mostSold = useSelector(state => state.shop.mostSoldItems)
+    return offersItems && mostSold ? 
+        (<MidSectionWrapper>
+         <Offers offersItems={offersItems} />
+            <MostSold mostSold={mostSold} />
+        </MidSectionWrapper>) :
+            <Loader
+            type="TailSpin"
+            color="black"
+            height={50}
+            width={50}
+            timeout={6000} //6 secs
+          />  
+        }
+
+
 
 const MidSectionWrapper = styled.div`
 ${flexRowCenter};

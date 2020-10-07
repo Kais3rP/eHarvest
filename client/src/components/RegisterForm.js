@@ -16,19 +16,33 @@ export default function () {
    const registrationResponse = useSelector(state => state.user.registrationResponse);
 
    const { 
+      
       isPwdCheckerOpen, 
       password, 
       passwordCheck, 
+      isValidName,
+      isValidSurname,
+      isValidEmail,
       isValidPwd, 
       validationParams, 
       pwdProps, 
-      pwdCheckProps } = usePwdValidator();
+      pwdCheckProps,
+   nameProps,
+surnameProps,
+emailProps,
+resetValidators } = usePwdValidator();
   
    function onSubmit(ev) {
       ev.preventDefault();
-      if (password !== passwordCheck || !isValidPwd) return;
+      if (password === passwordCheck &&
+          isValidPwd     &&
+          isValidName    &&
+          isValidSurname &&
+          isValidEmail) {
       dispatch(fetchRegister(ev));
       ev.target.reset();
+      resetValidators();
+          }
    }
 
    console.log('rerender')
@@ -36,23 +50,30 @@ export default function () {
       <RegisterForm onSubmit={onSubmit}>
          <Header3>Register</Header3>
          <FormElementWrapperDiv>
-            <FormInput placeholder={'Name'} type={'text'} name="name" required />
+         {isValidName                  ?
+         <ValidHeader>✔</ValidHeader> :
+         <InvalidHeader>✖ </InvalidHeader>}
+            <FormInput {...nameProps} />
             <Label>Name</Label>
          </FormElementWrapperDiv>
          <FormElementWrapperDiv>
-            <FormInput placeholder={'Surname'} type={'text'} name="surname" required />
+         {isValidSurname                 ?
+         <ValidHeader>✔</ValidHeader> :
+         <InvalidHeader>✖ </InvalidHeader>}
+            <FormInput {...surnameProps} />
             <Label>Surname</Label>
          </FormElementWrapperDiv>
          <FormElementWrapperDiv>
-            <FormInput placeholder={'email@example.it'} type={'email'} name="email" required />
+         {isValidEmail                  ?
+         <ValidHeader>✔</ValidHeader> :
+         <InvalidHeader>✖ </InvalidHeader>}
+            <FormInput {...emailProps} />
             <Label>E-mail Address</Label>
          </FormElementWrapperDiv>
          <FormElementWrapperDiv>
-         {
-            isValidPwd ?
-               <ValidHeader>✔</ValidHeader> :
-               <InvalidHeader>✖ </InvalidHeader>
-         }
+         {isValidPwd                  ?
+         <ValidHeader>✔</ValidHeader> :
+         <InvalidHeader>✖ </InvalidHeader>}
             <FormInput {...pwdProps} />
             <Label>Password</Label>
          </FormElementWrapperDiv>

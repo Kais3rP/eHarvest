@@ -54,7 +54,13 @@ export const {
 export const isLoggedChecker = () => async dispatch => {
   try {
     let res = await fetch('/auth/isloggedin');
-    if (!res.ok) {
+    if (res.ok)  {
+      let data = await res.json();
+      console.log(data)
+        const username = `${data.name} ${data.surname}`
+        dispatch(logIn());
+        dispatch(setUsername(username));
+      } else {
       dispatch(logOut());
       dispatch(setUsername(''));
       dispatch(setPersonalData({}));
@@ -65,6 +71,8 @@ export const isLoggedChecker = () => async dispatch => {
         console.log(err)
       });
     }
+   
+    
   } catch (err) {
     console.log(err);
   }
@@ -80,11 +88,10 @@ export const fetchRegister = (ev) => async dispatch => {
     });
     let data = await res.json();
     console.log(data)
-    if (res.ok) dispatch(setRegistrationResponse(data.msg));
-    else dispatch(setRegistrationResponse(data.msg));
+    dispatch(setRegistrationResponse(data.msg));
     setTimeout(() => {
       dispatch(setRegistrationResponse(''))
-    }, 3000);
+    }, 5000);
   } catch (err) {
     console.log(err);
   }
@@ -161,21 +168,21 @@ export const fetchPersonalData = () => async dispatch => {
   }
 }
 
-export const fetchUserDataUpdate = (newPersonalData) => async dispatch => {
+export const fetchUserDataUpdate = (updatedData) => async dispatch => {
   console.log('UserData Update');
+  if(!(updatedData.name && updatedData.surname && updatedData.email)) return;
   try {
     let res = await fetch('/user/update-personal-data', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify(newPersonalData)
+      body: JSON.stringify(updatedData)
     });
-    let data = await res.json();
-    const username = `${newPersonalData.name} ${newPersonalData.surname}`
+    const username = `${updatedData.name} ${updatedData.surname}`
     if (res.ok) {
+      if(updatedData.name) dispatch(setUsername(username));
       dispatch(fetchPersonalData());
-      dispatch(setUsername(username));
       dispatch(fetchItems());
       dispatch(fetchPersonalProducts());
     };

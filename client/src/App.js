@@ -59,20 +59,18 @@ export default function () {
 
     return (
             <AppWrapperDiv>
-                {(windowSize.width>768 && windowSize.height>500) ? 
+                {windowSize.width>768 && windowSize.height>500 ? 
                 <Header /> :
-                <MobileIconToggler />}
-                {isHeaderMobileOpen ? 
-                (windowSize.width<768 || windowSize.height<500) ? 
-                                   <HeaderMobile position={0}/> : 
-                            <HeaderMobile position={'-500px'}/> : 
-                            <HeaderMobile position={'-500px'}/>}
-                {isHeaderModalOpen ? 
-                <HeaderModal position={'100px'} />: 
-                <HeaderModal position={'-220px'} />}
-                {isCartOpen ? 
-                <Cart position={0} />:
-                <Cart position={'-500px'} />}
+                <MobileIconToggler />}              
+                <HeaderMobile position={
+                    isHeaderMobileOpen ? 
+                    windowSize.width<768 || windowSize.height<500 ? 
+                    0 : '-500px' : '-500px'}/>                 
+                <HeaderModal position={
+                    isHeaderModalOpen ? 
+                    windowSize.width>768 && windowSize.height>500 ?
+                    '100px' : '-220px' : '-220px'} />                                              
+                <Cart position={isCartOpen ? 0 : '-500px'} />
                 <Switch>
                     <AuthRoute exact path="/fullshop" >
                         <FullShop />

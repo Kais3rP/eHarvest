@@ -14,9 +14,6 @@ import OptionsMenu from './OptionsMenu'
 export default function () {
 
     const dispatch = useDispatch();
-    const productRegistrationResponse = useSelector(state => state.shop.productRegistrationResponse);
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-    const [productType, setProductType] = useState('Fruit');
     const [lengthOfText, setLengthOfText] = useState(0);
     const [hasRegistered, setHasRegistered] = useState(false);
     const [productPic, setProductPic] = useState('');

@@ -3,27 +3,18 @@ import styled from 'styled-components';
 import { flexColSpace, flexColCenter, flexRowSpace, flexRowCenter } from '../styled-components/globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import PicThumbnail from './PicThumbnail.js';
-import Loader from 'react-loader-spinner';
 
-export default function () {
-    const offersItems = useSelector(state => state.shop.offersItems);
-    return offersItems ? offersItems.length>0 ? (
-        <OffersWrapper>
+
+export default function ({offersItems}) {
+    
+    return (
+    <OffersWrapper>
             <OffersTitle>OFFERS</OffersTitle>
             <PicThumbnailContainer>
                 {offersItems.map((item, i) => (<PicThumbnail key={i} item={item} idx={i} />))}
             </PicThumbnailContainer>
-        </OffersWrapper>) :
-
-        (    <Loader
-            type="TailSpin"
-            color="black"
-            height={50}
-            width={50}
-            timeout={6000} //6 secs
-          />) : null
-
-    
+        </OffersWrapper> 
+    )
 }
 
 const OffersWrapper = styled.div`

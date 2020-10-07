@@ -15,35 +15,59 @@ export default function () {
   console.log(productClicked)
   return (
     <WrapperDiv>
-    <ProductPicSVG src={productClicked.pic}></ProductPicSVG>
-    <div>Type: {productClicked.type}</div>
-    <div>Name: {productClicked.productName}</div>
-    <div>This is sold by: {productClicked.sellerName}</div>
-    <div>Price per Kg: {productClicked.price}€</div>
-    <div>Actually there are still {productClicked.quantityAvailable} Kgs available</div>
-    <div>These {productClicked.productName} have been bought: {productClicked.soldNTimes} times</div>
-    <DescriptionDiv>Description: {productClicked.description}</DescriptionDiv>
-    <div>This item has been rated {productClicked.numberOfVotes} times</div>
-    <div>Average rating of the product: {productClicked.rating}</div>
-    <div>Real picture of the product:</div>
-    <ProductPic src={`data:image/png;base64,${productClicked.realPicture}`}></ProductPic>
-    
+    <LeftMainContainerDiv>
+    <ProductSvgImg src={productClicked.pic}></ProductSvgImg>
+    <div><Header2>Category:</Header2> {productClicked.type}</div>
+    <div><Header2>Product Name:</Header2> {productClicked.productName}</div>
+    <div><Header2>Seller Name:</Header2> {productClicked.sellerName}</div>
+    <div><Header2>Price (€/Kg):</Header2> {productClicked.price}€</div>
+    <div><Header2>Quantity available:</Header2> {productClicked.quantityAvailable} Kgs available</div>
+    <div>These {productClicked.productName} have been bought {productClicked.soldNTimes} times</div>
+    <DescriptionDiv>
+    <Header2>Description:</Header2> {productClicked.description}
+    </DescriptionDiv>
+    <div><Header2>This product has been rated </Header2> {productClicked.numberOfVotes} times</div>
+    <div><Header2>Average rating:</Header2> {productClicked.rating}</div>
+    </LeftMainContainerDiv>
+    <RightMainContainerDiv>
+    <PicturesContainerDiv>
+    <ProductPicImg src={`data:image/png;base64,${productClicked.realPicture}`}></ProductPicImg>
+    <ProductPicImg src={`data:image/png;base64,${productClicked.realPicture}`}></ProductPicImg>
+    <ProductPicImg src={`data:image/png;base64,${productClicked.realPicture}`}></ProductPicImg>
+    <ProductPicImg src={`data:image/png;base64,${productClicked.realPicture}`}></ProductPicImg>
+    <ProductPicImg src={`data:image/png;base64,${productClicked.realPicture}`}></ProductPicImg>
+    </PicturesContainerDiv>
+   
+    </RightMainContainerDiv>
     </WrapperDiv>)
 }
 
 const WrapperDiv = styled.div`
-${flexColCenter};
-margin-top:500px;
+${flexRowCenter};
+margin-top:250px;
+width:100%;
+align-items:flex-start;
+`
+const LeftMainContainerDiv = styled.div`
+width:48%;
+`
+
+const RightMainContainerDiv = styled.div`
+width:48%;
+`
+
+const PicturesContainerDiv = styled.div`
+width:100%;
 `
 
 const DescriptionDiv = styled.div`
 width:30%;
-background:red;
 overflow:auto;
 `
-const ProductPic = styled.img`
-
+const ProductPicImg = styled.img`
+width: 48%;
+margin:5px;
 `
-const ProductPicSVG = styled.img`
-width:10%;
+const ProductSvgImg = styled.img`
+width:15%;
 `

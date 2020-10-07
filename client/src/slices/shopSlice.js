@@ -97,13 +97,13 @@ export const {  addToCart,
 
 //Thunks
 export const fetchItems = () => async dispatch => {
+  console.log("Fetching list of products")
   try {
   let res = await fetch('/products/get-products');
   let data = await res.json();
   let vegs = [];
   let fruit = [];
   
- console.log(data, data.length)
   
   if (data.length > 0){
   for (let item of data) {
@@ -113,13 +113,15 @@ export const fetchItems = () => async dispatch => {
     if (item.type === 'Vegetables') vegs.push(item);
     if (item.type === 'Fruit') fruit.push(item);
   }
+}
+  
   let mostSold = findFiveMostSold(data);
   let offers = findFiveCheapest(data);
   dispatch(setOffers(offers));
   dispatch(setMostSold(mostSold));
   dispatch(setVegs(vegs));
   dispatch(setFruit(fruit));
-}
+
 } catch(err){
   console.log(err)
 }
