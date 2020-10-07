@@ -53,7 +53,7 @@ async function getProducts(req, res) {
     }));*/
     const finalProducts = [];
     for (let obj of products){
-      const picture = await readFileAsync(pathToProductPic + '/' + obj.productPicName, 'base64');
+    const picture = await readFileAsync(pathToProductPic + '/' + obj.productPicName, 'base64');
     finalProducts.push( 
       {
      _id: obj._id,

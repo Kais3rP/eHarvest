@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const path = require('path');
 const isAuthenticated = require('../helpers/authMiddleware');
 const User = require("../models/User");
 const multer = require('multer'); //multer is a middleware that parses bodies of POST with multi-part/formdata

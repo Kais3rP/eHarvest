@@ -1,6 +1,6 @@
 const express = require("express");
-const app = express();
 const router = express.Router();
+const path = require('path');
 const User = require('../models/User');
 const passport = require("passport");
 const bcrypt = require("bcrypt");
@@ -8,6 +8,7 @@ const ObjectId = require("mongodb").ObjectID;
 const Token = require('../models/TokenVerification');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const { body, validationResult } = require('express-validator');
 const isAuthenticated = require('../helpers/authMiddleware');
 const editRouter = require('../handlers/editRouter');
 const {
@@ -19,7 +20,16 @@ const {
     confirmationPost,
     resendTokenPost
 } = require('../handlers/authRouterHandlers');
+const { nextTick } = require("process");
 
+const registerValidator = [body('email').isEmail(), body('password').isLength({ min: 5 }) ]
+const validationErrorsHandler = function (req,res,next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).send({ msg: `${errors.array().value} has an ${errors.array().msg}` });
+  }
+  next();
+}
 
 const routers = [{
     router,
@@ -31,7 +41,7 @@ const routers = [{
     router,
     method: 'post',
     path: '/register',
-    middleware: [],
+    middleware: [registerValidator, validationErrorsHandler],
     handler: register
   },{
     router,

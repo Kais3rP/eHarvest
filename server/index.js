@@ -15,7 +15,8 @@ const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
 const userDataRouter = require('./routes/userDataRouter');
 const setAuthStrategies = require('./auth/auth');
-
+//Template engine
+app.set("view engine", "pug");
 //Connect to the DB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 const sessionStore = new MongoStore({mongooseConnection: mongoose.connection});
@@ -57,10 +58,19 @@ app.get('/test', (err, req, res,next) => {
 app.use('/products', productsRouter);
 app.use('/auth', authRouter);
 app.use('/user', userDataRouter);
-
+app.get('/test',function(req,res){
+  console.log('is auth?:', req.isAuthenticated(), 'user',req.user)
+})
 //manages non existant url so react router can handle it
 app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+  switch(process.env.ENVIRONMENT){
+    case "dev": res.redirect("http://localhost:3000");
+    break;
+    case "prod": res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+    break;
+  }
+  
+  
  
 });
 
@@ -68,7 +78,7 @@ app.get('/*', (req, res) => {
 app.use((error, req, res, next) => {
   console.log('Custom Error Handler');
   res.status(error.status || 500);
-  res.send(`Error ${error.status || 500} ${error.message} ${error.stack}`);
+  res.send({msg:`Error ${error.status || 500} ${error.message} ${error.stack}`});
   console.log(error);
 })
 

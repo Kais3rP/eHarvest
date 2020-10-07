@@ -5,10 +5,17 @@ const ObjectId = require("mongodb").ObjectID;
 const Token = require('../models/TokenVerification');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const fetch = require('node-fetch');
+
 
 async function isLoggedin(req, res) {
     try {
-        res.status(200).send('User is logged');
+        const user = {
+            name: req.user.name,
+            surname: req.user.surname,
+            email: req.user.email,
+        }
+        res.status(200).send(user);
     } catch (err) {
         console.log(err);
         throw (err);
@@ -18,29 +25,40 @@ async function isLoggedin(req, res) {
 
 async function register(req, res) {
     try {
+        console.log(req.body);
         const { name, surname, email, password } = req.body;
         let userEmail = await User.findOne({ email }).exec();
         if (userEmail) return res.status(400).send({ msg: 'The email address you have entered is already associated with another account.' })
-        let hashedPwd = await bcrypt.hashSync(req.body.password, 8); //crpyting pwd       
+        let hashedPwd = bcrypt.hashSync(req.body.password[0], 8); //crpyting pwd       
         let user = new User({ name, surname, email, password: hashedPwd });
         await user.save();
         // Create a verification token for this user
         let token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
-        // Save the verification token       
         await token.save();
         // Send the email
-        //console.log(user)
         let transporter = nodemailer.createTransport({ service: 'Gmail', auth: { user: process.env.GMAIL_USERNAME, pass: process.env.GMAIL_PASSWORD } });
-        let mailOptions = { from: 'eharvest00@gmail.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/auth/confirmation\/' + token.token + '.\n' };
-        transporter.sendMail(mailOptions, function (err) {
-            if (err) {
-                console.log(err);
-                return res.status(500).send({ msg: err.message });
-            }
-            res.status(200).send({ msg: 'A verification email has been sent to ' + user.email + '.' });
-        });
-    } catch (error) {
-        console.log(error);
+        let mailOptions = {
+            from: 'eharvest00@gmail.com',
+            to: user.email, subject: 'Account Verification Token',
+            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/auth/confirmation\/' + token.token + '.\n'
+        };
+
+        let response = await new Promise(resolve => {
+            transporter.sendMail(mailOptions, function (err, info) {
+                resolve(err ? { err } : { info })
+            })
+        })
+        console.log('Nodemailer response:',response)
+        if (response.err) {
+            console.log(response.err);
+            return res.status(500).send({ msg: response.err.message });
+        }
+        console.log('Successful Registration')
+
+        res.status(200).send({ msg: 'A verification email has been sent to ' + response.info.envelope.to[0] + '. Please Check your e-mail' });
+
+    } catch (err) {
+        console.log(err);
         throw (err);
     };
 };
@@ -61,7 +79,7 @@ async function login(req, res) {
         let user = await User.findOne({ email: req.body.email });
 
         let message = req.flash().success[0];
-        console.log(message, 'isAuth:' + req.isAuthenticated())
+        console.log(message, user.name + 'isAuth? :' + req.isAuthenticated())
         user = {
             name: user.name,
             surname: user.surname,
@@ -90,20 +108,28 @@ async function logout(req, res) {
 
 
 async function confirmationPost(req, res) {
+    console.log(req.headers.host)
     try {
         console.log(req.params.token);
         // Find a matching token
-        let token = Token.findOne({ token: req.params.token })
+        let token = await Token.findOne({ token: req.params.token })
         if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
         // If we found a token, find a matching user
-        let user = User.findOne({ _id: token._userId });
+        let user = await User.findOne({ _id: token._userId });
         if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
         if (user.isVerified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
         // Verify and save the user
         user.isVerified = true;
         await user.save();
-        //Alternativley I can set a redirect to / after verification succeded
-        res.status(200).send({ msg: "The account has been verified. Please log in." });
+        //Auto login with passport on successful registration and redirect
+        const login = await new Promise((resolve, reject) => {
+            req.login(user, function (err) {
+                if (err) reject(err)
+                resolve()
+            })
+        })
+        console.log('user:', req.user);
+        res.status(200).redirect('/');
     } catch (err) {
         console.log(err);
         throw (err);
