@@ -1,4 +1,3 @@
-export default function(str){
-
-return /.*(?=.png)/.exec(str)
+export default function (str) {
+  return /.*(?=.png)/.exec(str)
 }

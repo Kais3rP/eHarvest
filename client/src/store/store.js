@@ -1,31 +1,35 @@
-import { configureStore, combineReducers, getDefaultMiddleware } from '@reduxjs/toolkit';
-import shopReducer from '../slices/shopSlice';
-import userReducer from '../slices/userSlice';
-import uiReducer from '../slices/uiSlice';
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-import localForage from 'localforage';
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit"
+import { persistStore, persistReducer } from "redux-persist"
+import storage from "redux-persist/lib/storage" // defaults to localStorage for web
+import localForage from "localforage"
+import shopReducer from "../slices/shopSlice"
+import userReducer from "../slices/userSlice"
+import uiReducer from "../slices/uiSlice"
+
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: localForage,
-  blacklist: ['ui']
+  blacklist: ["ui"],
 }
 const rootReducer = combineReducers({
   shop: shopReducer,
   user: userReducer,
-  ui: uiReducer
+  ui: uiReducer,
 })
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-
- 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware({  //This is needed to get rid of error message of redux non serializable object
-    serializableCheck: false,         //due to redux-persist
+  middleware: getDefaultMiddleware({
+    // This is needed to get rid of error message of redux non serializable object
+    serializableCheck: false, // due to redux-persist
   }),
-devTools: true
-});
+  devTools: true,
+})
 
-const persistor = persistStore(store);
-export { store, persistor };
+const persistor = persistStore(store)
+export { store, persistor }

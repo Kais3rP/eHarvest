@@ -1,40 +1,40 @@
-export const pictureSizes = {
-    full: {
+const pictureSizes = {
+  full: {
     container: {
-        width:'170px',
-        height:'350px'
-        
+      width: "170px",
+      height: "350px",
     },
     picture: {
-       width:'60%'
+      width: "60%",
     },
-    info:{
-        fontSize:'16px'
-    }
-},
-mid: {
+    info: {
+      fontSize: "16px",
+    },
+  },
+  mid: {
     container: {
-        width:'120px',
-        height:'250px'
+      width: "120px",
+      height: "250px",
     },
     picture: {
-        width:'60%'
+      width: "60%",
     },
-    info:{
-        fontSize:'10px'
-    }
-},
-small: {
-   container: {
-        width:'80px',
-        height:'170px'
+    info: {
+      fontSize: "10px",
+    },
+  },
+  small: {
+    container: {
+      width: "80px",
+      height: "170px",
     },
     picture: {
-        width:'60%'
+      width: "60%",
     },
-    info:{
-        fontSize:'8px'
-    }
-},
-  };
-  
+    info: {
+      fontSize: "8px",
+    },
+  },
+}
+
+export default pictureSizes
