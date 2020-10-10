@@ -10,8 +10,8 @@ import {
 } from "../styled-components/globalStyles"
 import { fetchRegister } from "../slices/userSlice"
 import {} from "react-icons/fa"
-import PasswordChecker from "./PasswordChecker"
-import usePwdValidator from "./custom-hooks/usePwdValidator"
+import PasswordChecker from "../components/PasswordChecker"
+import useFormValidator from "./custom-hooks/useFormValidator"
 
 export default function () {
   const dispatch = useDispatch()
@@ -34,7 +34,7 @@ export default function () {
     surnameProps,
     emailProps,
     resetValidators,
-  } = usePwdValidator()
+  } = useFormValidator()
 
   function onSubmit(ev) {
     ev.preventDefault()

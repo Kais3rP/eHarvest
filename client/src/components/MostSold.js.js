@@ -7,7 +7,7 @@ import {
   flexRowSpace,
   flexRowCenter,
 } from "../styled-components/globalStyles"
-import PicThumbnail from "./PicThumbnail.js"
+import PicThumbnail from "../containers/PicThumbnail.js"
 
 export default function ({ mostSold }) {
   return (

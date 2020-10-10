@@ -1,24 +1,18 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import { useSelector, useDispatch } from "react-redux"
 import {
   ButtonAlt,
-  ValidStrong,
-  InvalidStrong,
   flexColCenter,
-  flexRowCenter,
   flexRowSpace,
 } from "../styled-components/globalStyles"
-import { fetchLogin, fetchRegister } from "../slices/userSlice"
-import {} from "react-icons/fa"
-import { IconContext } from "react-icons"
-import { useSelector, useDispatch } from "react-redux"
+import { fetchLogin } from "../slices/userSlice"
 
 export default function () {
   const loginResponse = useSelector((state) => state.user.loginResponse)
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const [errMsgLogin, setErrMsgLogin] = useState("")
   const dispatch = useDispatch()
-  console.log(loginResponse)
   return (
     <LoginForm
       onSubmit={(ev) => {

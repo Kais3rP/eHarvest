@@ -9,15 +9,12 @@ import {
   flexRowCenter,
 } from "../styled-components/globalStyles"
 import Offers from "./Offers"
-import MostSold from "./MostSold.js"
-
-
+import MostSold from "./MostSold.js.js"
 
 export default function () {
-
   const offersItems = useSelector((state) => state.shop.offersItems)
   const mostSold = useSelector((state) => state.shop.mostSoldItems)
- 
+
   return offersItems && mostSold ? (
     <MidSectionWrapper>
       <Offers offersItems={offersItems} />

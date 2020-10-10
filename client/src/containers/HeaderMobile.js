@@ -6,27 +6,17 @@ import { FaShoppingCart } from "react-icons/fa"
 import { IconContext } from "react-icons"
 import {
   flexRowCenter,
-  flexColSpace,
   flexColCenter,
-  flexRowSpace,
-  flexRowStart,
   ButtonAlt,
 } from "../styled-components/globalStyles"
-import {
-  toggleCart,
-  toggleHeaderMobile,
-  toggleHeaderMobileModal,
-} from "../slices/uiSlice"
+import { toggleCart, toggleHeaderMobile } from "../slices/uiSlice"
 import { fetchLogout } from "../slices/userSlice"
-import Logo from "./Logo"
-import HeaderMobileModal from "./HeaderMobileModal"
+import Logo from "../components/Logo"
 
 export default function ({ position }) {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const username = useSelector((state) => state.user.username)
-  const isHeaderMobileModalOpen = useSelector(
-    (state) => state.ui.isHeaderMobileModalOpen
-  )
+
   const dispatch = useDispatch()
   return (
     <HeaderWrapper style={{ left: position }}>
@@ -53,13 +43,6 @@ export default function ({ position }) {
           >
             FULL SHOP
           </Link>
-        </HeaderLink>
-        <HeaderLink
-          onClick={() => {
-            dispatch(toggleHeaderMobileModal())
-          }}
-        >
-          <a>WHAT'S eHARVEST</a>
         </HeaderLink>
         <HeaderLink>
           <Link
@@ -126,22 +109,19 @@ export default function ({ position }) {
               </Link>
             </HeaderLink>
           )}
-          <em> {isLoggedIn ? username : "Not Logged"}</em>
-          <em>
-            {" "}
-            {isLoggedIn ? (
-              <HeaderLink>
-                <Link
-                  onClick={() => {
-                    dispatch(toggleHeaderMobile())
-                  }}
-                  to="/private-area"
-                >
-                  Personal Area
-                </Link>
-              </HeaderLink>
-            ) : null}
-          </em>
+          <p> {isLoggedIn ? username : "Not Logged"}</p>
+          {isLoggedIn ? (
+            <HeaderLink>
+              <Link
+                onClick={() => {
+                  dispatch(toggleHeaderMobile())
+                }}
+                to="/private-area"
+              >
+                Personal Area
+              </Link>
+            </HeaderLink>
+          ) : null}
         </LoginContainer>
         <IconContext.Provider
           value={{

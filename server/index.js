@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo')(session);
 const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
 const userDataRouter = require('./routes/userDataRouter');
+const publicDataRouter = require('./routes/publicDataRouter');
 const setAuthStrategies = require('./auth/auth');
 //Template engine
 app.set("view engine", "pug");
@@ -41,7 +42,7 @@ app.use(
     store: sessionStore
   })
 );
-app.use(flash()); //Support for flash messagesi in req
+app.use(flash()); //Support for flash messages in req
 //----------------------------------------------------------------------
 //Auth Strategies
 setAuthStrategies(app);
@@ -58,6 +59,9 @@ app.get('/test', (err, req, res,next) => {
 app.use('/products', productsRouter);
 app.use('/auth', authRouter);
 app.use('/user', userDataRouter);
+app.use('/public', publicDataRouter);
+
+
 app.get('/test',function(req,res){
   console.log('is auth?:', req.isAuthenticated(), 'user',req.user)
 })

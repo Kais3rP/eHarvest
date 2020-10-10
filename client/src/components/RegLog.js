@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { flexColCenter, flexRowSpace } from "../styled-components/globalStyles"
-import RegisterForm from "./RegisterForm"
-import LoginForm from "./LoginForm"
+import RegisterForm from "../containers/RegisterForm"
+import LoginForm from "../containers/LoginForm"
 
 export default function () {
   return (

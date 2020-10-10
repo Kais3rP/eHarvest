@@ -1,35 +1,22 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect } from "react"
+import Loader from "react-loader-spinner"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import {
   ContainerDiv,
-  Input,
-  ValidStrong,
-  InvalidStrong,
   flexColCenter,
   flexRowCenter,
   flexRowSpace,
-  ButtonAlt,
   textSecondaryFont,
 } from "../styled-components/globalStyles"
-import {
-  fetchPersonalProducts,
-  fetchPersonalData,
-  fetchUserDataUpdate,
-} from "../slices/userSlice"
-import {} from "react-icons/fa"
-import { IconContext } from "react-icons"
+import { fetchPersonalProducts, fetchPersonalData } from "../slices/userSlice"
 import PicThumbnail from "./PicThumbnail"
-import Loader from "react-loader-spinner"
-import handleAutoResize from "../helpers/autoResizeTextArea"
 import UserInfo from "./UserInfo"
 import UserPicture from "./UserPicture"
 import UserDescription from "./UserDescription"
 
 export default function () {
   const personalProducts = useSelector((state) => state.user.personalProducts)
-  const personalData = useSelector((state) => state.user.personalData)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -59,7 +46,7 @@ export default function () {
           <strong>Personal Products</strong>
           <PicThumbnailContainer>
             {personalProducts.map((item, i) => (
-              <PicThumbnail key={i} item={item} idx={i} priv />
+              <PicThumbnail key={item._id} item={item} idx={i} priv />
             ))}
           </PicThumbnailContainer>
         </RightContainerDiv>
@@ -117,8 +104,3 @@ const PicThumbnailContainer = styled.div`
   height: 80%;
   flex-wrap: wrap;
 `
-const DescriptionTextArea = styled.textarea`
-  width: 100%;
-`
-
-const Descriptiontext = styled.p``

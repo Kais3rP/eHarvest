@@ -8,12 +8,11 @@ import {
   flexRowSpace,
   flexRowCenter,
 } from "../styled-components/globalStyles"
-import PicThumbnail from "./PicThumbnail.js"
+import PicThumbnail from "../containers/PicThumbnail.js"
 
 export default function ({ width, height }) {
   const vegetables = useSelector((state) => state.shop.vegetables)
   const fruit = useSelector((state) => state.shop.fruit)
-  const dispatch = useDispatch()
 
   return vegetables.length >= 0 && fruit.length >= 0 ? (
     <FullShopWrapper>

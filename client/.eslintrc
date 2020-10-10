@@ -15,6 +15,10 @@
     "rules": {
       "semi": 0,
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/jsx-props-no-spreading": [1, {
+        "custom": "ignore"        
+    }],
+    "no-underscore-dangle": [2, { "allow": ["_id"] }],
       "prettier/prettier": [
         "error", {
           "semi": false,

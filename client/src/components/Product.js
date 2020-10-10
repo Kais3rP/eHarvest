@@ -9,54 +9,55 @@ import {
 } from "../styled-components/globalStyles"
 
 export default function () {
+    const dispatch = useDispatch();
   const productClicked = useSelector((state) => state.shop.productClicked)
-  const dispatch = useDispatch()
-  const [] = useState(false)
-  const [] = useState(false)
-  const [] = useState("")
   return (
     <WrapperDiv>
       <LeftMainContainerDiv>
         <ContainerDiv>
           <ProductSvgImg src={productClicked.pic} />
-          <RowDiv>
+          <ul>
+          <RowLi>
             <strong>Category:</strong>
-            <em> {productClicked.type}</em>
-          </RowDiv>
-          <RowDiv>
+            <p> {productClicked.type}</p>
+          </RowLi>
+          <RowLi>
             <strong>Product Name:</strong>
-            <em> {productClicked.productName}</em>
-          </RowDiv>
-          <RowDiv>
+            <p> {productClicked.productName}</p>
+          </RowLi>
+          <RowLi>
             <strong>Seller Name:</strong>
-            <em>{productClicked.sellerName}</em>
-          </RowDiv>
-          <RowDiv>
+            <p>{productClicked.sellerName}</p>
+          </RowLi>
+          <RowLi>
             <strong>Price (€/Kg):</strong>
-            <em> {productClicked.price}€</em>
-          </RowDiv>
-          <RowDiv>
+            <p> {productClicked.price}€</p>
+          </RowLi>
+          <RowLi>
             <strong>Quantity available:</strong>
-            <em>{productClicked.quantityAvailable} Kgs available</em>
-          </RowDiv>
-          <RowDiv>
-            <em>
+            <p>{productClicked.quantityAvailable} Kgs available</p>
+          </RowLi>
+          <RowLi>
+            <p>
               These {productClicked.productName} have been bought
               {productClicked.soldNTimes} times
-            </em>
-          </RowDiv>
+            </p>
+          </RowLi>
+          
           <DescriptionDiv>
             <strong>Description:</strong>
-            <em> {productClicked.description}</em>
+            <p> {productClicked.description}</p>
           </DescriptionDiv>
-          <RowDiv>
+          
+          <RowLi>
             <strong>This product has been rated </strong>
-            <em>{productClicked.numberOfVotes} times</em>
-          </RowDiv>
-          <RowDiv>
+            <p>{productClicked.numberOfVotes} times</p>
+          </RowLi>
+          <RowLi>
             <strong>Average rating:</strong>
-            <em> {productClicked.rating}</em>
-          </RowDiv>
+            <p> {productClicked.rating}</p>
+          </RowLi>
+          </ul>
         </ContainerDiv>
       </LeftMainContainerDiv>
       <RightMainContainerDiv>
@@ -115,10 +116,8 @@ const ProductSvgImg = styled.img`
   width: 15%;
 `
 
-const RowDiv = styled.div`
+const RowLi = styled.li`
   ${flexRowCenter};
   justify-content: flex-start;
 `
-const em = styled.p`
-  margin-top: 3px;
-`
+

@@ -13,7 +13,7 @@ import {
 } from "../slices/shopSlice"
 import handleAutoResize from "../helpers/autoResizeTextArea"
 import validateTextArea from "../helpers/validateTextArea"
-import OptionsMenu from "./OptionsMenu"
+import OptionsMenu from "../components/OptionsMenu"
 
 export default function () {
   const dispatch = useDispatch()

@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components"
 import Star from "star-rating-react-component"
 import { Link, useLocation } from "react-router-dom"
-import { rateProduct, setProductClicked } from "../slices/shopSlice"
+import PropTypes from "prop-types"
+import { rateProduct, setProductClicked, setUserClicked, asyncGetPublicUser } from "../slices/shopSlice"
 import {
   flexColSpace,
   flexColCenter,
   flexRowCenter,
-  flexRowSpace,
   textSecondaryFont,
 } from "../styled-components/globalStyles"
 import AddToCart from "./AddToCart"
 import circle from "../img/circle.svg"
-import { pictureSizes } from "../styled-components/inlineStyles"
 
 const options = {
   name: "main",
@@ -26,7 +25,7 @@ const options = {
   showText: false,
 }
 
-export default function ({ item, idx }) {
+export default function PicThumbnail({ item, idx }) {
   const productRatingResponse = useSelector(
     (state) => state.shop.productRatingResponse
   )
@@ -53,21 +52,23 @@ export default function ({ item, idx }) {
       >
         <CircleImg src={circle} />
         <PicContainerDiv>
-          <Link to={`product/${item.productName}`}>
+          <Link to={`product/${item._id}`}>
             <PicImg src={item.pic} />
           </Link>
         </PicContainerDiv>
         <InfoContainerDiv>
-        <ul>
-          <li>{item.productName}</li>
-          <li>Grown by: </li>
-          <li>
-            <Link to={location}>
-              <strong>{item.sellerName}</strong>
-            </Link>
-          </li>
-          <li>{item.price}€/Kg</li>
-          <li>Average Rating: {item.rating}</li>
+          <ul>
+            <li>{item.productName}</li>
+            <li>Grown by: </li>
+            <li onClick={()=>{
+              dispatch(asyncGetPublicUser(item._id)) 
+            }}>
+              <Link to={`public-user/${item.sellerName}`}>
+                <strong>{item.sellerName}</strong>
+              </Link>
+            </li>
+            <li>{item.price}€/Kg</li>
+            <li>Average Rating: {item.rating}</li>
           </ul>
         </InfoContainerDiv>
         <RatingDiv>
@@ -85,10 +86,8 @@ export default function ({ item, idx }) {
         />
       </ThumbnailContainerDiv>
       <MessageP>
-        {hasBeenRated &&
-          productRatingResponse}
-          {hasBeenAdded &&
-           addedMessage}
+        {hasBeenRated && productRatingResponse}
+        {hasBeenAdded && addedMessage}
       </MessageP>
     </WrapperDiv>
   )
@@ -97,7 +96,6 @@ export default function ({ item, idx }) {
 const WrapperDiv = styled.div`
   ${flexColCenter};
   ${textSecondaryFont};
-  
 `
 const ThumbnailContainerDiv = styled.div`
   position: relative;
@@ -177,3 +175,22 @@ const MessageP = styled.p`
     height: 350px;
   }
 `
+PicThumbnail.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string,
+    type: PropTypes.string,
+    productName: PropTypes.string,
+    sellerName: PropTypes.string,
+    price: PropTypes.number,
+    quantityAvailable: PropTypes.number,
+    soldNTimes: PropTypes.number,
+    pic: PropTypes.string,
+    description: PropTypes.string,
+    numberOfVotes: PropTypes.number,
+    rating: PropTypes.string,
+    productPicName: PropTypes.string,
+    realPicture: PropTypes.string,
+    quantityInCart: PropTypes.number,
+  }).isRequired,
+  idx: PropTypes.number.isRequired,
+}

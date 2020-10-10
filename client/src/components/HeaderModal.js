@@ -11,15 +11,10 @@ import {
   flexRowStart,
 } from "../styled-components/globalStyles"
 
-export default function ({ position }) {
+export default function ({ position, onMouseLeave }) {
   const dispatch = useDispatch()
   return (
-    <Modal
-      onMouseLeave={() => {
-        dispatch(closeHeaderModal())
-      }}
-      style={{ top: position }}
-    >
+    <Modal onMouseLeave={onMouseLeave} style={{ top: position }}>
       <ModalWrapper>
         <strong>
           <Link to="/howitworks">How it works</Link>

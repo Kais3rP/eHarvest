@@ -4,28 +4,39 @@ import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import { FaBars } from "react-icons/fa"
 import { IconContext } from "react-icons"
-import { flexColSpace, flexRowCenter, textMainFont } from "./styled-components/globalStyles"
+import {
+  flexColSpace,
+  flexRowCenter,
+  textMainFont,
+} from "./styled-components/globalStyles"
 import AuthRoute from "./components/AuthRoute"
-import Header from "./components/Header"
-import HeaderMobile from "./components/HeaderMobile"
+import Header from "./containers/Header"
+import HeaderMobile from "./containers/HeaderMobile"
 import MidSection from "./components/MidSection"
-import Footer from "./components/Footer"
-import Cart from "./components/Cart"
+import Footer from "./containers/Footer"
+import Cart from "./containers/Cart"
 import FullShop from "./components/FullShop"
 import RegLog from "./components/RegLog"
 import HeaderModal from "./components/HeaderModal"
 import HowItWorks from "./components/HowItWorks"
 import Feedbacks from "./components/Feedbacks"
-import SellForm from "./components/SellForm"
+import SellForm from "./containers/SellForm"
 import Faq from "./components/Faq"
-import PrivateArea from "./components/PrivateArea"
+import PrivateArea from "./containers/PrivateArea"
 import Temp404Component from "./components/Temp404Component"
 import Product from "./components/Product"
+import PublicUserPage from "./components/PublicUserPage"
+import ShadowDiv from "./components/ShadowDiv"
 import { fetchItems } from "./slices/shopSlice"
 import { isLoggedChecker } from "./slices/userSlice"
-import { setWindowSize, toggleHeaderMobile, toggleCart } from "./slices/uiSlice"
+import {
+  setWindowSize,
+  closeHeaderModal,
+  toggleHeaderMobile,
+  toggleCart,
+} from "./slices/uiSlice"
 
-import MobileIconToggler from "./components/MobileIconToggler"
+import MobileIconToggler from "./containers/MobileIconToggler"
 
 export default function () {
   const isCartOpen = useSelector((state) => state.ui.isCartOpen)
@@ -71,17 +82,12 @@ export default function () {
             ? "100px"
             : "-220px"
         }
+        onMouseLeave={() => {
+          dispatch(closeHeaderModal())
+        }}
       />
       <Cart position={isCartOpen ? 0 : "-500px"} />
-      {isCartOpen && 
-        <ShadowDiv
-          onClick={() => {
-            dispatch(toggleCart())
-          }}
-        >
-        <CloseDiv>&times;</CloseDiv>
-        </ShadowDiv>
-      }
+      {isCartOpen && <ShadowDiv />}
       <Switch>
         <AuthRoute exact path="/fullshop">
           <FullShop />
@@ -107,6 +113,9 @@ export default function () {
         <AuthRoute exact path="/product/*">
           <Product />
         </AuthRoute>
+        <AuthRoute exact path="/public-user/*" type="private">
+          <PublicUserPage />
+        </AuthRoute>
         <AuthRoute exact path="/">
           <MidSection />
         </AuthRoute>
@@ -126,23 +135,4 @@ const AppWrapperDiv = styled.div`
   height: 100%;
   margin: 0;
   overflow: hidden;
-`
-const ShadowDiv = styled.div`
-${flexRowCenter};
-justify-content:flex-end;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  opacity: 0.8;
-  background: black;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  z-index:2; 
-`
-const CloseDiv = styled.div`
-position:absolute;
-left:10px;
-top:195px;
-font-size:50px;
 `

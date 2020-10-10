@@ -18,7 +18,7 @@ import {
   openHeaderModal,
 } from "../slices/uiSlice"
 import { fetchLogout } from "../slices/userSlice"
-import Logo from "./Logo"
+import Logo from "../components/Logo"
 
 export default function () {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)

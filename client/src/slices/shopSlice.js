@@ -13,6 +13,7 @@ export const shopSlice = createSlice({
     productRatingResponse: "",
     payResponse: "",
     ProductClicked: {},
+    publicUser: {},
   },
   reducers: {
     addToCart: (state, action) => {
@@ -83,6 +84,9 @@ export const shopSlice = createSlice({
     setProductClicked: (state, action) => {
       state.productClicked = action.payload
     },
+    setPublicUser: (state, action) => {
+      state.publicUser = action.payload
+    },
   },
 })
 
@@ -100,6 +104,7 @@ export const {
   setProductRatingResponse,
   setPayResponse,
   setProductClicked,
+  setPublicUser,
 } = shopSlice.actions
 
 // Thunks
@@ -203,6 +208,21 @@ export const asyncUploadProductPicture = (productData) => async (dispatch) => {
     console.log("Uploading Product Pic")
     if (res.ok) {
       dispatch(fetchItems())
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const asyncGetPublicUser = (id) => async (dispatch) => {
+  try {
+    console.log(id)
+    const res = await fetch(`/public/get-user-data/${id}`) //Gonna search through the id of the obj
+    console.log("Fetching public User Data")
+    const data = await res.json()
+    console.log(data)
+    if (res.ok) {
+      dispatch(setPublicUser(data))
     }
   } catch (err) {
     console.log(err)
