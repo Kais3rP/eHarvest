@@ -17,8 +17,12 @@ export default function () {
 
   return offersItems && mostSold ? (
     <MidSectionWrapper>
+    <LeftWrapperDiv>
       <Offers offersItems={offersItems} />
+      </LeftWrapperDiv>
+      <RightWrapperDiv>
       <MostSold mostSold={mostSold} />
+      </RightWrapperDiv>
     </MidSectionWrapper>
   ) : (
     <Loader
@@ -32,8 +36,8 @@ export default function () {
 }
 
 const MidSectionWrapper = styled.div`
-  ${flexRowCenter};
-  width: 100%;
+  ${flexRowSpace};
+  width: 98%;
   text-align: center;
   margin-top: 230px;
   @media (max-width: 768px) {
@@ -45,5 +49,21 @@ const MidSectionWrapper = styled.div`
     ${flexColCenter};
     justify-content: flex-start;
     margin-top: 20px;
+  }
+`
+const LeftWrapperDiv = styled.div`
+  ${flexColCenter};
+  width: 47%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+const RightWrapperDiv = styled.div`
+  ${flexColCenter};
+  width: 47%;
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `

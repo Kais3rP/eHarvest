@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import {
   ContainerDiv,
   flexColCenter,
+  flexColSpace,
   flexRowCenter,
   flexRowSpace,
   textSecondaryFont,
@@ -14,6 +15,7 @@ import PicThumbnail from "./PicThumbnail"
 import UserInfo from "./UserInfo"
 import UserPicture from "./UserPicture"
 import UserDescription from "./UserDescription"
+import Window from "../components/Window"
 
 export default function () {
   const personalProducts = useSelector((state) => state.user.personalProducts)
@@ -26,31 +28,32 @@ export default function () {
 
   return personalProducts && personalProducts.length >= 0 ? (
     <MainDiv>
+     <Window title={"Private Area"}/>
+    <LayoutContainerDiv>
       <LeftWrapperDiv>
-        <LeftContainerDiv>
+        <Window title={"User Info"}>
           <UserInfo />
-        </LeftContainerDiv>
-        <LeftContainerDiv>
+        </Window>
+        <Window title={"Your Picture"}>
           <UserPicture />
-        </LeftContainerDiv>
-        <LeftContainerDiv>
+        </Window>
+        <Window title={"Your Description"}>
           <UserDescription />
-        </LeftContainerDiv>
-        <LeftContainerDiv>
-          <strong>Products you bought:</strong>
+        </Window>
+        <Window title={"Products you bought:"}>
           {/* Here goes the picthumbnail of productsBought array */}
-        </LeftContainerDiv>
+        </Window>
       </LeftWrapperDiv>
       <RightWrapperDiv>
-        <RightContainerDiv>
-          <strong>Personal Products</strong>
+        <Window title={"Personal Products"}>
           <PicThumbnailContainer>
             {personalProducts.map((item, i) => (
               <PicThumbnail key={item._id} item={item} idx={i} priv />
             ))}
           </PicThumbnailContainer>
-        </RightContainerDiv>
+        </Window>
       </RightWrapperDiv>
+      </LayoutContainerDiv>
     </MainDiv>
   ) : (
     <Loader
@@ -67,15 +70,23 @@ const MainDiv = styled.div`
   & > * {
     ${textSecondaryFont};
   }
-  ${flexRowSpace};
+  ${flexColSpace};
   align-items: flex-start;
-  width: 95%;
-  margin-top: 300px;
+  width: 100%;
+  margin-top: 230px;
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
+`
+const LayoutContainerDiv = styled.div`
+${flexRowSpace};
+  align-items: flex-start;
+  width: 98%;
   @media (max-width: 768px) {
     ${flexColCenter};
     justify-content: flex-start;
     margin-top: 10px;
-    width: 100%;
+    width: 98%;
   }
 `
 
@@ -87,8 +98,6 @@ const LeftWrapperDiv = styled.div`
     width: 100%;
   }
 `
-
-const LeftContainerDiv = styled(ContainerDiv)``
 const RightWrapperDiv = styled.div`
   ${flexColCenter};
   width: 47%;
@@ -97,7 +106,6 @@ const RightWrapperDiv = styled.div`
     width: 100%;
   }
 `
-const RightContainerDiv = styled(ContainerDiv)``
 const PicThumbnailContainer = styled.div`
   ${flexRowCenter};
   width: 100%;

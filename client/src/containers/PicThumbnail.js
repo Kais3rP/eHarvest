@@ -52,7 +52,7 @@ export default function PicThumbnail({ item, idx }) {
       >
         <CircleImg src={circle} />
         <PicContainerDiv>
-          <Link to={`product/${item._id}`}>
+          <Link to={`/product/${item._id}`}>
             <PicImg src={item.pic} />
           </Link>
         </PicContainerDiv>
@@ -63,7 +63,7 @@ export default function PicThumbnail({ item, idx }) {
             <li onClick={()=>{
               dispatch(asyncGetPublicUser(item._id)) 
             }}>
-              <Link to={`public-user/${item.sellerName}`}>
+              <Link to={`/public-user/${item.sellerName}`}>
                 <strong>{item.sellerName}</strong>
               </Link>
             </li>
@@ -96,6 +96,7 @@ export default function PicThumbnail({ item, idx }) {
 const WrapperDiv = styled.div`
   ${flexColCenter};
   ${textSecondaryFont};
+ 
 `
 const ThumbnailContainerDiv = styled.div`
   position: relative;

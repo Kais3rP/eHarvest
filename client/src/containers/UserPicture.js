@@ -29,7 +29,6 @@ export default function () {
 
   return (
     <>
-      <strong>Personal Picture:</strong>
       {isEditPicMode ? (
         <>
           <FileInput

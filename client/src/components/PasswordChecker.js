@@ -19,28 +19,24 @@ export default function ({ isLowerCase, isUpperCase, isNumber, isLongEnough }) {
       <CheckersWrapper>
         {isLowerCase ? "✔ " : "✖ "}
         <LetterChecker>
-          {" "}
           At least a <b>lowercase</b> letter{" "}
         </LetterChecker>
       </CheckersWrapper>
       <CheckersWrapper>
         {isUpperCase ? "✔ " : "✖ "}
         <LetterChecker>
-          {" "}
           At least an <b>uppercase</b> letter{" "}
         </LetterChecker>
       </CheckersWrapper>
       <CheckersWrapper>
         {isNumber ? "✔ " : "✖ "}
         <LetterChecker>
-          {" "}
           At least a <b>number</b>
         </LetterChecker>
       </CheckersWrapper>
       <CheckersWrapper>
         {isLongEnough ? "✔ " : "✖ "}
         <LetterChecker>
-          {" "}
           At least <b>8 characters</b>{" "}
         </LetterChecker>
       </CheckersWrapper>

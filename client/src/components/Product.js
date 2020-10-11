@@ -6,16 +6,21 @@ import {
   flexRowSpace,
   flexRowCenter,
   textSecondaryFont,
+  flexColCenter,
+  flexColSpace,
 } from "../styled-components/globalStyles"
+import Window from "./Window"
 
 export default function () {
     const dispatch = useDispatch();
   const productClicked = useSelector((state) => state.shop.productClicked)
   return (
-    <WrapperDiv>
-      <LeftMainContainerDiv>
-        <ContainerDiv>
-          <ProductSvgImg src={productClicked.pic} />
+    <MainDiv>
+    <Window title={"Product Info"}/>
+    <LayoutContainerDiv>
+      <LeftMainDiv>
+        <Window title={ <ProductSvgImg src={productClicked.pic} />}>
+         
           <ul>
           <RowLi>
             <strong>Category:</strong>
@@ -58,10 +63,10 @@ export default function () {
             <p> {productClicked.rating}</p>
           </RowLi>
           </ul>
-        </ContainerDiv>
-      </LeftMainContainerDiv>
-      <RightMainContainerDiv>
-        <ContainerDiv>
+        </Window>
+      </LeftMainDiv>
+      <RightMainDiv>
+        <Window title={"Pictures"}>
           <PicturesContainerDiv>
             <ProductPicImg
               src={`data:image/png;base64,${productClicked.realPicture}`}
@@ -79,27 +84,53 @@ export default function () {
               src={`data:image/png;base64,${productClicked.realPicture}`}
             />
           </PicturesContainerDiv>
-        </ContainerDiv>
-      </RightMainContainerDiv>
-    </WrapperDiv>
+          </Window>
+       
+      </RightMainDiv>
+      </LayoutContainerDiv>
+    </MainDiv>
   )
 }
 
-const WrapperDiv = styled.div`
-  ${flexRowSpace};
-  ${textSecondaryFont};
-  margin-top: 250px;
-  width: 95%;
+const MainDiv = styled.div`
+  & > * {
+    ${textSecondaryFont};
+  }
+  ${flexColSpace};
+  width: 100%;
+  margin-top: 230px;
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
+`
+const LayoutContainerDiv = styled.div`
+${flexRowSpace};
   align-items: flex-start;
-`
-const LeftMainContainerDiv = styled.div`
-  width: 48%;
+  width: 98%;
+  @media (max-width: 768px) {
+    ${flexColCenter};
+    justify-content: flex-start;
+    margin-top: 10px;
+    width: 98%;
+  }
 `
 
-const RightMainContainerDiv = styled.div`
-  width: 48%;
-`
+const LeftMainDiv = styled.div`
+  ${flexColCenter};
+  width: 47%;
 
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+const RightMainDiv = styled.div`
+  ${flexColCenter};
+  width: 47%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
 const PicturesContainerDiv = styled.div`
   width: 100%;
 `

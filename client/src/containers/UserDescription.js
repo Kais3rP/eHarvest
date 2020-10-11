@@ -25,7 +25,6 @@ export default function () {
   }
   return (
     <>
-      <strong>Your personal description as a seller:</strong>
       <DescriptiontextP>{personalData.description}</DescriptiontextP>
       {isEditDescriptionMode && (
         <DescriptionTextArea onChange={onChange} value={descriptionText} />

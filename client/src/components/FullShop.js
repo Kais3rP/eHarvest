@@ -7,30 +7,42 @@ import {
   flexColCenter,
   flexRowSpace,
   flexRowCenter,
+  ContainerDiv,
+  TitleDiv,
+  PicThumbnailContainerDiv,
 } from "../styled-components/globalStyles"
 import PicThumbnail from "../containers/PicThumbnail.js"
 
-export default function ({ width, height }) {
+export default function () {
   const vegetables = useSelector((state) => state.shop.vegetables)
   const fruit = useSelector((state) => state.shop.fruit)
 
   return vegetables.length >= 0 && fruit.length >= 0 ? (
     <FullShopWrapper>
       <VegsContainer>
+      <ContainerDiv>
+      <TitleDiv>
         <strong>Vegetables</strong>
-        <PicThumbnailContainer>
+        </TitleDiv>
+        <PicThumbnailContainerDiv>
           {vegetables.map((item, i) => (
             <PicThumbnail key={i} item={item} idx={i + 200} />
           ))}
-        </PicThumbnailContainer>
+        </PicThumbnailContainerDiv>
+        
+        </ContainerDiv>
       </VegsContainer>
       <FruitContainer>
+      <ContainerDiv>
+      <TitleDiv>
         <strong>Fruit</strong>
-        <PicThumbnailContainer>
+        </TitleDiv>
+        <PicThumbnailContainerDiv>
           {fruit.map((item, i) => (
             <PicThumbnail key={i} item={item} idx={i + 300} />
           ))}
-        </PicThumbnailContainer>
+        </PicThumbnailContainerDiv>
+        </ContainerDiv>
       </FruitContainer>
     </FullShopWrapper>
   ) : (
@@ -47,10 +59,10 @@ export default function ({ width, height }) {
 }
 
 const FullShopWrapper = styled.div`
-  ${flexRowCenter};
+  ${flexRowSpace};
   align-items: flex-start;
-  width: 100%;
-  margin-top: 300px;
+  width: 98%;
+  margin-top: 230px;
   @media (max-width: 768px) {
     ${flexColCenter};
     justify-content: flex-start;
@@ -59,19 +71,16 @@ const FullShopWrapper = styled.div`
 `
 const VegsContainer = styled.div`
   ${flexColCenter};
-  width: 100%;
-  height: 90%;
+  width: 47%;
+  @media (max-width: 768px) {
+    width: 98%;
+  }
 `
 
 const FruitContainer = styled.div`
   ${flexColCenter};
-  width: 100%;
-  height: 90%;
-`
-
-const PicThumbnailContainer = styled.div`
-  ${flexRowCenter};
-  width: 80%;
-  height: 90%;
-  flex-wrap: wrap;
+  width: 47%;
+  @media (max-width: 768px) {
+    width: 98%;
+  }
 `

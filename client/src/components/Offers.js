@@ -6,35 +6,20 @@ import {
   flexColCenter,
   flexRowSpace,
   flexRowCenter,
+  PicThumbnailContainerDiv
 } from "../styled-components/globalStyles"
 import PicThumbnail from "../containers/PicThumbnail.js"
+import Window from "./Window"
 
 export default function ({ offersItems }) {
   return (
-    <OffersWrapper>
-      <OffersTitle>OFFERS</OffersTitle>
-      <PicThumbnailContainer>
+   <Window title={"Offers"}>
+      <PicThumbnailContainerDiv>
         {offersItems.map((item, i) => (
           <PicThumbnail key={i} item={item} idx={i} />
         ))}
-      </PicThumbnailContainer>
-    </OffersWrapper>
+      </PicThumbnailContainerDiv>
+    </Window>
   )
 }
 
-const OffersWrapper = styled.div`
-  ${flexColSpace};
-  width: 98%;
-  text-align: center;
-`
-
-const OffersTitle = styled.div`
-  width: 100%;
-  height: 20%;
-`
-const PicThumbnailContainer = styled.div`
-  ${flexRowCenter};
-  width: 100%;
-  height: 80%;
-  flex-wrap: wrap;
-`

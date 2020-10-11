@@ -90,3 +90,37 @@ export const ContainerDiv = styled.div`
     width: 100%;
   }
 `
+export const RowCenterDiv = styled.div`
+${flexRowCenter};
+align-items: flex-start;
+width:100%;
+`
+export const RowSpaceDiv = styled.div`
+${flexRowSpace};
+align-items: flex-start;
+width:100%;
+`
+
+export const ColDiv = styled.div`
+${flexColCenter};
+width:100%;
+`
+
+export const TitleDiv = styled.div`
+${flexRowCenter};
+${textMainFont};
+justify-content:flex-start;
+border-top: 1px inset grey;
+border-bottom: 2px outset grey;
+width:100%;
+padding:5px;
+font-size:35px;
+margin-bottom:40px;
+
+`
+export const PicThumbnailContainerDiv = styled.div`
+  ${flexRowCenter};
+  width: 100%;
+  height: 80%;
+  flex-wrap: wrap;
+`

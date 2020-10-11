@@ -12,9 +12,7 @@ async function getPublicUserData(req, res) {
     try {
         console.log('Getting Public user data')
         const _id = req.params._id;
-        console.log(_id);
         const obj = await Product.findOne({_id});
-        console.log(obj.owner)
         let user = await User.findOne({email:obj.owner});
         //Retrieve the user picture
         const pathToUserPic = path.resolve(__dirname, '..', 'assets', 'user-pics');
@@ -25,11 +23,15 @@ async function getPublicUserData(req, res) {
         const buffer = await readFileAsync(pathToUserPic + '/' + nameOfUserPic);
         picture = buffer.toString('base64');
         }
+        let productsInSale = await Product.find({owner:user.email});
+        productsInSale = productsInSale.map(prod => prod._id)  //Retrieve the list of all the ids of the products they are already present on  client
+        console.log(productsInSale)
         user = {
             name: user.name,
             surname: user.surname,
             description: user.description,
-            picture
+            productsInSale,
+            picture,
         };
         res.status(200).send(user);
     } catch (err) {

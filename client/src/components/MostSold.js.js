@@ -6,36 +6,22 @@ import {
   flexColCenter,
   flexRowSpace,
   flexRowCenter,
+  TitleDiv,
+  ContainerDiv,
+  PicThumbnailContainerDiv
 } from "../styled-components/globalStyles"
 import PicThumbnail from "../containers/PicThumbnail.js"
+import Window from "./Window"
 
 export default function ({ mostSold }) {
   return (
-    <MostSoldWrapper>
-      <ProductsTitle>MOST SOLD</ProductsTitle>
-      <PicThumbnailContainer>
-        {" "}
+  <Window title={"Most Sold"}>
+      <PicThumbnailContainerDiv>
         {mostSold.map((item, i) => (
           <PicThumbnail key={i} item={item} idx={i + 100} />
         ))}
-      </PicThumbnailContainer>
-    </MostSoldWrapper>
+      </PicThumbnailContainerDiv>
+    </Window>
   )
 }
 
-const MostSoldWrapper = styled.div`
-  ${flexColSpace};
-  width: 98%;
-  text-align: center;
-`
-
-const ProductsTitle = styled.div`
-  width: 100%;
-  height: 10%;
-`
-const PicThumbnailContainer = styled.div`
-  ${flexRowCenter};
-  width: 100%;
-  height: 90%;
-  flex-wrap: wrap;
-`

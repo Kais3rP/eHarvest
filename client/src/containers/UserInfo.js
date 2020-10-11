@@ -27,7 +27,6 @@ export default function () {
 
   return (
     <>
-      <strong>User Info:</strong>
       <em>Name: {`${personalData.name} ${personalData.surname}`}</em>
       <em>E-mail: {personalData.email}</em>
 
