@@ -3,14 +3,17 @@ import styled from "styled-components"
 import { flexColCenter, flexRowSpace } from "../styled-components/globalStyles"
 import RegisterForm from "../containers/RegisterForm"
 import LoginForm from "../containers/LoginForm"
+import Window from "./Window"
 
 export default function () {
   return (
     <RegLogWrapperDiv>
+    <Window title={"Register or Login"}>
       <RegLogContainerDiv>
         <RegisterForm />
         <LoginForm />
       </RegLogContainerDiv>
+    </Window>
     </RegLogWrapperDiv>
   )
 }
@@ -18,15 +21,10 @@ export default function () {
 const RegLogWrapperDiv = styled.div`
   ${flexColCenter};
   width: 60%;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow: 5px 5px 13px #6b6b6b, -5px -5px 13px #ffffff;
-  padding: 20px;
   margin-top: 300px;
   @media (max-width: 768px) {
-    ${flexColCenter};
-    justify-content: flex-start;
     margin-top: 10px;
-    width: 100%;
+    width: 98%;
   }
 `
 const RegLogContainerDiv = styled.div`

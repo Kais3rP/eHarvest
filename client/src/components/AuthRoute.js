@@ -2,10 +2,10 @@ import React from "react"
 import { useSelector } from "react-redux"
 import { Redirect, Route } from "react-router"
 
-export default function AuthRoute(props) {
+export default function AuthRoute({type}) {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
-  if (props.type === "guest" && isLoggedIn) return <Redirect to="/" />
-  if (props.type === "private" && !isLoggedIn) return <Redirect to="/login" />
+  if (type === "guest" && isLoggedIn) return <Redirect to="/" />
+  if (type === "private" && !isLoggedIn) return <Redirect to="/login" />
 
   return <Route {...props} />
 }

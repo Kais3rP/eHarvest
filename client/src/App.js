@@ -87,7 +87,9 @@ export default function () {
         }}
       />
       <Cart position={isCartOpen ? 0 : "-500px"} />
-      {isCartOpen && <ShadowDiv />}
+      {isCartOpen && <ShadowDiv onClick={() => {
+        dispatch(toggleCart())
+      }}/>}
       <Switch>
         <AuthRoute exact path="/fullshop">
           <FullShop />

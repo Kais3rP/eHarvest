@@ -10,12 +10,18 @@ import {
   flexColSpace,
 } from "../styled-components/globalStyles"
 import Window from "./Window"
+import ImagePreviewer from "./ImagePreviewer"
 
 export default function () {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
   const productClicked = useSelector((state) => state.shop.productClicked)
+  const [selectedPicSrc, setSelectedPicSrc] = useState("")
+  const [isPreviewPic, setIsPreviewPic] = useState(false)
   return (
     <MainDiv>
+    {isPreviewPic && <ImagePreviewer pic={{pic:selectedPicSrc, name:productClicked.productName}} onClick={()=>{
+      setIsPreviewPic(false)
+    }}/>}
     <Window title={"Product Info"}/>
     <LayoutContainerDiv>
       <LeftMainDiv>
@@ -68,21 +74,12 @@ export default function () {
       <RightMainDiv>
         <Window title={"Pictures"}>
           <PicturesContainerDiv>
-            <ProductPicImg
-              src={`data:image/png;base64,${productClicked.realPicture}`}
-            />
-            <ProductPicImg
-              src={`data:image/png;base64,${productClicked.realPicture}`}
-            />
-            <ProductPicImg
-              src={`data:image/png;base64,${productClicked.realPicture}`}
-            />
-            <ProductPicImg
-              src={`data:image/png;base64,${productClicked.realPicture}`}
-            />
-            <ProductPicImg
-              src={`data:image/png;base64,${productClicked.realPicture}`}
-            />
+          {[productClicked.realPicture].map(pic =>  <ProductPicImg
+              src={`data:image/png;base64,${pic}`} onClick={()=>{
+                setSelectedPicSrc(`data:image/png;base64,${pic}`)
+                setIsPreviewPic(true)
+              }}
+            /> )}
           </PicturesContainerDiv>
           </Window>
        
@@ -142,6 +139,7 @@ const DescriptionDiv = styled.div`
 const ProductPicImg = styled.img`
   width: 48%;
   margin: 5px;
+  cursor:pointer;
 `
 const ProductSvgImg = styled.img`
   width: 15%;
