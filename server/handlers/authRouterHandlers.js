@@ -25,7 +25,7 @@ async function isLoggedin(req, res) {
 
 async function register(req, res) {
     try {
-        console.log(req.body);
+        console.log("resgister request body",req.body);
         const { name, surname, email, password } = req.body;
         let userEmail = await User.findOne({ email }).exec();
         if (userEmail) return res.status(400).send({ msg: 'The email address you have entered is already associated with another account.' })
@@ -50,6 +50,8 @@ async function register(req, res) {
         })
         console.log('Nodemailer response:',response)
         if (response.err) {
+            await User.deleteOne({email: user.email})
+            console.log(user.email+" has been deleted from the db due to a nodemailer error")
             console.log(response.err);
             return res.status(500).send({ msg: response.err.message });
         }
