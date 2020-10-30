@@ -52,6 +52,7 @@ export const {
 
 export const isLoggedChecker = () => async (dispatch) => {
   try {
+    console.log("Checking if user is logged")
     const res = await fetch("/auth/isloggedin")
     if (res.ok) {
       const data = await res.json()

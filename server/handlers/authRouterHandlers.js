@@ -9,6 +9,7 @@ const fetch = require('node-fetch');
 
 
 async function isLoggedin(req, res) {
+    console.log("Checking if user is logged")  //The auth middleware prevents the status code 200 to be sent if the user is not logged in
     try {
         const user = {
             name: req.user.name,

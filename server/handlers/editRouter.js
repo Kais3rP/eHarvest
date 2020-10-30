@@ -7,7 +7,6 @@ const handleAsyncRejections = (fn) => (...args) => {
   };
   const editRouter = ({ router, method, path, middleware, handler }) => {
     const wrappedHandler = handleAsyncRejections(handler);
-  console.log(method,path)
     return router[method](path, ...middleware, wrappedHandler);
   };
   module.exports = editRouter;
