@@ -36,7 +36,12 @@ async function register(req, res) {
         let token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
         await token.save();
         // Send the email
-        let transporter = nodemailer.createTransport({ service: 'Gmail', auth: { user: process.env.GMAIL_USERNAME, pass: process.env.GMAIL_PASSWORD } });
+        let transporter = nodemailer.createTransport({ 
+            service: 'Gmail',
+            port: 465,
+            secure: true, 
+            auth: { user: process.env.GMAIL_USERNAME, 
+                    pass: process.env.GMAIL_PASSWORD } });
         let mailOptions = {
             from: 'eharvest00@gmail.com',
             to: user.email, subject: 'Account Verification Token',
